@@ -51,6 +51,20 @@
       border-radius: 50%;
       margin-bottom: 10px;
     }
+    .social-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .social-btn img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+    .social-btn img:hover {
+      transform: scale(1.1);
+    }
     .header-right {
       text-align: left;
     }
@@ -96,10 +110,19 @@
 
   <div class="header-container">
     <div class="header-left">
-      <img src="PB.jpg">
+      <img src="PB.jpg" alt="Profilbild">
       <h2>Sarah Meister</h2>
       <p>Kreativität trifft Technik</p>
       <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
+      
+      <div class="social-buttons">
+        <a href="https://www.instagram.com/deinusername" target="_blank" class="social-btn">
+          <img src="images/instagram-icon.png" alt="Instagram">
+        </a>
+        <a href="https://www.behance.net/deinusername" target="_blank" class="social-btn">
+          <img src="images/behance-icon.png" alt="Behance">
+        </a>
+      </div>
     </div>
     <div class="header-right">
       <h1>3D Artist & Concept Designer</h1>
