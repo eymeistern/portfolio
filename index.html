@@ -12,26 +12,47 @@
       background: #f5f5f5;
       color: #1a1a1a;
     }
-    .container {
+    nav {
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+    nav a:hover {
+      color: #0070f3;
+    }
+    header {
       max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
-    .header {
+      margin: 0 auto;
       text-align: center;
-      padding: 40px 20px;
+      padding: 60px 20px 40px;
     }
-    .header img {
+    header img {
       width: 120px;
       border-radius: 50%;
     }
-    .header h1 {
+    header h1 {
       font-size: 2.5em;
       margin: 10px 0 5px;
     }
-    .header p {
+    header p {
       margin: 5px 0 20px;
       font-weight: 300;
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
     }
     .grid {
       display: grid;
@@ -57,36 +78,44 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img src="https://via.placeholder.com/120" alt="Profilbild">
-      <h1>Sarah Meister</h1>
-      <p>3D Artist & Concept Designer</p>
-      <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
-    </div>
+  <nav>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Kontakt</a>
+    <a href="#impressum">Impressum</a>
+  </nav>
 
+  <header>
+    <img src="https://via.placeholder.com/120" alt="Profilbild">
+    <h1>Sarah Meister</h1>
+    <p>3D Artist & Concept Designer</p>
+    <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
+  </header>
+
+  <main>
     <div class="grid">
-      <div class="card">
+      <div class="card" id="portfolio">
         <img src="https://via.placeholder.com/400x200" alt="Portfolio">
         <h2>Portfolio</h2>
       </div>
-      <div class="card">
+      <div class="card" id="about">
         <img src="https://via.placeholder.com/400x200" alt="About">
         <h2>About</h2>
       </div>
-      <div class="card">
+      <div class="card" id="services">
         <img src="https://via.placeholder.com/400x200" alt="Services">
         <h2>Services</h2>
       </div>
-      <div class="card">
+      <div class="card" id="contact">
         <img src="https://via.placeholder.com/400x200" alt="Kontakt">
         <h2>Kontakt</h2>
       </div>
-      <div class="card">
+      <div class="card" id="impressum">
         <img src="https://via.placeholder.com/400x200" alt="Impressum">
         <h2>Impressum</h2>
       </div>
     </div>
-  </div>
+  </main>
 </body>
 </html>
