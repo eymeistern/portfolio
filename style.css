@@ -1,4 +1,3 @@
-/* Grundlayout */
 body {
   margin: 0;
   font-family: 'Helvetica Neue', sans-serif;
@@ -36,8 +35,6 @@ nav a {
 nav a:hover {
   color: #0077ff;
 }
-
-/* Portfolio Grid */
 section.portfolio {
   padding: 2rem;
   display: grid;
@@ -85,8 +82,6 @@ footer {
   color: #888;
   border-top: 1px solid #e0e0e0;
 }
-
-/* Kontaktformular */
 form {
   max-width: 500px;
   margin: 2rem auto;
