@@ -1,42 +1,92 @@
-
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio von Sarah Meister</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarah Meister – 3D Artist & Concept Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .header img {
+      width: 120px;
+      border-radius: 50%;
+    }
+    .header h1 {
+      font-size: 2.5em;
+      margin: 10px 0 5px;
+    }
+    .header p {
+      margin: 5px 0 20px;
+      font-weight: 300;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .card h2 {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Sarah Meister – Fotografin & Designstudentin</h1>
-    <nav>
-      <a href="#portfolio">Werke</a>
-      <a href="#about">Über mich</a>
-      <a href="#contact">Kontakt</a>
-      <a href="resume.html">Lebenslauf</a>
-    </nav>
-  </header>
+  <div class="container">
+    <div class="header">
+      <img src="https://via.placeholder.com/120" alt="Profilbild">
+      <h1>Sarah Meister</h1>
+      <p>3D Artist & Concept Designer</p>
+      <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
+    </div>
 
-  <section id="portfolio" class="portfolio">
-    <div class="project">
-      <img src="img/projekt1.jpg" alt="Projekt 1">
-      <div class="info">
-        <h2>Magische Uhrenwelt</h2>
-        <p>3D-Animation • 2025</p>
+    <div class="grid">
+      <div class="card">
+        <img src="https://via.placeholder.com/400x200" alt="Portfolio">
+        <h2>Portfolio</h2>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/400x200" alt="About">
+        <h2>About</h2>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/400x200" alt="Services">
+        <h2>Services</h2>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/400x200" alt="Kontakt">
+        <h2>Kontakt</h2>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/400x200" alt="Impressum">
+        <h2>Impressum</h2>
       </div>
     </div>
-    <div class="project">
-      <img src="img/projekt2.jpg" alt="Projekt 2">
-      <div class="info">
-        <h2>Licht und Stille</h2>
-        <p>Fotoreihe • 2024</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Sarah Meister</p>
-  </footer>
+  </div>
 </body>
 </html>
