@@ -1,72 +1,60 @@
-
 body {
-  margin: 0;
-  font-family: 'Helvetica Neue', sans-serif;
-  background-color: #fdfdfd;
-  color: #1a1a1a;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f0f0f0;
 }
+
 header {
-  background-color: #ffffff;
-  padding: 2rem;
-  text-align: center;
-  border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222;
+    color: white;
+    padding: 20px;
 }
-header h1 {
-  margin: 0;
-  font-size: 2.2rem;
-  font-weight: 700;
+
+.left, .right {
+    width: 45%;
+    text-align: center;
 }
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 1rem 0;
+
+.left img, .right img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 10px;
 }
-nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.2s;
+
+.left h2, .left p {
+    margin: 10px 0;
 }
-nav a:hover {
-  color: #0077ff;
+
+.right h1 {
+    font-size: 2em;
+    margin: 10px 0;
 }
-section.portfolio {
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
-.project {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: box-shadow 0.3s;
+
+nav ul li {
+    margin: 10px;
 }
-.project:hover {
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+nav ul li a {
+    color: #222;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
 }
-.project img {
-  width: 100%;
-  display: block;
-}
-.project .info {
-  padding: 1rem;
-}
-.project .info h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.2rem;
-}
-.project .info p {
-  margin: 0;
-  color: #666;
-  font-size: 0.95rem;
-}
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  font-size: 0.8rem;
-  color: #888;
-  border-top: 1px solid #e0e0e0;
+
+nav ul li a:hover {
+    background-color: #ddd;
 }
