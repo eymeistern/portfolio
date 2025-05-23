@@ -34,8 +34,16 @@
     header {
       max-width: 1200px;
       margin: 0 auto;
-      text-align: center;
       padding: 60px 20px 40px;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .header-text {
+      text-align: left;
     }
     header img {
       width: 120px;
@@ -80,18 +88,21 @@
 <body>
 
   <header>
-    <img src="https://via.placeholder.com/120" alt="Profilbild">
-    <h1>Sarah Meister</h1>
-    <p>3D Artist & Concept Designer</p>
-    <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
-    
+    <div class="header-content">
+      <img src="https://via.placeholder.com/120" alt="Profilbild">
+      <div class="header-text">
+        <h1>Sarah Meister</h1>
+        <p>3D Artist & Concept Designer</p>
+        <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
+      </div>
+    </div>
     <nav>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Kontakt</a>
-    <a href="#impressum">Impressum</a>
-  </nav>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Kontakt</a>
+      <a href="#impressum">Impressum</a>
+    </nav>
   </header>
 
   <main>
@@ -118,5 +129,6 @@
       </div>
     </div>
   </main>
+
 </body>
 </html>
