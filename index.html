@@ -38,12 +38,9 @@
     }
     .header-content {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-    }
-    .header-text {
-      text-align: left;
+      flex-direction: column; /* Ändert die Richtung zu vertikal */
+      align-items: center; /* Zentriert alles */
+      text-align: center;
     }
     header img {
       width: 120px;
@@ -90,11 +87,9 @@
   <header>
     <div class="header-content">
       <img src="https://via.placeholder.com/120" alt="Profilbild">
-      <div class="header-text">
-        <h1>Sarah Meister</h1>
-        <p>3D Artist & Concept Designer</p>
-        <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
-      </div>
+      <h1>Sarah Meister</h1>
+      <p>3D Artist & Concept Designer</p>
+      <p>Ich kombiniere Technik mit Ästhetik, um visuelle Konzepte zum Leben zu erwecken.</p>
     </div>
     <nav>
       <a href="#portfolio">Portfolio</a>
