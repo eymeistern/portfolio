@@ -28,12 +28,15 @@
       color: var(--text-dark);
     }
 
-    /* HEADER ohne Wölbung */
+    /* HEADER mit begrenzter Breite */
     header {
       background-color: var(--bg-dark);
       padding: 4rem 2rem 6rem;
       text-align: center;
       position: relative;
+      max-width: 900px;     /* Begrenzung der Breite */
+      margin: 0 auto;       /* Zentrierung */
+      border-radius: 1rem;  /* Optional: abgerundete Ecken */
     }
 
     .logo img {
@@ -73,7 +76,7 @@
       height: 150px;
       background-color: #ccc;
       border-radius: 50%;
-      background-image: url('profilbild.jpg'); /* Bild ersetzen */
+      background-image: url('profilbild.jpg');
       background-size: cover;
       background-position: center;
       border: 5px solid white;
@@ -148,19 +151,16 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      <img src="Logo Head.png"/>
+      <img src="Logo Head.png" alt="Logo" />
     </div>
   </header>
 
   <!-- HERO-BEREICH -->
   <section id="hero">
     <div class="profile">
-      <div class="profile-pic">
-        <!-- Profilbild kommt hier -->
-      </div>
+      <div class="profile-pic"></div>
       <h2>Sarah Meister</h2>
       <p>3D Artist & Web Development</p>
-
       <div class="socials">
         <a href="#"><i class="fab fa-linkedin"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
