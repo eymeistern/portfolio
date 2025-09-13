@@ -28,27 +28,17 @@
       color: var(--text-dark);
     }
 
-    /* HEADER ohne Wölbung – kompakter */
+    /* HEADER ohne Wölbung */
     header {
       background-color: var(--bg-dark);
-      padding: 2rem 1rem;       /* weniger Höhe */
+      padding: 4rem 2rem 6rem;
       text-align: center;
       position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      border-radius: 1rem;
-    }
-
-    .logo {
-      margin: 0;
-      padding: 0;
     }
 
     .logo img {
-      width: 80px;              /* optional: etwas kleiner */
+      width: 100px;
       height: auto;
-      margin: 0;
-      display: block;           /* entfernt Leerraum unter dem Bild */
     }
 
     /* HERO-Bereich */
@@ -83,7 +73,7 @@
       height: 150px;
       background-color: #ccc;
       border-radius: 50%;
-      background-image: url('profilbild.jpg');
+      background-image: url('profilbild.jpg'); /* Bild ersetzen */
       background-size: cover;
       background-position: center;
       border: 5px solid white;
@@ -158,16 +148,19 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      <img src="Logo Head.png" alt="Logo" />
+      <img src="logo.png" alt="Sarah Meister Logo" />
     </div>
   </header>
 
   <!-- HERO-BEREICH -->
   <section id="hero">
     <div class="profile">
-      <div class="profile-pic"></div>
+      <div class="profile-pic">
+        <!-- Profilbild kommt hier -->
+      </div>
       <h2>Sarah Meister</h2>
       <p>3D Artist & Web Development</p>
+
       <div class="socials">
         <a href="#"><i class="fab fa-linkedin"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
