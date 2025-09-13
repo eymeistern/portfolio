@@ -4,15 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sarah Meister | 3D & Web</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --primary: #6C63FF;
+      --secondary: #00D1FF;
+      --highlight: #FF4F81;
+      --bg-light: #F7F7FA;
+      --bg-dark: #121212;
+      --text-dark: #1E1E1E;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    header {
+      background-color: var(--bg-dark);
+      color: white;
+      padding: 1rem 2rem;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    #hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 2rem;
+      background-color: white;
+    }
+
+    .profile {
+      max-width: 400px;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      background-color: #ccc;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .socials a {
+      margin-right: 1rem;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    nav {
+      background-color: var(--primary);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    footer {
+      background-color: var(--bg-dark);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="logo">
-      <h1>SM</h1> <!-- später Logo hier -->
+      <h1>SM</h1>
     </div>
   </header>
 
+  <!-- HERO-BEREICH -->
   <section id="hero">
     <div class="profile">
       <div class="profile-pic">
@@ -29,11 +115,11 @@
     </div>
 
     <div class="hero-model">
-      <!-- später interaktives 3D Modell -->
       <p>[3D Modell Platzhalter]</p>
     </div>
   </section>
 
+  <!-- NAVIGATION -->
   <nav>
     <a href="#about">About Me</a>
     <a href="#work">My Work</a>
@@ -41,6 +127,7 @@
     <a href="#contact">Contact</a>
   </nav>
 
+  <!-- HAUPTBEREICHE -->
   <main>
     <section id="about">
       <h2>About Me</h2>
@@ -63,6 +150,7 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Sarah Meister</p>
   </footer>
