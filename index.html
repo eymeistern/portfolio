@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sarah Meister | 3D & Web</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome für Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
   <style>
     :root {
-      --primary: #6C63FF;
-      --secondary: #00D1FF;
-      --highlight: #FF4F81;
-      --bg-light: #F7F7FA;
+      --primary: #6c63ff;
+      --secondary: #00d1ff;
+      --highlight: #ff4f81;
+      --bg-light: #f7f7fa;
       --bg-dark: #121212;
-      --text-dark: #1E1E1E;
+      --text-dark: #1e1e1e;
     }
 
     body {
@@ -36,14 +42,20 @@
     #hero {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       padding: 3rem 2rem;
       background-color: white;
+      gap: 2rem;
     }
 
     .profile {
-      max-width: 400px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 350px;
     }
 
     .profile-pic {
@@ -51,13 +63,40 @@
       height: 150px;
       background-color: #ccc;
       border-radius: 50%;
+      margin: 0 auto 1rem;
+      background-image: url('profilbild.jpg'); /* Bild ersetzen */
+      background-size: cover;
+      background-position: center;
+    }
+
+    .profile h2 {
+      margin: 0.5rem 0;
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    .profile p {
       margin-bottom: 1rem;
+      font-weight: 500;
     }
 
     .socials a {
-      margin-right: 1rem;
+      margin: 0 0.5rem;
+      font-size: 1.5rem;
       color: var(--secondary);
       text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .socials a:hover {
+      color: var(--highlight);
+    }
+
+    .hero-model {
+      flex: 1;
+      text-align: center;
+      font-style: italic;
+      color: #666;
     }
 
     nav {
@@ -81,6 +120,10 @@
       margin-bottom: 3rem;
     }
 
+    section h2 {
+      color: var(--primary);
+    }
+
     footer {
       background-color: var(--bg-dark);
       color: white;
@@ -90,7 +133,6 @@
   </style>
 </head>
 <body>
-
   <!-- HEADER -->
   <header>
     <div class="logo">
@@ -108,9 +150,9 @@
       <p>3D Artist & Web Development</p>
 
       <div class="socials">
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="#">ArtStation</a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-artstation"></i></a>
       </div>
     </div>
 
@@ -154,6 +196,5 @@
   <footer>
     <p>&copy; 2025 Sarah Meister</p>
   </footer>
-
 </body>
 </html>
