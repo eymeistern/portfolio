@@ -28,10 +28,10 @@
       color: var(--text-dark);
     }
 
-    /* Kompakter HEADER */
+    /* HEADER ohne Wölbung – kompakter */
     header {
       background-color: var(--bg-dark);
-      padding: 2rem 2rem 2rem; /* weniger Höhe */
+      padding: 2rem 1rem;       /* weniger Höhe */
       text-align: center;
       position: relative;
       max-width: 900px;
@@ -39,9 +39,16 @@
       border-radius: 1rem;
     }
 
+    .logo {
+      margin: 0;
+      padding: 0;
+    }
+
     .logo img {
-      width: 100px;
+      width: 80px;              /* optional: etwas kleiner */
       height: auto;
+      margin: 0;
+      display: block;           /* entfernt Leerraum unter dem Bild */
     }
 
     /* HERO-Bereich */
