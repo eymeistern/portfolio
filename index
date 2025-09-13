@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarah Meister | 3D & Web</title>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <h1>SM</h1> <!-- später Logo hier -->
+    </div>
+  </header>
+
+  <section id="hero">
+    <div class="profile">
+      <div class="profile-pic">
+        <!-- Profilbild kommt hier -->
+      </div>
+      <h2>Sarah Meister</h2>
+      <p>3D Artist & Web Development</p>
+
+      <div class="socials">
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">ArtStation</a>
+      </div>
+    </div>
+
+    <div class="hero-model">
+      <!-- später interaktives 3D Modell -->
+      <p>[3D Modell Platzhalter]</p>
+    </div>
+  </section>
+
+  <nav>
+    <a href="#about">About Me</a>
+    <a href="#work">My Work</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hier schreibst du später etwas über dich.</p>
+    </section>
+
+    <section id="work">
+      <h2>My Work</h2>
+      <p>Portfolio-Elemente oder Bilder kommen hier.</p>
+    </section>
+
+    <section id="blog">
+      <h2>Blog</h2>
+      <p>Deine Blog-Posts oder News.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Kontaktformular oder E-Mail-Link.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Sarah Meister</p>
+  </footer>
+
+</body>
+</html>
