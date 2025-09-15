@@ -4,12 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sarah Meister | 3D & Web Development</title>
-
-  <!-- Font Awesome für Icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     :root {
@@ -28,12 +23,12 @@
       color: var(--text-dark);
     }
 
-    /* HEADER ohne Wölbung */
     header {
       background-color: var(--bg-dark);
-      padding: 4rem 2rem 6rem;
+      padding: 5rem 2rem 8rem;
       text-align: center;
       position: relative;
+      z-index: 1;
     }
 
     .logo img {
@@ -41,48 +36,44 @@
       height: auto;
     }
 
-    /* HERO-Bereich */
     #hero {
+      position: relative;
+      z-index: 2;
+      margin-top: -150px; /* Überlappung mit Header */
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
-      padding: 4rem 2rem 2rem;
       gap: 2rem;
-      position: relative;
-      z-index: 1;
+      padding: 2rem;
     }
 
     .profile {
       position: relative;
-      background-color: black;
-      padding: 4rem 2rem 2rem;
-      border-radius: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      padding: 6rem 2rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
       text-align: center;
       max-width: 350px;
-      margin-top: 80px;
-      transform: translateX(100px);
     }
 
     .profile-pic {
       position: absolute;
-      top: -75px;
+      top: -90px;
       left: 50%;
       transform: translateX(-50%);
       width: 180px;
       height: 180px;
-      background-color: #ccc;
       background-image: url('profilbild.JPG');
       background-size: cover;
       background-position: center;
       border-radius: 1rem;
-      border: 0px solid white;
+      border: 5px solid white;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
+    }
 
     .profile h2 {
-      margin-top: 90px;
+      margin-top: 1rem;
       font-size: 1.8rem;
       color: var(--primary);
     }
@@ -147,22 +138,17 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="logo">
-      <img src="Logo Head.png"/>
+      <img src="Logo Head.png" alt="Logo" />
     </div>
   </header>
 
-  <!-- HERO-BEREICH -->
   <section id="hero">
     <div class="profile">
-      <div class="profile-pic">
-        <!-- Profilbild kommt hier -->
-      </div>
+      <div class="profile-pic"></div>
       <h2>Sarah Meister</h2>
       <p>3D Artist & Web Development</p>
-
       <div class="socials">
         <a href="#"><i class="fab fa-linkedin"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -175,7 +161,6 @@
     </div>
   </section>
 
-  <!-- NAVIGATION -->
   <nav>
     <a href="#about">About Me</a>
     <a href="#work">My Work</a>
@@ -183,7 +168,6 @@
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- HAUPTBEREICHE -->
   <main>
     <section id="about">
       <h2>About Me</h2>
@@ -206,7 +190,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Sarah Meister</p>
   </footer>
