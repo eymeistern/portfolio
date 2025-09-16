@@ -1,1 +1,204 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Sarah Meister | 3D & Web Development</title> <!-- Font Awesome für Icons --> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> <style> :root { --primary: #ffffff; --secondary: #00d1ff; --highlight: #ff4f81; --bg-light: #f7f7fa; --bg-dark: #121212; --text-dark: #1e1e1e; } body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--bg-light); color: var(--text-dark); } /* HEADER ohne Wölbung */ header { background-color: var(--bg-dark); padding: 4rem 2rem 6rem; text-align: center; position: relative; } .logo img { width: 100px; height: auto; } /* HERO-Bereich */ #hero { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; padding: 4rem 2rem 2rem; gap: 2rem; position: relative; z-index: 1; } .profile { position: relative; background-color: black; padding: 4rem 2rem 2rem; border-radius: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); text-align: center; max-width: 350px; margin-top: 80px; transform: translateX(100px); } .profile-pic { position: absolute; top: -75px; left: 50%; transform: translateX(-50%); width: 180px; height: 180px; background-color: #ccc; background-image: url('profilbild.JPG'); background-size: cover; background-position: center; border-radius: 1rem; border: 0px solid white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); } .profile h2 { margin-top: 90px; font-size: 1.8rem; color: var(--primary); } .profile p { margin-bottom: 1rem; font-weight: 500; } .socials a { margin: 0 0.5rem; font-size: 1.5rem; color: var(--secondary); text-decoration: none; transition: color 0.3s; } .socials a:hover { color: var(--highlight); } .hero-model { flex: 1; text-align: center; font-style: italic; color: #666; margin-top: 2rem; } nav { background-color: var(--primary); padding: 1rem; text-align: center; } nav a { margin: 0 1rem; color: white; text-decoration: none; font-weight: bold; } main { padding: 2rem; } section { margin-bottom: 3rem; } section h2 { color: var(--primary); } footer { background-color: var(--bg-dark); color: white; text-align: center; padding: 1rem; } </style> </head> <body> <!-- HEADER --> <header> <div class="logo"> <img src="Logo Head.png"/> </div> </header> <!-- HERO-BEREICH --> <section id="hero"> <div class="profile"> <div class="profile-pic"> <!-- Profilbild kommt hier --> </div> <h2>Sarah Meister</h2> <p>3D Artist & Web Development</p> <div class="socials"> <a href="#"><i class="fab fa-linkedin"></i></a> <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-artstation"></i></a> </div> </div> <div class="hero-model"> <p>[3D Modell Platzhalter]</p> </div> </section> <!-- NAVIGATION --> <nav> <a href="#about">About Me</a> <a href="#work">My Work</a> <a href="#blog">Blog</a> <a href="#contact">Contact</a> </nav> <!-- HAUPTBEREICHE --> <main> <section id="about"> <h2>About Me</h2> <p>Hier schreibst du später etwas über dich.</p> </section> <section id="work"> <h2>My Work</h2> <p>Portfolio-Elemente oder Bilder kommen hier.</p> </section> <section id="blog"> <h2>Blog</h2> <p>Deine Blog-Posts oder News.</p> </section> <section id="contact"> <h2>Contact</h2> <p>Kontaktformular oder E-Mail-Link.</p> </section> </main> <!-- FOOTER --> <footer> <p>&copy; 2025 Sarah Meister</p> </footer> </body> </html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarah Meister | 3D & Web Development</title>
+  <!-- Font Awesome für Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #ffffff;       /* Weiß für Text und Kontraste */
+      --secondary: #308b5d;     /* Smaragdgrün für Buttons, Icons */
+      --highlight: #204a3c;     /* Dunkleres Grün für Hover-Effekte */
+      --bg-light: #f5f5f5;      /* Helles Grau für helle Flächen */
+      --bg-dark: #0b0b0b;       /* Tiefschwarz für Hintergrund */
+      --text-dark: #1e1e1e;     /* Dunkles Grau für Lesbarkeit */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    /* HEADER ohne Wölbung */
+    header {
+      background-color: var(--bg-dark);
+      padding: 4rem 2rem 6rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo img {
+      width: 100px;
+      height: auto;
+    }
+
+    /* HERO-Bereich */
+    #hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4rem 2rem 2rem;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile {
+      position: relative;
+      background-color: var(--bg-dark);
+      padding: 4rem 2rem 2rem;
+      border-radius: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 350px;
+      margin-top: 80px;
+      transform: translateX(100px);
+    }
+
+    .profile-pic {
+      position: absolute;
+      top: -75px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 180px;
+      background-color: #ccc;
+      background-image: url('profilbild.JPG');
+      background-size: cover;
+      background-position: center;
+      border-radius: 1rem;
+      border: 0px solid white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .profile h2 {
+      margin-top: 90px;
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    .profile p {
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .socials a {
+      margin: 0 0.5rem;
+      font-size: 1.5rem;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .socials a:hover {
+      color: var(--highlight);
+    }
+
+    .hero-model {
+      flex: 1;
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin-top: 2rem;
+    }
+
+    nav {
+      background-color: var(--secondary);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      color: var(--highlight);
+    }
+
+    footer {
+      background-color: var(--bg-dark);
+      color: var(--primary);
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <img src="Logo Head.png" />
+    </div>
+  </header>
+
+  <!-- HERO-BEREICH -->
+  <section id="hero">
+    <div class="profile">
+      <div class="profile-pic">
+        <!-- Profilbild kommt hier -->
+      </div>
+      <h2>Sarah Meister</h2>
+      <p>3D Artist & Web Development</p>
+      <div class="socials">
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-artstation"></i></a>
+      </div>
+    </div>
+    <div class="hero-model">
+      <p>[3D Modell Platzhalter]</p>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#about">About Me</a>
+    <a href="#work">My Work</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- HAUPTBEREICHE -->
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hier schreibst du später etwas über dich.</p>
+    </section>
+    <section id="work">
+      <h2>My Work</h2>
+      <p>Portfolio-Elemente oder Bilder kommen hier.</p>
+    </section>
+    <section id="blog">
+      <h2>Blog</h2>
+      <p>Deine Blog-Posts oder News.</p>
+    </section>
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Kontaktformular oder E-Mail-Link.</p>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Sarah Meister</p>
+  </footer>
+</body>
+</html>
