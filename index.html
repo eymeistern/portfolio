@@ -54,7 +54,6 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       text-align: center;
       max-width: 350px;
-      margin-top: 80px;
       flex: 1 1 300px;
     }
 
@@ -97,6 +96,14 @@
       color: var(--highlight);
     }
 
+    #3d-container {
+      flex: 1 1 300px;
+      height: 500px;
+      background-color: #000;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
     nav {
       background-color: var(--secondary);
       padding: 1rem;
@@ -121,11 +128,6 @@
     section h2 {
       color: var(--highlight);
       text-align: center;
-    }
-
-    #3d-container {
-      width: 100%;
-      height: 500px;
     }
 
     footer {
@@ -155,6 +157,10 @@
         display: block;
         margin: 0.5rem 0;
       }
+
+      #3d-container {
+        height: 300px;
+      }
     }
   </style>
 </head>
@@ -176,6 +182,7 @@
         <a href="#"><i class="fab fa-artstation"></i></a>
       </div>
     </div>
+    <div id="3d-container"></div>
   </section>
 
   <nav>
@@ -194,11 +201,6 @@
     <section id="work">
       <h2>My Work</h2>
       <p>Portfolio-Elemente oder Bilder kommen hier.</p>
-    </section>
-
-    <section id="my-3d-model">
-      <h2>Interaktives 3D-Modell</h2>
-      <div id="3d-container"></div>
     </section>
 
     <section id="blog">
@@ -223,9 +225,9 @@
 
   <script>
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 500, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, document.getElementById('3d-container').clientWidth / 500, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, 500);
+    renderer.setSize(document.getElementById('3d-container').clientWidth, 500);
     document.getElementById('3d-container').appendChild(renderer.domElement);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
