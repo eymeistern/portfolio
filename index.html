@@ -1,289 +1,217 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sarah Meister | 3D & Web Development</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    :root {
-      --primary: #ffffff;
-      --secondary: #308b5d;
-      --highlight: #204a3c;
-      --bg-light: #f5f5f5;
-      --bg-dark: #0b0b0b;
-      --text-dark: #1e1e1e;
-    }
+<!-- NAVBAR (GitHub Pages / Multi-Page + Onepage-Anker) -->
+<header class="nav-wrap">
+  <nav class="nav" id="siteNav" aria-label="Hauptnavigation">
+    <a class="nav__brand" href="/" aria-label="Zur Startseite">Sarah Meister</a>
 
-    * {
-      box-sizing: border-box;
-    }
+    <button class="nav__toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-light);
-      color: var(--text-dark);
-    }
+    <div class="nav__links" id="navLinks">
+      <!-- Onepager-Sektionen auf der Startseite -->
+      <a href="/#projekte">Projekte</a>
+      <a href="/#showreel">Showreel</a>
 
-    header {
-      background-color: var(--bg-dark);
-      padding: 1rem;
-      text-align: center;
-    }
+      <!-- Echte Unterseiten -->
+      <a href="/leistungen/">Leistungen</a>
+      <a href="/ueber-mich/">Über mich</a>
 
-    .logo img {
-      width: 100px;
-      height: auto;
-    }
+      <!-- Kontakt: als Anker auf Home (oder ändere zu /kontakt/) -->
+      <a href="/#kontakt" class="nav__cta">Kontakt</a>
 
-    #hero {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 4rem 2rem 2rem;
-      gap: 2rem;
-    }
-
-    .profile {
-      position: relative;
-      background-color: var(--bg-dark);
-      padding: 4rem 2rem 2rem;
-      border-radius: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 350px;
-      flex: 1 1 300px;
-    }
-
-    .profile-pic {
-      position: absolute;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 180px;
-      height: 180px;
-      background-color: #ccc;
-      background-image: url('profilbild.JPG');
-      background-size: cover;
-      background-position: center;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .profile h2 {
-      margin-top: 80px;
-      font-size: 1.8rem;
-      color: var(--primary);
-    }
-
-    .profile p {
-      margin-bottom: 1rem;
-      font-weight: 500;
-      color: var(--primary);
-    }
-
-    .socials a {
-      margin: 0 0.5rem;
-      font-size: 1.5rem;
-      color: var(--secondary);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .socials a:hover {
-      color: var(--highlight);
-    }
-
-    #3d-container {
-      flex: 1 1 300px;
-      height: 500px;
-      background-color: #000;
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-
-    nav {
-      background-color: var(--secondary);
-      padding: 1rem;
-      text-align: center;
-    }
-
-    nav a {
-      margin: 0 1rem;
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    main {
-      padding: 2rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    section h2 {
-      color: var(--highlight);
-      text-align: center;
-    }
-
-    footer {
-      background-color: var(--bg-dark);
-      color: var(--primary);
-      text-align: center;
-      padding: 1rem;
-    }
-
-    @media (max-width: 768px) {
-      #hero {
-        flex-direction: column;
-        padding: 2rem 1rem;
-      }
-
-      .profile {
-        margin-top: 40px;
-      }
-
-      .profile-pic {
-        width: 140px;
-        height: 140px;
-        top: -60px;
-      }
-
-      nav a {
-        display: block;
-        margin: 0.5rem 0;
-      }
-
-      #3d-container {
-        height: 300px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">
-      <img src="Logo Head.png" />
+      <!-- Optional Social -->
+      <a class="nav__icon" href="https://instagram.com/eymeistern" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M17.8 6.2h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </a>
     </div>
-  </header>
-
-  <section id="hero">
-    <div class="profile">
-      <div class="profile-pic"></div>
-      <h2>Sarah Meister</h2>
-      <p>3D Artist & Web Development</p>
-      <div class="socials">
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-artstation"></i></a>
-      </div>
-    </div>
-    <div id="3d-container"></div>
-  </section>
-
-  <nav>
-    <a href="#about">About Me</a>
-    <a href="#work">My Work</a>
-    <a href="#blog">Blog</a>
-    <a href="#contact">Contact</a>
   </nav>
+</header>
 
-  <main>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Hier schreibst du später etwas über dich.</p>
-    </section>
+<style>
+  :root{
+    --nav-height: 72px;
+    --pad-x: clamp(16px, 4vw, 56px);
+    --text: rgba(255,255,255,.92);
+    --text-dim: rgba(255,255,255,.72);
+    --solid-bg: rgba(10, 12, 18, .72);
+    --solid-border: rgba(255,255,255,.10);
+    --trans-bg: rgba(10, 12, 18, 0);
+    --trans-border: rgba(255,255,255, 0);
+    --shadow: 0 10px 30px rgba(0,0,0,.20);
+  }
 
-    <section id="work">
-      <h2>My Work</h2>
-      <p>Portfolio-Elemente oder Bilder kommen hier.</p>
-    </section>
+  html{
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-height) + 16px);
+  }
 
-    <section id="blog">
-      <h2>Blog</h2>
-      <p>Deine Blog-Posts oder News.</p>
-    </section>
+  .nav-wrap{ position: sticky; top: 0; z-index: 9999; }
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Kontaktformular oder E-Mail-Link.</p>
-    </section>
-  </main>
+  .nav{
+    height: var(--nav-height);
+    padding: 0 var(--pad-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
 
-  <footer>
-    <p>&copy; 2025 Sarah Meister</p>
-  </footer>
+    background: var(--trans-bg);
+    border-bottom: 1px solid var(--trans-border);
 
-  <!-- Three.js & Shader -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/controls/OrbitControls.js"></script>
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, backdrop-filter .25s ease;
+  }
 
-  <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, document.getElementById('3d-container').clientWidth / 500, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(document.getElementById('3d-container').clientWidth, 500);
-    document.getElementById('3d-container').appendChild(renderer.domElement);
+  .nav.is-solid{
+    background: var(--solid-bg);
+    border-bottom-color: var(--solid-border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    camera.position.z = 2;
+  .nav__brand{
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 650;
+    letter-spacing: .2px;
+    font-size: 16px;
+    white-space: nowrap;
+  }
 
-    const light = new THREE.HemisphereLight(0xffffff, 0x444444);
-    scene.add(light);
+  .nav__links{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
 
-    const vertexShader = `
-      uniform float hover;
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        vec3 displaced = position + normal * hover * 0.2;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
-      }
-    `;
+  .nav__links a{
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    transition: background .2s ease, color .2s ease;
+  }
 
-    const fragmentShader = `
-      varying vec2 vUv;
-      void main() {
-        gl_FragColor = vec4(vUv, 1.0, 1.0);
-      }
-    `;
+  .nav__links a:hover{
+    color: var(--text);
+    background: rgba(255,255,255,.08);
+  }
 
-    const uniforms = {
-      hover: { value: 0 }
-    };
+  .nav__cta{
+    color: rgba(0,0,0,.9) !important;
+    background: rgba(255,255,255,.92);
+    font-weight: 650;
+  }
+  .nav__cta:hover{ background: rgba(255,255,255,1); }
 
-    const shaderMaterial = new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms
-    });
+  .nav__icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+  }
 
-    const loader = new THREE.GLTFLoader();
-    loader.load('assets/modell.glb', function (gltf) {
-      gltf.scene.traverse(obj => {
-        if (obj.isMesh) obj.material = shaderMaterial;
-      });
-      scene.add(gltf.scene);
-    });
+  /* Mobile */
+  .nav__toggle{
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.06);
+    border-radius: 999px;
+    cursor: pointer;
+    padding: 10px;
+  }
+  .nav__toggle span{
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: rgba(255,255,255,.88);
+    border-radius: 2px;
+    margin: 5px 0;
+  }
 
-    document.getElementById('3d-container').addEventListener('mouseenter', () => {
-      uniforms.hover.value = 1;
-    });
+  @media (max-width: 860px){
+    .nav__toggle{ display: inline-flex; align-items: center; justify-content: center; }
+    .nav__links{
+      position: absolute;
+      top: var(--nav-height);
+      left: 0; right: 0;
+      padding: 12px var(--pad-x) 18px;
+      background: var(--solid-bg);
+      border-bottom: 1px solid var(--solid-border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
 
-    document.getElementById('3d-container').addEventListener('mouseleave', () => {
-      uniforms.hover.value = 0;
-    });
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
 
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
     }
-    animate();
-  </script>
+    .nav__links.is-open{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .nav__links a{ width: 100%; padding: 12px 12px; }
+  }
+
+  /* Optional: aktiver Link per aria-current */
+  .nav__links a[aria-current="page"]{
+    color: var(--text);
+    background: rgba(255,255,255,.10);
+  }
+</style>
+
+<script>
+  // Solid background on scroll
+  const nav = document.getElementById("siteNav");
+  const setNavState = () => {
+    if (window.scrollY > 20) nav.classList.add("is-solid");
+    else nav.classList.remove("is-solid");
+  };
+  setNavState();
+  window.addEventListener("scroll", setNavState, { passive: true });
+
+  // Mobile menu toggle
+  const toggle = document.getElementById("navToggle");
+  const links = document.getElementById("navLinks");
+
+  toggle?.addEventListener("click", () => {
+    const open = links.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+
+  // Close mobile menu after clicking a link
+  links?.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target && target.tagName === "A" && links.classList.contains("is-open")) {
+      links.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // Mark active page link (works for /leistungen/ and /ueber-mich/)
+  (function markActiveLink(){
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+    document.querySelectorAll(".nav__links a[href^='/']").forEach(a => {
+      const href = a.getAttribute("href").replace(/\/+$/, "") || "/";
+      // only mark non-hash links as active pages
+      if (!href.includes("#") && href === path) a.setAttribute("aria-current", "page");
+    });
+  })();
+</script>
 </body>
 </html>
