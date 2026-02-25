@@ -212,17 +212,52 @@
     }
     .btn-primary:hover{ background: rgba(11,19,32,1); }
 
-    /* Glass panels */
-    .panel{
-      background: linear-gradient(180deg, var(--glass), var(--glass2));
-      border: 1px solid var(--stroke);
-      border-top-color: rgba(255,255,255,.65);
-      border-left-color: rgba(255,255,255,.55);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
+.panel{
+  position: relative;
+  overflow: hidden;
+
+  /* glass body */
+  background: linear-gradient(180deg, var(--glass), var(--glass2));
+  border: 1px solid var(--stroke);
+  border-top-color: rgba(255,255,255,.75);
+  border-left-color: rgba(255,255,255,.65);
+  border-right-color: rgba(255,255,255,.35);
+  border-bottom-color: rgba(11,19,32,.08);
+
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+
+  /* the “real glass” feel */
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+}
+
+/* specular highlight (light edge) */
+.panel::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(circle at 20% 10%,
+    rgba(255,255,255,.85),
+    rgba(255,255,255,0) 55%);
+  opacity: .35;
+  pointer-events:none;
+  transform: rotate(-8deg);
+}
+
+/* inner shadow / thickness (glass depth) */
+.panel::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -1px 0 rgba(11,19,32,.10),
+    inset 0 0 0 1px rgba(255,255,255,.18);
+  opacity: .9;
+}
 
     /* Competencies */
     .section{ padding: 22px 0 0; }
