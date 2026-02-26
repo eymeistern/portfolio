@@ -1,1 +1,473 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta http-equiv="X-UA-Compatible" content="IE=edge">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <link rel="stylesheet" href="styles.css">\n    <title>Portfolio</title>\n    <style>\n        body {\n            background: rgba(255, 255, 255, 0.1);\n            backdrop-filter: blur(10px);\n            color: white;\n        }\n        nav {\n            background: rgba(255, 255, 255, 0.2);\n            border-radius: 15px;\n            padding: 10px;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);\n            backdrop-filter: blur(5px);\n        }\n        button {\n            background: rgba(255, 255, 255, 0.3);\n            border: none;\n            border-radius: 10px;\n            padding: 10px 20px;\n            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);\n            transition: 0.3s;\n        }\n        button:hover {\n            background: rgba(255, 255, 255, 0.4);\n            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.6);\n        }\n        .card {\n            background: rgba(255, 255, 255, 0.3);\n            border-radius: 15px;\n            padding: 15px;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);\n            backdrop-filter: blur(8px);\n            margin: 10px;\n        }\n        .competency-section, .contact-area {\n            margin-top: 20px;\n            padding: 15px;\n            border-radius: 15px;\n            background: rgba(255, 255, 255, 0.2);\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);\n            backdrop-filter: blur(15px);\n        }\n        h1, h2, h3 {\n            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);\n        }\n    </style>\n</head>\n<body>\n    <nav>\n        <a href="#">Home</a> |\n        <a href="#">About</a> |\n        <a href="#">Portfolio</a> |\n        <a href="#">Contact</a>\n    </nav>\n    <div class="competency-section">\n        <h2>Competencies</h2>\n        <div class="card">HTML & CSS</div>\n        <div class="card">JavaScript</div>\n        <div class="card">React</div>\n    </div>\n    <div class="contact-area">\n        <h2>Contact Me</h2>\n        <button>Get in Touch</button>\n    </div>\n</body>\n</html>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sarah Meister — UI/UX & 3D</title>
+
+<style>
+  :root{
+    --bg0:#f7f9fc;
+    --bg1:#eef3f8;
+
+    --ink:#0b1320;
+    --ink2:rgba(11,19,32,.72);
+
+    --r: 26px;
+    --padx: clamp(14px, 4vw, 60px);
+    --max: 1120px;
+
+    /* Vision glass */
+    --glassA: rgba(255,255,255,.22);
+    --glassB: rgba(255,255,255,.10);
+    --stroke: rgba(255,255,255,.58);
+    --stroke2: rgba(255,255,255,.22);
+    --strokeDark: rgba(11,19,32,.10);
+
+    --shadowA: 0 34px 120px rgba(10,18,35,.10);
+    --shadowB: 0 14px 38px rgba(10,18,35,.07);
+
+    /* subtle color energy (very low!) */
+    --c1: rgba(160,210,255,.18);
+    --c2: rgba(210,190,255,.14);
+    --c3: rgba(255,220,180,.10);
+  }
+
+  * , *::before, *::after{ box-sizing:border-box; }
+  html, body{ width:100%; max-width:100%; overflow-x:hidden; margin:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 760px at 20% 0%, rgba(255,255,255,.95), transparent 62%),
+      radial-gradient(1000px 700px at 85% 15%, rgba(255,255,255,.82), transparent 62%),
+      linear-gradient(180deg, var(--bg0), var(--bg1));
+  }
+
+  /* ===== VisionOS-like atmosphere layers ===== */
+  .atmo{
+    position:fixed; inset:-20%; pointer-events:none; z-index:-2;
+    background:
+      radial-gradient(700px 420px at 18% 20%, var(--c1), transparent 70%),
+      radial-gradient(720px 460px at 78% 22%, var(--c2), transparent 72%),
+      radial-gradient(820px 540px at 55% 78%, var(--c3), transparent 72%);
+    filter: blur(26px);
+    opacity:.85;
+  }
+
+  /* subtle noise (makes glass feel premium) */
+  .noise{
+    position:fixed; inset:0; pointer-events:none; z-index:-1;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E");
+    opacity:.12;
+    mix-blend-mode: overlay;
+  }
+
+  .container{
+    width:min(var(--max), calc(100% - (var(--padx) * 2)));
+    margin:0 auto;
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky; top:0; z-index:40;
+    padding: 14px var(--padx);
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    background: rgba(247,249,252,.35);
+    border-bottom: 1px solid rgba(255,255,255,.30);
+    backdrop-filter: blur(20px) saturate(1.25);
+    -webkit-backdrop-filter: blur(20px) saturate(1.25);
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:10px;
+    font-weight:750; letter-spacing:.02em;
+  }
+  .brand small{
+    font-weight:650;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color: rgba(11,19,32,.50);
+  }
+  .nav-links{ display:flex; gap:10px; align-items:center; }
+  .nav-links a{
+    text-decoration:none;
+    color: rgba(11,19,32,.70);
+    font-weight:600;
+    font-size:14px;
+    padding:10px 12px;
+    border-radius:999px;
+    transition: background .18s ease, transform .18s ease, color .18s ease;
+  }
+  .nav-links a:hover{ background: rgba(255,255,255,.35); color: var(--ink); transform: translateY(-1px); }
+
+  /* ===== VisionOS CRYSTAL GLASS ===== */
+  .glass{
+    position:relative;
+    overflow:hidden;
+    border-radius: var(--r);
+
+    background:
+      radial-gradient(900px 280px at 20% 0%, rgba(255,255,255,.35), transparent 60%),
+      linear-gradient(180deg, var(--glassA), var(--glassB));
+
+    border: 1px solid var(--stroke);
+    border-right-color: rgba(255,255,255,.28);
+    border-bottom-color: var(--strokeDark);
+
+    box-shadow:
+      var(--shadowA),
+      var(--shadowB),
+      inset 0 1px 0 rgba(255,255,255,.75),
+      inset 0 -18px 30px rgba(11,19,32,.06);
+
+    backdrop-filter: blur(30px) saturate(1.35);
+    -webkit-backdrop-filter: blur(30px) saturate(1.35);
+
+    transform: translateZ(0);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  /* Inner rim (Apple-y) */
+  .glass::after{
+    content:"";
+    position:absolute;
+    inset: 1px;
+    border-radius: calc(var(--r) - 1px);
+    pointer-events:none;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.18),
+      inset 0 0 0 2px rgba(255,255,255,.08);
+    opacity:.95;
+  }
+
+  /* Specular sweep film */
+  .glass::before{
+    content:"";
+    position:absolute;
+    inset:-45%;
+    background: linear-gradient(120deg,
+      transparent 35%,
+      rgba(255,255,255,.85) 50%,
+      transparent 65%);
+    transform: translateX(-32%) rotate(10deg);
+    opacity: .14;
+    pointer-events:none;
+    transition: opacity .25s ease, transform .65s cubic-bezier(.2,.9,.2,1);
+  }
+
+  .glass:hover{
+    transform: translateY(-6px);
+    box-shadow:
+      0 46px 160px rgba(10,18,35,.12),
+      0 18px 52px rgba(10,18,35,.08),
+      inset 0 1px 0 rgba(255,255,255,.80),
+      inset 0 -22px 34px rgba(11,19,32,.06);
+  }
+  .glass:hover::before{
+    opacity:.20;
+    transform: translateX(32%) rotate(10deg);
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    padding: clamp(64px, 9vh, 120px) 0 34px;
+  }
+  .kicker{
+    display:inline-block;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color: rgba(11,19,32,.55);
+    margin-bottom: 14px;
+  }
+  h1{
+    margin:0 0 14px;
+    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    font-weight: 620;
+    letter-spacing:-0.02em;
+    line-height:1.02;
+    font-size: clamp(38px, 5.6vw, 74px);
+  }
+  .sub{
+    max-width: 70ch;
+    margin:0 0 22px;
+    color: rgba(11,19,32,.70);
+    font-size: 16.5px;
+    line-height: 1.7;
+  }
+
+  .actions{ display:flex; gap:12px; flex-wrap:wrap; }
+
+  /* ===== Buttons (Vision) ===== */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 12px 16px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight: 650;
+    color: rgba(11,19,32,.85);
+
+    background: rgba(255,255,255,.20);
+    border: 1px solid rgba(255,255,255,.62);
+    border-bottom-color: rgba(11,19,32,.12);
+
+    box-shadow:
+      0 16px 38px rgba(10,18,35,.08),
+      inset 0 1px 0 rgba(255,255,255,.75),
+      inset 0 -12px 22px rgba(11,19,32,.06);
+
+    backdrop-filter: blur(22px) saturate(1.35);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+
+    transition: transform .18s ease, background .18s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.26); }
+
+  .btn-primary{
+    background: rgba(11,19,32,.92);
+    color: rgba(255,255,255,.92);
+    border-color: rgba(11,19,32,.18);
+    box-shadow: 0 18px 42px rgba(11,19,32,.14);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+
+  /* ===== Sections / Grid ===== */
+  .section{ padding: 34px 0 0; }
+  .section-title{
+    text-align:center;
+    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    font-weight: 650;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color: rgba(11,19,32,.55);
+    margin: 26px 0 14px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    gap:14px;
+    margin: 14px 0 40px;
+  }
+  .span-6{ grid-column: span 6; }
+  .span-4{ grid-column: span 4; }
+  @media (max-width: 980px){
+    .grid{ grid-template-columns: repeat(6, minmax(0,1fr)); }
+    .span-4,.span-6{ grid-column: span 6; }
+  }
+  @media (max-width: 640px){
+    .grid{ grid-template-columns: 1fr; }
+    .span-4,.span-6{ grid-column: 1 / -1; }
+  }
+
+  .pad{ padding: 18px 18px 16px; }
+  .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .title{ margin:0; font-weight: 760; font-size: 15px; }
+  .year{ font-size: 13px; font-weight: 700; color: rgba(11,19,32,.55); }
+  .desc{ margin:8px 0 0; color: rgba(11,19,32,.70); font-size: 13.5px; line-height: 1.55; }
+
+  /* media area */
+  .media{
+    height: 170px;
+    border-bottom: 1px solid rgba(11,19,32,.06);
+    background:
+      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.85), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,0));
+    position: relative;
+    overflow:hidden;
+  }
+  /* caustic sparkle */
+  .media::before{
+    content:"";
+    position:absolute; inset:-30%;
+    background:
+      radial-gradient(220px 140px at 22% 30%, rgba(255,255,255,.55), transparent 70%),
+      radial-gradient(240px 160px at 74% 40%, rgba(185,220,255,.28), transparent 74%);
+    filter: blur(18px);
+    opacity:.55;
+    pointer-events:none;
+  }
+
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px; }
+  .tag{
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.62);
+    border-bottom-color: rgba(11,19,32,.12);
+    color: rgba(11,19,32,.70);
+
+    box-shadow:
+      0 12px 26px rgba(10,18,35,.06),
+      inset 0 1px 0 rgba(255,255,255,.75),
+      inset 0 -10px 18px rgba(11,19,32,.06);
+
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  }
+
+  footer{
+    padding: 26px 0 44px;
+    color: rgba(11,19,32,.55);
+    font-size: 13px;
+    text-align:center;
+  }
+
+  /* ===== Optional: subtle 3D tilt on pointer ===== */
+  .tilt{
+    transform-style: preserve-3d;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .glass, .glass::before, .btn{ transition:none !important; }
+  }
+</style>
+</head>
+
+<body>
+  <div class="atmo" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <nav>
+    <div class="brand">S.M. <small>Portfolio</small></div>
+    <div class="nav-links">
+      <a href="#projekte">Projekte</a>
+      <a href="#leistungen">Leistungen</a>
+      <a href="#ueber">Über mich</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero" id="top">
+      <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
+      <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
+      <p class="sub">
+        Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
+        strukturiert, elegant und lebendig.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
+        <a class="btn" href="#leistungen">Leistungen</a>
+      </div>
+    </section>
+
+    <section class="section" id="leistungen">
+      <div class="section-title">Kompetenzen</div>
+      <div class="grid">
+        <div class="glass pad span-6 tilt">
+          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">UI/UX Design</h3>
+          <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
+            User Flows · Informationsarchitektur · Interaction Design · Design Systems · Prototyping · Testing
+          </div>
+        </div>
+        <div class="glass pad span-6 tilt">
+          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">3D Art & Worldbuilding</h3>
+          <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
+            Scene Composition · Lighting (lichtbetont) · Unreal Engine · Blender · Materials · Rendering
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projekte">
+      <div class="section-title">Ausgewählte Projekte</div>
+      <div class="grid">
+        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+          <div class="media"></div>
+          <div class="pad">
+            <div class="card-head">
+              <h3 class="title">Sternburg App (UI)</h3>
+              <div class="year">2025</div>
+            </div>
+            <p class="desc">Modernes UI für eine Marke — Look, Typo & spielerisches System.</p>
+            <div class="tags">
+              <span class="tag">UI</span><span class="tag">Figma</span><span class="tag">Prototyp</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+          <div class="media"></div>
+          <div class="pad">
+            <div class="card-head">
+              <h3 class="title">Das stille Ritual</h3>
+              <div class="year">2026</div>
+            </div>
+            <p class="desc">Reduzierte Serie — Licht als Erzählung, klare Inszenierung.</p>
+            <div class="tags">
+              <span class="tag">Photography</span><span class="tag">Series</span><span class="tag">Light</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+          <div class="media"></div>
+          <div class="pad">
+            <div class="card-head">
+              <h3 class="title">Unreal — Magische Welt</h3>
+              <div class="year">2026</div>
+            </div>
+            <p class="desc">Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe.</p>
+            <div class="tags">
+              <span class="tag">Unreal</span><span class="tag">3D</span><span class="tag">Lookdev</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="ueber">
+      <div class="section-title">Über mich</div>
+      <div class="glass pad tilt">
+        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
+          Ich verbinde klare UI-Systeme mit räumlicher, lichtgeführter Gestaltung.
+          Mein Stil ist clean, modular und atmosphärisch — damit Projekte professionell wirken
+          und trotzdem Magie behalten.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="kontakt">
+      <div class="section-title">Kontakt</div>
+      <div class="glass pad tilt">
+        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
+          <strong>E-Mail:</strong> <span style="opacity:.75;">dein.name@mail.de</span> ·
+          <strong>Instagram:</strong> <span style="opacity:.75;">@eymeistern</span>
+        </p>
+      </div>
+    </section>
+
+    <footer>© <span id="y"></span> Sarah Meister — UI/UX & 3D</footer>
+  </main>
+
+<script>
+  // year
+  document.getElementById("y").textContent = new Date().getFullYear();
+
+  // optional: subtle tilt (desktop only)
+  const cards = document.querySelectorAll(".tilt");
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+  if (hasFinePointer) {
+    cards.forEach(el => {
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `translateY(-2px) rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*5).toFixed(2)}deg)`;
+      });
+      el.addEventListener("mouseleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
+</script>
+</body>
+</html>
