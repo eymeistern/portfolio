@@ -15,6 +15,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto;
   color:var(--ink);
@@ -24,7 +25,8 @@ body{
     linear-gradient(180deg,var(--bg0),var(--bg1));
 }
 
-/* ===== NAVBAR ===== */
+/* ================= NAVBAR ================= */
+
 nav{
   position:sticky;
   top:0;
@@ -37,7 +39,10 @@ nav{
   background:rgba(255,255,255,.18);
 }
 
-.brand{font-weight:700;letter-spacing:.04em}
+.brand{
+  font-weight:700;
+  letter-spacing:.04em;
+}
 
 .nav-links{
   display:flex;
@@ -62,7 +67,8 @@ nav{
   color:var(--ink);
 }
 
-/* ===== HERO ===== */
+/* ================= HERO ================= */
+
 .container{
   width:min(var(--max), calc(100% - var(--padx)*2));
   margin:auto;
@@ -70,29 +76,37 @@ nav{
 
 .hero{
   position:relative;
-  padding:120px 0 120px;
+  padding:120px 0 140px;
 }
 
 .hero h1{
   font-size: clamp(40px,6vw,72px);
   line-height:1.05;
   margin-bottom:20px;
+  position:relative;
+  z-index:2;
 }
 
 .hero p{
   max-width:60ch;
   opacity:.75;
   line-height:1.6;
+  position:relative;
+  z-index:2;
 }
 
-/* ===== BUBBLES RIGHT SIDE ===== */
+/* ================= BUBBLES (FIXED POSITION) ================= */
+
 .hero-bubbles{
   position:absolute;
-  right:-120px;
-  top:-20px;
-  width:620px;
-  height:460px;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:480px;
+  height:380px;
+  overflow:hidden;   /* wichtig: bleiben im Bereich */
   pointer-events:auto;
+  z-index:1;
 }
 
 canvas{
@@ -119,12 +133,18 @@ canvas{
 
 <main class="container">
   <section class="hero">
-    <h1>UI/UX Designerin<br>& 3D Artist</h1>
-    <p>Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme — strukturiert, elegant und lebendig.</p>
 
+    <h1>UI/UX Designerin<br>& 3D Artist</h1>
+    <p>
+      Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
+      strukturiert, elegant und lebendig.
+    </p>
+
+    <!-- BLASEN JETZT IM HERO -->
     <div class="hero-bubbles">
       <canvas id="bubbles"></canvas>
     </div>
+
   </section>
 </main>
 
@@ -145,12 +165,12 @@ window.addEventListener("resize", resize);
 
 class Bubble{
   constructor(){
-    this.radius = 45 + Math.random()*55;
+    this.radius = 45 + Math.random()*45;
     this.x = Math.random()*canvas.width;
     this.y = Math.random()*canvas.height;
-    this.vx = (Math.random()-0.5)*2;
-    this.vy = (Math.random()-0.5)*2;
-    this.mass = this.radius * 0.12;
+    this.vx = (Math.random()-0.5)*1.5;
+    this.vy = (Math.random()-0.5)*1.5;
+    this.mass = this.radius * 0.1;
   }
 
   update(){
@@ -167,10 +187,10 @@ class Bubble{
       const dx = this.x-mouse.x;
       const dy = this.y-mouse.y;
       const dist = Math.hypot(dx,dy);
-      if(dist < 220){
-        const force = (220-dist)/220;
-        this.vx += (dx/dist)*force*4;
-        this.vy += (dy/dist)*force*4;
+      if(dist < 200){
+        const force = (200-dist)/200;
+        this.vx += (dx/dist)*force*3;
+        this.vy += (dy/dist)*force*3;
       }
     }
   }
@@ -191,16 +211,14 @@ class Bubble{
     ctx.fillStyle=g;
     ctx.fill();
 
-    /* Rainbow refraction */
     const rainbow = ctx.createLinearGradient(
       this.x-r,this.y-r,
       this.x+r,this.y+r
     );
     rainbow.addColorStop(0,"rgba(255,0,150,0.25)");
-    rainbow.addColorStop(0.25,"rgba(0,200,255,0.25)");
-    rainbow.addColorStop(0.5,"rgba(0,255,150,0.25)");
-    rainbow.addColorStop(0.75,"rgba(255,255,0,0.25)");
-    rainbow.addColorStop(1,"rgba(255,120,0,0.25)");
+    rainbow.addColorStop(0.3,"rgba(0,200,255,0.25)");
+    rainbow.addColorStop(0.6,"rgba(120,255,0,0.25)");
+    rainbow.addColorStop(1,"rgba(255,200,0,0.25)");
 
     ctx.globalCompositeOperation="overlay";
     ctx.fillStyle=rainbow;
@@ -252,12 +270,14 @@ canvas.addEventListener("mouseleave",()=>mouse.active=false);
 
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
+
   for(let i=0;i<bubbles.length;i++){
     bubbles[i].update();
     for(let j=i+1;j<bubbles.length;j++){
       resolveCollision(bubbles[i],bubbles[j]);
     }
   }
+
   bubbles.forEach(b=>b.draw());
   requestAnimationFrame(animate);
 }
