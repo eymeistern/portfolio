@@ -6,719 +6,329 @@
 <title>Sarah Meister — UI/UX & 3D</title>
 
 <style>
-  :root{
-    --bg0:#f7f9fc;
-    --bg1:#eef3f8;
+:root{
+  --bg0:#f7f9fc;
+  --bg1:#eef3f8;
+  --ink:#0b1320;
+  --padx: clamp(14px, 4vw, 60px);
+  --max: 1120px;
+}
 
-    --ink:#0b1320;
-    --ink2:rgba(11,19,32,.72);
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system;
+  color:var(--ink);
+  background:
+    radial-gradient(600px 400px at 20% 20%, rgba(124,92,255,.25), transparent 60%),
+    radial-gradient(600px 400px at 80% 20%, rgba(0,224,255,.18), transparent 60%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
+}
 
-    --r: 26px;
-    --padx: clamp(14px, 4vw, 60px);
-    --max: 1120px;
+.container{
+  width:min(var(--max), calc(100% - (var(--padx) * 2)));
+  margin:0 auto;
+}
 
-    /* more color detail behind glass so blur is visible */
-    --c1: rgba(140,210,255,.34);
-    --c2: rgba(205,175,255,.28);
-    --c3: rgba(255,210,170,.20);
-  }
+/* ===== NAV ===== */
 
-  * , *::before, *::after{ box-sizing:border-box; }
-  html, body{ width:100%; max-width:100%; overflow-x:hidden; margin:0; }
-  html{ scroll-behavior:smooth; }
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:16px var(--padx);
+  display:flex;
+  align-items:center;
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(14px) saturate(1.6);
+  border-bottom:1px solid rgba(255,255,255,.4);
+}
 
-  body{
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--ink);
+.brand{
+  font-weight:800;
+  letter-spacing:.04em;
+}
 
-    background:
-      radial-gradient(540px 360px at 18% 18%, rgba(124, 92, 255, .20), transparent 60%),
-      radial-gradient(560px 380px at 82% 22%, rgba(0, 224, 255, .16), transparent 62%),
-      radial-gradient(720px 520px at 70% 86%, rgba(255, 110, 199, .12), transparent 65%),
-      radial-gradient(1200px 760px at 20% 0%, rgba(255,255,255,.92), transparent 62%),
-      radial-gradient(1000px 700px at 85% 15%, rgba(255,255,255,.78), transparent 62%),
-      linear-gradient(180deg, var(--bg0), var(--bg1));
-  }
+.nav-right{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
 
-  /* ===== Atmosphere layers ===== */
-  .atmo{
-    position:fixed; inset:-20%; pointer-events:none; z-index:-2;
-    background:
-      radial-gradient(700px 420px at 18% 20%, var(--c1), transparent 70%),
-      radial-gradient(720px 460px at 78% 22%, var(--c2), transparent 72%),
-      radial-gradient(820px 540px at 55% 78%, var(--c3), transparent 72%);
-    filter: blur(4px);
-    opacity: 1;
-  }
+.nav-links a{
+  text-decoration:none;
+  color:rgba(11,19,32,.75);
+  font-weight:600;
+  font-size:14px;
+  padding:8px 12px;
+  border-radius:999px;
+  transition:.2s;
+}
+.nav-links a:hover{
+  background:rgba(255,255,255,.35);
+}
 
-  /* subtle noise */
-  .noise{
-    position:fixed; inset:0; pointer-events:none; z-index:-1;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E");
-    opacity:.12;
-    mix-blend-mode: overlay;
-  }
+.nav-btn{
+  padding:10px 18px;
+  border-radius:999px;
+  font-weight:700;
+  text-decoration:none;
+  color:#111;
+  background:rgba(255,255,255,.35);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.6);
+  transition:.2s;
+}
+.nav-btn:hover{
+  transform:translateY(-2px);
+}
 
-  .container{
-    width:min(var(--max), calc(100% - (var(--padx) * 2)));
-    margin:0 auto;
-  }
+/* ===== HERO ===== */
 
-  /* ===== NAV (rechtsbündig) ===== */
-  nav{
-    position:sticky; top:0; z-index:40;
-    padding: 14px var(--padx);
-    display:flex; align-items:center; gap:14px;
+.hero{
+  padding:110px 0 80px;
+}
 
-    background: rgba(247,249,252,.14);
-    border-bottom: 1px solid rgba(255,255,255,.26);
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 520px;
+  gap:40px;
+  align-items:center;
+}
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+}
 
-    backdrop-filter: blur(12px) saturate(1.6) contrast(1.06);
-    -webkit-backdrop-filter: blur(12px) saturate(1.6) contrast(1.06);
-  }
+h1{
+  font-family: ui-serif, Georgia;
+  font-size:clamp(40px,5vw,70px);
+  line-height:1.05;
+  margin-bottom:16px;
+}
 
-  .brand{
-    display:flex; align-items:baseline; gap:10px;
-    font-weight:750; letter-spacing:.02em;
-  }
-  .brand small{
-    font-weight:650;
-    font-size:11px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color: rgba(11,19,32,.50);
-  }
+.sub{
+  color:rgba(11,19,32,.7);
+  line-height:1.7;
+  margin-bottom:24px;
+}
 
-  /* -> alles rechts */
-  .nav-right{
-    margin-left:auto;
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
+.actions{display:flex;gap:12px}
 
-  .nav-links{ display:flex; gap:10px; align-items:center; }
-  .nav-links a{
-    text-decoration:none;
-    color: rgba(11,19,32,.70);
-    font-weight:600;
-    font-size:14px;
-    padding:10px 12px;
-    border-radius:999px;
-    transition: background .18s ease, transform .18s ease, color .18s ease;
-  }
-  .nav-links a:hover{ background: rgba(255,255,255,.28); color: var(--ink); transform: translateY(-1px); }
+.btn{
+  padding:12px 18px;
+  border-radius:999px;
+  font-weight:600;
+  text-decoration:none;
+  background:#111;
+  color:#fff;
+}
 
-  /* Kontakt als Button rechts außen */
-  .nav-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 10px 16px;
-    border-radius: 999px;
-    text-decoration:none;
-    font-weight: 700;
-    color: rgba(11,19,32,.88);
+/* ===== BUBBLE AREA ===== */
 
-    background: rgba(255,255,255,.16);
-    border: 1px solid rgba(255,255,255,.62);
-    border-bottom-color: rgba(11,19,32,.12);
+.bubble-area{
+  position:relative;
+  height:420px;
+  overflow:hidden;
+}
 
-    box-shadow:
-      0 16px 38px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.75),
-      inset 0 -12px 22px rgba(11,19,32,.06);
+#liquidBubbles{
+  width:100%;
+  height:100%;
+  display:block;
+}
 
-    backdrop-filter: blur(10px) saturate(1.35);
-    -webkit-backdrop-filter: blur(10px) saturate(1.35);
-
-    transition: transform .18s ease, background .18s ease;
-  }
-  .nav-btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.22); }
-
-  /* ===== CLEAR LIQUID GLASS ===== */
-  .glass{
-    position:relative;
-    overflow:hidden;
-    border-radius: var(--r);
-
-    background: linear-gradient(
-      180deg,
-      rgba(255,255,255,.10),
-      rgba(255,255,255,.03)
-    );
-
-    border: 1px solid rgba(255,255,255,.45);
-    border-right-color: rgba(255,255,255,.26);
-    border-bottom-color: rgba(11,19,32,.08);
-
-    box-shadow:
-      0 40px 120px rgba(10,18,35,.12),
-      0 15px 45px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.90),
-      inset 0 -20px 35px rgba(11,19,32,.05);
-
-    backdrop-filter: blur(12px) saturate(1.6) contrast(1.08);
-    -webkit-backdrop-filter: blur(12px) saturate(1.6) contrast(1.08);
-
-    transform: translateZ(0);
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-
-  .glass::after{
-    content:"";
-    position:absolute;
-    inset: 1px;
-    border-radius: calc(var(--r) - 1px);
-    pointer-events:none;
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.16),
-      inset 0 0 0 2px rgba(255,255,255,.06);
-    opacity: 1;
-  }
-
-  .glass::before{
-    content:"";
-    position:absolute;
-    inset:-40%;
-    background: linear-gradient(
-      120deg,
-      transparent 35%,
-      rgba(255,255,255,.9) 50%,
-      transparent 65%
-    );
-    transform: translateX(-40%) rotate(8deg);
-    opacity:.22;
-    pointer-events:none;
-    transition: opacity .25s ease, transform .7s cubic-bezier(.2,.9,.2,1);
-  }
-
-  .glass:hover{
-    transform: translateY(-6px);
-    box-shadow:
-      0 52px 170px rgba(10,18,35,.14),
-      0 20px 58px rgba(10,18,35,.10),
-      inset 0 1px 0 rgba(255,255,255,.92),
-      inset 0 -24px 40px rgba(11,19,32,.05);
-  }
-  .glass:hover::before{
-    opacity:.28;
-    transform: translateX(35%) rotate(8deg);
-  }
-
-  /* ===== HERO (mit Bubble-Area rechts) ===== */
-  .hero{
-    position:relative;
-    padding: clamp(64px, 9vh, 120px) 0 70px;
-  }
-
-  /* 2-Spalten Layout nur für Hero */
-  .hero-grid{
-    display:grid;
-    grid-template-columns: 1fr minmax(320px, 520px);
-    gap: clamp(18px, 4vw, 44px);
-    align-items:center;
-  }
-  @media (max-width: 980px){
-    .hero-grid{ grid-template-columns: 1fr; }
-  }
-
-  .kicker{
-    display:inline-block;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    font-size:12px;
-    color: rgba(11,19,32,.55);
-    margin-bottom: 14px;
-  }
-  h1{
-    margin:0 0 14px;
-    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-    font-weight: 620;
-    letter-spacing:-0.02em;
-    line-height:1.02;
-    font-size: clamp(38px, 5.6vw, 74px);
-  }
-  .sub{
-    max-width: 70ch;
-    margin:0 0 22px;
-    color: rgba(11,19,32,.70);
-    font-size: 16.5px;
-    line-height: 1.7;
-  }
-
-  .actions{ display:flex; gap:12px; flex-wrap:wrap; }
-
-  /* ===== Buttons ===== */
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 12px 16px;
-    border-radius: 999px;
-    text-decoration:none;
-    font-weight: 650;
-    color: rgba(11,19,32,.85);
-
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.52);
-    border-bottom-color: rgba(11,19,32,.10);
-
-    box-shadow:
-      0 16px 38px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.80),
-      inset 0 -12px 22px rgba(11,19,32,.05);
-
-    backdrop-filter: blur(10px) saturate(1.5) contrast(1.06);
-    -webkit-backdrop-filter: blur(10px) saturate(1.5) contrast(1.06);
-
-    transition: transform .18s ease, background .18s ease;
-  }
-  .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.16); }
-
-  .btn-primary{
-    background: rgba(11,19,32,.92);
-    color: rgba(255,255,255,.92);
-    border-color: rgba(11,19,32,.18);
-    box-shadow: 0 18px 42px rgba(11,19,32,.14);
-    backdrop-filter:none;
-    -webkit-backdrop-filter:none;
-  }
-
-  /* ===== Bubble Area rechts im Hero (Platz A) ===== */
-  .bubble-area{
-    position:relative;
-    height: 420px;
-    overflow:hidden;        /* bleibt in der Fläche */
-    user-select:none;
-    touch-action:none;
-  }
-  @media (max-width: 980px){
-    .bubble-area{ height: 360px; }
-  }
-  #liquidBubbles{
-    width:100%;
-    height:100%;
-    display:block;
-  }
-
-  /* ===== Sections / Grid ===== */
-  .section{ padding: 34px 0 0; }
-  .section-title{
-    text-align:center;
-    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-    font-weight: 650;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    font-size:12px;
-    color: rgba(11,19,32,.55);
-    margin: 26px 0 14px;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(12, minmax(0,1fr));
-    gap:14px;
-    margin: 14px 0 40px;
-  }
-  .span-6{ grid-column: span 6; }
-  .span-4{ grid-column: span 4; }
-  @media (max-width: 980px){
-    .grid{ grid-template-columns: repeat(6, minmax(0,1fr)); }
-    .span-4,.span-6{ grid-column: span 6; }
-  }
-  @media (max-width: 640px){
-    .grid{ grid-template-columns: 1fr; }
-    .span-4,.span-6{ grid-column: 1 / -1; }
-  }
-
-  .pad{ padding: 18px 18px 16px; }
-  .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
-  .title{ margin:0; font-weight: 760; font-size: 15px; }
-  .year{ font-size: 13px; font-weight: 700; color: rgba(11,19,32,.55); }
-  .desc{ margin:8px 0 0; color: rgba(11,19,32,.70); font-size: 13.5px; line-height: 1.55; }
-
-  .media{
-    height: 170px;
-    border-bottom: 1px solid rgba(11,19,32,.06);
-    background:
-      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.78), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0));
-    position: relative;
-    overflow:hidden;
-  }
-  .media::before{
-    content:"";
-    position:absolute; inset:-30%;
-    background:
-      radial-gradient(220px 140px at 22% 30%, rgba(255,255,255,.46), transparent 70%),
-      radial-gradient(240px 160px at 74% 40%, rgba(185,220,255,.22), transparent 74%);
-    filter: blur(10px);
-    opacity:.60;
-    pointer-events:none;
-  }
-
-  .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px; }
-  .tag{
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 999px;
-
-    background: rgba(255,255,255,.10);
-    border: 1px solid rgba(255,255,255,.50);
-    border-bottom-color: rgba(11,19,32,.10);
-    color: rgba(11,19,32,.70);
-
-    box-shadow:
-      0 12px 26px rgba(10,18,35,.06),
-      inset 0 1px 0 rgba(255,255,255,.75),
-      inset 0 -10px 18px rgba(11,19,32,.05);
-
-    backdrop-filter: blur(9px) saturate(1.4) contrast(1.05);
-    -webkit-backdrop-filter: blur(9px) saturate(1.4) contrast(1.05);
-  }
-
-  footer{
-    padding: 26px 0 44px;
-    color: rgba(11,19,32,.55);
-    font-size: 13px;
-    text-align:center;
-  }
-
-  .tilt{ transform-style: preserve-3d; }
-
-  @media (prefers-reduced-motion: reduce){
-    .glass, .glass::before, .btn{ transition:none !important; }
-  }
-
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass, nav, .btn, .tag, .nav-btn {
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      background: rgba(255,255,255,.70) !important;
-      border-color: rgba(11,19,32,.08) !important;
-      box-shadow:
-        0 22px 70px rgba(10,18,35,.12),
-        inset 0 1px 0 rgba(255,255,255,.75) !important;
-    }
-  }
 </style>
 </head>
 
 <body>
-  <div class="atmo" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
 
-  <nav>
-    <div class="brand">S.M. <small>Portfolio</small></div>
-
-    <div class="nav-right">
-      <div class="nav-links">
-        <a href="#projekte">Projekte</a>
-        <a href="#leistungen">Leistungen</a>
-        <a href="#ueber">Über mich</a>
-      </div>
-      <a class="nav-btn" href="#kontakt">Kontakt</a>
+<nav>
+  <div class="brand">S.M.</div>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#">Projekte</a>
+      <a href="#">Leistungen</a>
+      <a href="#">Über mich</a>
     </div>
-  </nav>
+    <a class="nav-btn" href="#">Kontakt</a>
+  </div>
+</nav>
 
-  <main class="container">
-    <!-- HERO: Text links, Blasen rechts (Platz A) -->
-    <section class="hero" id="top">
-      <div class="hero-grid">
-        <div>
-          <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
-          <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
-          <p class="sub">
-            Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
-            strukturiert, elegant und lebendig.
-          </p>
-          <div class="actions">
-            <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
-            <a class="btn" href="#leistungen">Leistungen</a>
-          </div>
-        </div>
+<main class="container">
 
-        <div class="bubble-area" aria-label="Interaktive Glasblasen">
-          <canvas id="liquidBubbles"></canvas>
-        </div>
+<section class="hero">
+  <div class="hero-grid">
+
+    <div>
+      <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
+      <p class="sub">
+        Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
+        strukturiert, elegant und lebendig.
+      </p>
+      <div class="actions">
+        <a class="btn" href="#">Projekte ansehen</a>
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="leistungen">
-      <div class="section-title">Kompetenzen</div>
-      <div class="grid">
-        <div class="glass pad span-6 tilt">
-          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">UI/UX Design</h3>
-          <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
-            User Flows · Informationsarchitektur · Interaction Design · Design Systems · Prototyping · Testing
-          </div>
-        </div>
-        <div class="glass pad span-6 tilt">
-          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">3D Art & Worldbuilding</h3>
-          <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
-            Scene Composition · Lighting (lichtbetont) · Unreal Engine · Blender · Materials · Rendering
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="bubble-area">
+      <canvas id="liquidBubbles"></canvas>
+    </div>
 
-    <section class="section" id="projekte">
-      <div class="section-title">Ausgewählte Projekte</div>
-      <div class="grid">
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Sternburg App (UI)</h3>
-              <div class="year">2025</div>
-            </div>
-            <p class="desc">Modernes UI für eine Marke — Look, Typo & spielerisches System.</p>
-            <div class="tags">
-              <span class="tag">UI</span><span class="tag">Figma</span><span class="tag">Prototyp</span>
-            </div>
-          </div>
-        </a>
+  </div>
+</section>
 
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Das stille Ritual</h3>
-              <div class="year">2026</div>
-            </div>
-            <p class="desc">Reduzierte Serie — Licht als Erzählung, klare Inszenierung.</p>
-            <div class="tags">
-              <span class="tag">Photography</span><span class="tag">Series</span><span class="tag">Light</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Unreal — Magische Welt</h3>
-              <div class="year">2026</div>
-            </div>
-            <p class="desc">Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe.</p>
-            <div class="tags">
-              <span class="tag">Unreal</span><span class="tag">3D</span><span class="tag">Lookdev</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="section" id="ueber">
-      <div class="section-title">Über mich</div>
-      <div class="glass pad tilt">
-        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
-          Ich verbinde klare UI-Systeme mit räumlicher, lichtgeführter Gestaltung.
-          Mein Stil ist clean, modular und atmosphärisch — damit Projekte professionell wirken
-          und trotzdem Magie behalten.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" id="kontakt">
-      <div class="section-title">Kontakt</div>
-      <div class="glass pad tilt">
-        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
-          <strong>E-Mail:</strong> <span style="opacity:.75;">dein.name@mail.de</span> ·
-          <strong>Instagram:</strong> <span style="opacity:.75;">@eymeistern</span>
-        </p>
-      </div>
-    </section>
-
-    <footer>© <span id="y"></span> Sarah Meister — UI/UX & 3D</footer>
-  </main>
+</main>
 
 <script>
-  // year
-  document.getElementById("y").textContent = new Date().getFullYear();
 
-  // optional: subtle tilt (desktop only)
-  const cards = document.querySelectorAll(".tilt");
-  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+const canvas = document.getElementById("liquidBubbles");
+const ctx = canvas.getContext("2d");
+let bubbles = [];
+let mouse = {x:null,y:null,active:false};
 
-  if (hasFinePointer) {
-    cards.forEach(el => {
-      el.addEventListener("mousemove", (e) => {
-        const r = el.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = `translateY(-2px) rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*5).toFixed(2)}deg)`;
-      });
-      el.addEventListener("mouseleave", () => { el.style.transform = ""; });
-    });
+function resize(){
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+}
+resize();
+window.addEventListener("resize",resize);
+
+class Bubble{
+  constructor(){
+    this.radius = 30 + Math.random()*50;
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.vx = (Math.random()-.5)*1.2;
+    this.vy = (Math.random()-.5)*1.2;
+    this.mass = this.radius*.1;
+    this.wobble = Math.random()*Math.PI*2;
   }
 
-  /* ===== Liquid bubbles (same as your best version) ===== */
-  const canvas = document.getElementById("liquidBubbles");
-  const ctx = canvas.getContext("2d", { alpha: true });
+  update(){
+    this.wobble += .02;
+    this.x += this.vx;
+    this.y += this.vy;
 
-  let bubbles = [];
-  let mouse = { x: null, y: null, active: false };
+    this.vx *= .992;
+    this.vy *= .992;
 
-  function resizeBubbles(){
-    const rect = canvas.parentElement.getBoundingClientRect();
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    canvas.width = Math.floor(rect.width * dpr);
-    canvas.height = Math.floor(rect.height * dpr);
-    canvas.style.width = rect.width + "px";
-    canvas.style.height = rect.height + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  resizeBubbles();
-  window.addEventListener("resize", resizeBubbles);
+    if(this.x<this.radius||this.x>canvas.width-this.radius) this.vx*=-.9;
+    if(this.y<this.radius||this.y>canvas.height-this.radius) this.vy*=-.9;
 
-  class Bubble{
-    constructor(){
-      const w = canvas.parentElement.getBoundingClientRect().width;
-      const h = canvas.parentElement.getBoundingClientRect().height;
-
-      this.radius = 26 + Math.random() * 42;
-      this.x = 40 + Math.random() * (Math.max(120, w) - 80);
-      this.y = 40 + Math.random() * (Math.max(120, h) - 80);
-
-      this.vx = (Math.random() - 0.5) * 1.2;
-      this.vy = (Math.random() - 0.5) * 1.2;
-
-      this.mass = this.radius * 0.09;
-      this.wobble = Math.random() * Math.PI * 2;
-    }
-
-    update(){
-      this.wobble += 0.02;
-      this.vx += Math.sin(this.wobble) * 0.002;
-      this.vy += Math.cos(this.wobble) * 0.002;
-
-      this.x += this.vx;
-      this.y += this.vy;
-
-      this.vx *= 0.992;
-      this.vy *= 0.992;
-
-      const w = canvas.parentElement.getBoundingClientRect().width;
-      const h = canvas.parentElement.getBoundingClientRect().height;
-
-      if(this.x < this.radius){ this.x = this.radius; this.vx *= -0.95; }
-      if(this.x > w - this.radius){ this.x = w - this.radius; this.vx *= -0.95; }
-      if(this.y < this.radius){ this.y = this.radius; this.vy *= -0.95; }
-      if(this.y > h - this.radius){ this.y = h - this.radius; this.vy *= -0.95; }
-
-      if(mouse.active){
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.hypot(dx, dy) || 0.0001;
-        const range = 170;
-
-        if(dist < range){
-          const force = (range - dist) / range;
-          const push = 2.2 * force;
-          this.vx += (dx / dist) * push;
-          this.vy += (dy / dist) * push;
-        }
+    if(mouse.active){
+      const dx=this.x-mouse.x;
+      const dy=this.y-mouse.y;
+      const dist=Math.hypot(dx,dy);
+      if(dist<180){
+        const force=(180-dist)/180;
+        this.vx+=(dx/dist)*force*2;
+        this.vy+=(dy/dist)*force*2;
       }
     }
+  }
 
-    draw(){
-      const r = this.radius * (1 + Math.sin(this.wobble) * 0.015);
+  draw(){
+    const r=this.radius*(1+Math.sin(this.wobble)*.015);
 
-      const g = ctx.createRadialGradient(
-        this.x - r * 0.35,
-        this.y - r * 0.35,
-        r * 0.12,
-        this.x,
-        this.y,
-        r
-      );
-      g.addColorStop(0, "rgba(255,255,255,0.92)");
-      g.addColorStop(0.22, "rgba(255,255,255,0.28)");
-      g.addColorStop(0.55, "rgba(255,255,255,0.10)");
-      g.addColorStop(1, "rgba(255,255,255,0.04)");
+    // strong glass gradient
+    const g=ctx.createRadialGradient(
+      this.x-r*.35,this.y-r*.35,r*.1,
+      this.x,this.y,r
+    );
+    g.addColorStop(0,"rgba(255,255,255,1)");
+    g.addColorStop(.25,"rgba(255,255,255,.4)");
+    g.addColorStop(.6,"rgba(255,255,255,.15)");
+    g.addColorStop(1,"rgba(255,255,255,.05)");
 
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,r,0,Math.PI*2);
+    ctx.fillStyle=g;
+    ctx.fill();
+
+    // inner shadow
+    ctx.globalCompositeOperation="multiply";
+    const inner=ctx.createRadialGradient(this.x,this.y,r*.4,this.x,this.y,r);
+    inner.addColorStop(0,"rgba(0,0,0,0)");
+    inner.addColorStop(1,"rgba(0,0,0,.12)");
+    ctx.fillStyle=inner;
+    ctx.fill();
+    ctx.globalCompositeOperation="source-over";
+
+    // rainbow refraction
+    ctx.globalCompositeOperation="screen";
+    ctx.lineWidth=Math.max(2,r*.05);
+
+    const arcs=[
+      {c:"rgba(255,80,180,.25)",ox:-1,oy:-.5},
+      {c:"rgba(80,220,255,.22)",ox:1,oy:-.3},
+      {c:"rgba(255,220,80,.18)",ox:0,oy:1}
+    ];
+
+    arcs.forEach(a=>{
+      ctx.strokeStyle=a.c;
       ctx.beginPath();
-      ctx.arc(this.x, this.y, r, 0, Math.PI*2);
-      ctx.fillStyle = g;
-      ctx.fill();
-
-      ctx.strokeStyle = "rgba(255,255,255,0.40)";
-      ctx.lineWidth = 1.4;
+      ctx.arc(this.x+a.ox,this.y+a.oy,r*.98,-.2,Math.PI*1.4);
       ctx.stroke();
+    });
 
-      ctx.beginPath();
-      ctx.arc(this.x - r*0.28, this.y - r*0.28, r*0.22, 0, Math.PI*2);
-      ctx.fillStyle = "rgba(255,255,255,0.18)";
-      ctx.fill();
-    }
+    ctx.globalCompositeOperation="source-over";
+
+    // strong rim
+    ctx.strokeStyle="rgba(255,255,255,.85)";
+    ctx.lineWidth=2.2;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,r,0,Math.PI*2);
+    ctx.stroke();
+
+    // highlights
+    ctx.globalCompositeOperation="screen";
+    ctx.beginPath();
+    ctx.arc(this.x-r*.3,this.y-r*.3,r*.28,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,255,255,.25)";
+    ctx.fill();
+    ctx.globalCompositeOperation="source-over";
   }
+}
 
-  function resolveCollision(a, b){
-    const dx = b.x - a.x;
-    const dy = b.y - a.y;
-    const dist = Math.hypot(dx, dy) || 0.0001;
-    const minDist = a.radius + b.radius;
-
-    if(dist < minDist){
-      const nx = dx / dist;
-      const ny = dy / dist;
-      const overlap = (minDist - dist);
-
-      a.x -= nx * overlap * 0.5;
-      a.y -= ny * overlap * 0.5;
-      b.x += nx * overlap * 0.5;
-      b.y += ny * overlap * 0.5;
-
-      const rvx = b.vx - a.vx;
-      const rvy = b.vy - a.vy;
-      const velAlongNormal = rvx * nx + rvy * ny;
-      if(velAlongNormal > 0) return;
-
-      const restitution = 0.88;
-      const j = -(1 + restitution) * velAlongNormal / (1/a.mass + 1/b.mass);
-
-      const impX = j * nx;
-      const impY = j * ny;
-
-      a.vx -= impX / a.mass;
-      a.vy -= impY / a.mass;
-      b.vx += impX / b.mass;
-      b.vy += impY / b.mass;
-
-      a.vx *= 0.995; a.vy *= 0.995;
-      b.vx *= 0.995; b.vy *= 0.995;
-    }
+function resolve(a,b){
+  const dx=b.x-a.x;
+  const dy=b.y-a.y;
+  const dist=Math.hypot(dx,dy);
+  const min=a.radius+b.radius;
+  if(dist<min){
+    const nx=dx/dist;
+    const ny=dy/dist;
+    const overlap=min-dist;
+    a.x-=nx*overlap*.5;
+    a.y-=ny*overlap*.5;
+    b.x+=nx*overlap*.5;
+    b.y+=ny*overlap*.5;
   }
+}
 
-  bubbles = [];
-  for(let i=0;i<7;i++) bubbles.push(new Bubble());
+for(let i=0;i<7;i++) bubbles.push(new Bubble());
 
-  canvas.addEventListener("mousemove", (e)=>{
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-    mouse.active = true;
-  });
-  canvas.addEventListener("mouseenter", ()=>{ mouse.active = true; });
-  canvas.addEventListener("mouseleave", ()=>{
-    mouse.active = false;
-    mouse.x = null; mouse.y = null;
-  });
+canvas.addEventListener("mousemove",(e)=>{
+  const rect=canvas.getBoundingClientRect();
+  mouse.x=e.clientX-rect.left;
+  mouse.y=e.clientY-rect.top;
+  mouse.active=true;
+});
+canvas.addEventListener("mouseleave",()=>mouse.active=false);
 
-  function animateBubbles(){
-    const w = canvas.parentElement.getBoundingClientRect().width;
-    const h = canvas.parentElement.getBoundingClientRect().height;
-    ctx.clearRect(0,0,w,h);
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  bubbles.forEach(b=>b.update());
+  for(let i=0;i<bubbles.length;i++)
+    for(let j=i+1;j<bubbles.length;j++)
+      resolve(bubbles[i],bubbles[j]);
+  bubbles.forEach(b=>b.draw());
+  requestAnimationFrame(animate);
+}
+animate();
 
-    for(let i=0;i<bubbles.length;i++){
-      bubbles[i].update();
-      for(let j=i+1;j<bubbles.length;j++){
-        resolveCollision(bubbles[i], bubbles[j]);
-      }
-    }
-
-    bubbles.forEach(b => b.draw());
-    requestAnimationFrame(animateBubbles);
-  }
-  animateBubbles();
 </script>
+
 </body>
 </html>
