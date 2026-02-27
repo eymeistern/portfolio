@@ -17,21 +17,10 @@
     --padx: clamp(14px, 4vw, 60px);
     --max: 1120px;
 
-    /* Glass (tuned a bit clearer / “jelly”) */
-    --glassA: rgba(255,255,255,.16);
-    --glassB: rgba(255,255,255,.06);
-
-    --stroke: rgba(255,255,255,.55);
-    --stroke2: rgba(255,255,255,.22);
-    --strokeDark: rgba(11,19,32,.10);
-
-    --shadowA: 0 34px 120px rgba(10,18,35,.10);
-    --shadowB: 0 14px 38px rgba(10,18,35,.07);
-
-    /* subtle color energy (slightly stronger so blur is visible) */
-    --c1: rgba(140,210,255,.28);
-    --c2: rgba(205,175,255,.22);
-    --c3: rgba(255,210,170,.16);
+    /* a bit more color so the glass blur is visible */
+    --c1: rgba(140,210,255,.34);
+    --c2: rgba(205,175,255,.28);
+    --c3: rgba(255,210,170,.20);
   }
 
   * , *::before, *::after{ box-sizing:border-box; }
@@ -42,25 +31,25 @@
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color: var(--ink);
 
-    /* slightly more “active” background so backdrop-filter has something to blur */
+    /* more “detail” behind the glass so blur is noticeable */
     background:
-      radial-gradient(520px 340px at 18% 18%, rgba(124, 92, 255, .18), transparent 60%),
-      radial-gradient(560px 360px at 82% 22%, rgba(0, 224, 255, .14), transparent 62%),
-      radial-gradient(700px 480px at 70% 86%, rgba(255, 110, 199, .10), transparent 65%),
+      radial-gradient(540px 360px at 18% 18%, rgba(124, 92, 255, .20), transparent 60%),
+      radial-gradient(560px 380px at 82% 22%, rgba(0, 224, 255, .16), transparent 62%),
+      radial-gradient(720px 520px at 70% 86%, rgba(255, 110, 199, .12), transparent 65%),
       radial-gradient(1200px 760px at 20% 0%, rgba(255,255,255,.92), transparent 62%),
       radial-gradient(1000px 700px at 85% 15%, rgba(255,255,255,.78), transparent 62%),
       linear-gradient(180deg, var(--bg0), var(--bg1));
   }
 
-  /* ===== Atmosphere layers (LESS pre-blur so glass blur becomes visible) ===== */
+  /* ===== Atmosphere layers (keep them sharper!) ===== */
   .atmo{
     position:fixed; inset:-20%; pointer-events:none; z-index:-2;
     background:
       radial-gradient(700px 420px at 18% 20%, var(--c1), transparent 70%),
       radial-gradient(720px 460px at 78% 22%, var(--c2), transparent 72%),
       radial-gradient(820px 540px at 55% 78%, var(--c3), transparent 72%);
-    filter: blur(8px); /* was 26px */
-    opacity:.9;
+    filter: blur(4px); /* was very blurred before */
+    opacity: 1;
   }
 
   /* subtle noise */
@@ -83,12 +72,11 @@
     padding: 14px var(--padx);
     display:flex; align-items:center; justify-content:space-between; gap:14px;
 
-    /* “glass nav” */
-    background: rgba(247,249,252,.22);
-    border-bottom: 1px solid rgba(255,255,255,.30);
+    background: rgba(247,249,252,.14);
+    border-bottom: 1px solid rgba(255,255,255,.26);
 
-    backdrop-filter: blur(18px) saturate(1.35) contrast(1.03);
-    -webkit-backdrop-filter: blur(18px) saturate(1.35) contrast(1.03);
+    backdrop-filter: blur(12px) saturate(1.6) contrast(1.06);
+    -webkit-backdrop-filter: blur(12px) saturate(1.6) contrast(1.06);
   }
 
   .brand{
@@ -112,40 +100,40 @@
     border-radius:999px;
     transition: background .18s ease, transform .18s ease, color .18s ease;
   }
-  .nav-links a:hover{ background: rgba(255,255,255,.35); color: var(--ink); transform: translateY(-1px); }
+  .nav-links a:hover{ background: rgba(255,255,255,.28); color: var(--ink); transform: translateY(-1px); }
 
-  /* ===== CRYSTAL / JELLY GLASS ===== */
+  /* ===== CLEAR LIQUID GLASS ===== */
   .glass{
     position:relative;
     overflow:hidden;
     border-radius: var(--r);
 
-    /* IMPORTANT: explicit base background-color helps consistency */
-    background-color: rgba(255,255,255,.14);
+    /* VERY transparent base */
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,.10),
+      rgba(255,255,255,.03)
+    );
 
-    background:
-      radial-gradient(900px 280px at 20% 0%, rgba(255,255,255,.30), transparent 60%),
-      linear-gradient(180deg, var(--glassA), var(--glassB));
-
-    border: 1px solid var(--stroke);
+    border: 1px solid rgba(255,255,255,.45);
     border-right-color: rgba(255,255,255,.26);
-    border-bottom-color: var(--strokeDark);
+    border-bottom-color: rgba(11,19,32,.08);
 
     box-shadow:
-      var(--shadowA),
-      var(--shadowB),
-      inset 0 1px 0 rgba(255,255,255,.75),
-      inset 0 -18px 30px rgba(11,19,32,.06);
+      0 40px 120px rgba(10,18,35,.12),
+      0 15px 45px rgba(10,18,35,.08),
+      inset 0 1px 0 rgba(255,255,255,.90),
+      inset 0 -20px 35px rgba(11,19,32,.05);
 
-    /* tuned blur for “clear jelly” */
-    backdrop-filter: blur(18px) saturate(1.5) contrast(1.05);
-    -webkit-backdrop-filter: blur(18px) saturate(1.5) contrast(1.05);
+    /* LESS blur = clearer glass */
+    backdrop-filter: blur(12px) saturate(1.6) contrast(1.08);
+    -webkit-backdrop-filter: blur(12px) saturate(1.6) contrast(1.08);
 
     transform: translateZ(0);
     transition: transform .25s ease, box-shadow .25s ease;
   }
 
-  /* Inner rim */
+  /* Inner rim (gives “thickness”) */
   .glass::after{
     content:"";
     position:absolute;
@@ -153,37 +141,39 @@
     border-radius: calc(var(--r) - 1px);
     pointer-events:none;
     box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.18),
-      inset 0 0 0 2px rgba(255,255,255,.08);
-    opacity:.95;
+      inset 0 0 0 1px rgba(255,255,255,.16),
+      inset 0 0 0 2px rgba(255,255,255,.06);
+    opacity: 1;
   }
 
-  /* Specular sweep film */
+  /* Specular sweep (stronger for “jelly”) */
   .glass::before{
     content:"";
     position:absolute;
-    inset:-45%;
-    background: linear-gradient(120deg,
+    inset:-40%;
+    background: linear-gradient(
+      120deg,
       transparent 35%,
-      rgba(255,255,255,.85) 50%,
-      transparent 65%);
-    transform: translateX(-32%) rotate(10deg);
-    opacity: .14;
+      rgba(255,255,255,.9) 50%,
+      transparent 65%
+    );
+    transform: translateX(-40%) rotate(8deg);
+    opacity:.22;
     pointer-events:none;
-    transition: opacity .25s ease, transform .65s cubic-bezier(.2,.9,.2,1);
+    transition: opacity .25s ease, transform .7s cubic-bezier(.2,.9,.2,1);
   }
 
   .glass:hover{
     transform: translateY(-6px);
     box-shadow:
-      0 46px 160px rgba(10,18,35,.12),
-      0 18px 52px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.80),
-      inset 0 -22px 34px rgba(11,19,32,.06);
+      0 52px 170px rgba(10,18,35,.14),
+      0 20px 58px rgba(10,18,35,.10),
+      inset 0 1px 0 rgba(255,255,255,.92),
+      inset 0 -24px 40px rgba(11,19,32,.05);
   }
   .glass:hover::before{
-    opacity:.20;
-    transform: translateX(32%) rotate(10deg);
+    opacity:.28;
+    transform: translateX(35%) rotate(8deg);
   }
 
   /* ===== HERO ===== */
@@ -225,21 +215,21 @@
     font-weight: 650;
     color: rgba(11,19,32,.85);
 
-    background: rgba(255,255,255,.18);
-    border: 1px solid rgba(255,255,255,.60);
-    border-bottom-color: rgba(11,19,32,.12);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.52);
+    border-bottom-color: rgba(11,19,32,.10);
 
     box-shadow:
       0 16px 38px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.75),
-      inset 0 -12px 22px rgba(11,19,32,.06);
+      inset 0 1px 0 rgba(255,255,255,.80),
+      inset 0 -12px 22px rgba(11,19,32,.05);
 
-    backdrop-filter: blur(16px) saturate(1.35) contrast(1.03);
-    -webkit-backdrop-filter: blur(16px) saturate(1.35) contrast(1.03);
+    backdrop-filter: blur(10px) saturate(1.5) contrast(1.06);
+    -webkit-backdrop-filter: blur(10px) saturate(1.5) contrast(1.06);
 
     transition: transform .18s ease, background .18s ease;
   }
-  .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.24); }
+  .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.16); }
 
   .btn-primary{
     background: rgba(11,19,32,.92);
@@ -290,8 +280,8 @@
     height: 170px;
     border-bottom: 1px solid rgba(11,19,32,.06);
     background:
-      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.85), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,0));
+      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.78), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0));
     position: relative;
     overflow:hidden;
   }
@@ -300,10 +290,10 @@
     content:"";
     position:absolute; inset:-30%;
     background:
-      radial-gradient(220px 140px at 22% 30%, rgba(255,255,255,.55), transparent 70%),
-      radial-gradient(240px 160px at 74% 40%, rgba(185,220,255,.28), transparent 74%);
-    filter: blur(16px);
-    opacity:.55;
+      radial-gradient(220px 140px at 22% 30%, rgba(255,255,255,.46), transparent 70%),
+      radial-gradient(240px 160px at 74% 40%, rgba(185,220,255,.22), transparent 74%);
+    filter: blur(10px);
+    opacity:.60;
     pointer-events:none;
   }
 
@@ -313,18 +303,18 @@
     padding: 6px 10px;
     border-radius: 999px;
 
-    background: rgba(255,255,255,.14);
-    border: 1px solid rgba(255,255,255,.60);
-    border-bottom-color: rgba(11,19,32,.12);
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.50);
+    border-bottom-color: rgba(11,19,32,.10);
     color: rgba(11,19,32,.70);
 
     box-shadow:
       0 12px 26px rgba(10,18,35,.06),
       inset 0 1px 0 rgba(255,255,255,.75),
-      inset 0 -10px 18px rgba(11,19,32,.06);
+      inset 0 -10px 18px rgba(11,19,32,.05);
 
-    backdrop-filter: blur(14px) saturate(1.25) contrast(1.03);
-    -webkit-backdrop-filter: blur(14px) saturate(1.25) contrast(1.03);
+    backdrop-filter: blur(9px) saturate(1.4) contrast(1.05);
+    -webkit-backdrop-filter: blur(9px) saturate(1.4) contrast(1.05);
   }
 
   footer{
@@ -343,12 +333,12 @@
     .glass, .glass::before, .btn{ transition:none !important; }
   }
 
-  /* ===== Fallback if backdrop-filter not supported ===== */
+  /* ===== Fallback if backdrop-filter not supported (e.g. some Firefox setups) ===== */
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .glass, nav, .btn, .tag {
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
-      background: rgba(255,255,255,.72) !important;
+      background: rgba(255,255,255,.70) !important;
       border-color: rgba(11,19,32,.08) !important;
       box-shadow:
         0 22px 70px rgba(10,18,35,.12),
