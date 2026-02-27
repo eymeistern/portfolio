@@ -65,11 +65,11 @@
     margin:0 auto;
   }
 
-  /* ===== NAV ===== */
+  /* ===== NAV (rechtsbündig) ===== */
   nav{
     position:sticky; top:0; z-index:40;
     padding: 14px var(--padx);
-    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    display:flex; align-items:center; gap:14px;
 
     background: rgba(247,249,252,.14);
     border-bottom: 1px solid rgba(255,255,255,.26);
@@ -89,6 +89,15 @@
     text-transform:uppercase;
     color: rgba(11,19,32,.50);
   }
+
+  /* -> alles rechts */
+  .nav-right{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
   .nav-links{ display:flex; gap:10px; align-items:center; }
   .nav-links a{
     text-decoration:none;
@@ -101,24 +110,30 @@
   }
   .nav-links a:hover{ background: rgba(255,255,255,.28); color: var(--ink); transform: translateY(-1px); }
 
-  /* ===== VisionOS Liquid Bubble layer (top-right) ===== */
-  nav{ position:sticky; } /* keep sticky */
-  nav::after{ content:""; } /* no-op, just keeps nav block stable */
+  /* Kontakt als Button rechts außen */
+  .nav-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight: 700;
+    color: rgba(11,19,32,.88);
 
-  .bubble-wrap{
-    position:absolute;
-    top:-42px;
-    right:-64px;
-    width:560px;
-    height:340px;
-    pointer-events:auto;
-    z-index: 2; /* above nav background */
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.62);
+    border-bottom-color: rgba(11,19,32,.12);
+
+    box-shadow:
+      0 16px 38px rgba(10,18,35,.08),
+      inset 0 1px 0 rgba(255,255,255,.75),
+      inset 0 -12px 22px rgba(11,19,32,.06);
+
+    backdrop-filter: blur(10px) saturate(1.35);
+    -webkit-backdrop-filter: blur(10px) saturate(1.35);
+
+    transition: transform .18s ease, background .18s ease;
   }
-  #liquidBubbles{
-    width:100%;
-    height:100%;
-    display:block;
-  }
+  .nav-btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.22); }
 
   /* ===== CLEAR LIQUID GLASS ===== */
   .glass{
@@ -190,10 +205,23 @@
     transform: translateX(35%) rotate(8deg);
   }
 
-  /* ===== HERO ===== */
+  /* ===== HERO (mit Bubble-Area rechts) ===== */
   .hero{
-    padding: clamp(64px, 9vh, 120px) 0 34px;
+    position:relative;
+    padding: clamp(64px, 9vh, 120px) 0 70px;
   }
+
+  /* 2-Spalten Layout nur für Hero */
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1fr minmax(320px, 520px);
+    gap: clamp(18px, 4vw, 44px);
+    align-items:center;
+  }
+  @media (max-width: 980px){
+    .hero-grid{ grid-template-columns: 1fr; }
+  }
+
   .kicker{
     display:inline-block;
     letter-spacing:.18em;
@@ -254,6 +282,23 @@
     -webkit-backdrop-filter:none;
   }
 
+  /* ===== Bubble Area rechts im Hero (Platz A) ===== */
+  .bubble-area{
+    position:relative;
+    height: 420px;
+    overflow:hidden;        /* bleibt in der Fläche */
+    user-select:none;
+    touch-action:none;
+  }
+  @media (max-width: 980px){
+    .bubble-area{ height: 360px; }
+  }
+  #liquidBubbles{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
   /* ===== Sections / Grid ===== */
   .section{ padding: 34px 0 0; }
   .section-title{
@@ -289,7 +334,6 @@
   .year{ font-size: 13px; font-weight: 700; color: rgba(11,19,32,.55); }
   .desc{ margin:8px 0 0; color: rgba(11,19,32,.70); font-size: 13.5px; line-height: 1.55; }
 
-  /* media area */
   .media{
     height: 170px;
     border-bottom: 1px solid rgba(11,19,32,.06);
@@ -337,16 +381,14 @@
     text-align:center;
   }
 
-  /* ===== Optional: subtle 3D tilt on pointer ===== */
   .tilt{ transform-style: preserve-3d; }
 
   @media (prefers-reduced-motion: reduce){
     .glass, .glass::before, .btn{ transition:none !important; }
   }
 
-  /* ===== Fallback if backdrop-filter not supported ===== */
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass, nav, .btn, .tag {
+    .glass, nav, .btn, .tag, .nav-btn {
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
       background: rgba(255,255,255,.70) !important;
@@ -366,30 +408,36 @@
   <nav>
     <div class="brand">S.M. <small>Portfolio</small></div>
 
-    <!-- VisionOS liquid glass bubbles (top-right) -->
-    <div class="bubble-wrap" aria-hidden="true">
-      <canvas id="liquidBubbles"></canvas>
-    </div>
-
-    <div class="nav-links">
-      <a href="#projekte">Projekte</a>
-      <a href="#leistungen">Leistungen</a>
-      <a href="#ueber">Über mich</a>
-      <a href="#kontakt">Kontakt</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#projekte">Projekte</a>
+        <a href="#leistungen">Leistungen</a>
+        <a href="#ueber">Über mich</a>
+      </div>
+      <a class="nav-btn" href="#kontakt">Kontakt</a>
     </div>
   </nav>
 
   <main class="container">
+    <!-- HERO: Text links, Blasen rechts (Platz A) -->
     <section class="hero" id="top">
-      <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
-      <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
-      <p class="sub">
-        Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
-        strukturiert, elegant und lebendig.
-      </p>
-      <div class="actions">
-        <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
-        <a class="btn" href="#leistungen">Leistungen</a>
+      <div class="hero-grid">
+        <div>
+          <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
+          <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
+          <p class="sub">
+            Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
+            strukturiert, elegant und lebendig.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
+            <a class="btn" href="#leistungen">Leistungen</a>
+          </div>
+        </div>
+
+        <div class="bubble-area" aria-label="Interaktive Glasblasen">
+          <canvas id="liquidBubbles"></canvas>
+        </div>
       </div>
     </section>
 
@@ -502,7 +550,7 @@
     });
   }
 
-  /* ===== VisionOS-level liquid bubbles (collision + repulsion + glass shading) ===== */
+  /* ===== Liquid bubbles (same as your best version) ===== */
   const canvas = document.getElementById("liquidBubbles");
   const ctx = canvas.getContext("2d", { alpha: true });
 
@@ -511,7 +559,7 @@
 
   function resizeBubbles(){
     const rect = canvas.parentElement.getBoundingClientRect();
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); // cap DPR for perf
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
     canvas.width = Math.floor(rect.width * dpr);
     canvas.height = Math.floor(rect.height * dpr);
     canvas.style.width = rect.width + "px";
@@ -523,9 +571,12 @@
 
   class Bubble{
     constructor(){
+      const w = canvas.parentElement.getBoundingClientRect().width;
+      const h = canvas.parentElement.getBoundingClientRect().height;
+
       this.radius = 26 + Math.random() * 42;
-      this.x = 40 + Math.random() * (canvas.clientWidth - 80);
-      this.y = 40 + Math.random() * (canvas.clientHeight - 80);
+      this.x = 40 + Math.random() * (Math.max(120, w) - 80);
+      this.y = 40 + Math.random() * (Math.max(120, h) - 80);
 
       this.vx = (Math.random() - 0.5) * 1.2;
       this.vy = (Math.random() - 0.5) * 1.2;
@@ -535,7 +586,6 @@
     }
 
     update(){
-      // gentle drift
       this.wobble += 0.02;
       this.vx += Math.sin(this.wobble) * 0.002;
       this.vy += Math.cos(this.wobble) * 0.002;
@@ -543,20 +593,17 @@
       this.x += this.vx;
       this.y += this.vy;
 
-      // damping = liquid feel
       this.vx *= 0.992;
       this.vy *= 0.992;
 
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
+      const w = canvas.parentElement.getBoundingClientRect().width;
+      const h = canvas.parentElement.getBoundingClientRect().height;
 
-      // wall bounce
       if(this.x < this.radius){ this.x = this.radius; this.vx *= -0.95; }
       if(this.x > w - this.radius){ this.x = w - this.radius; this.vx *= -0.95; }
       if(this.y < this.radius){ this.y = this.radius; this.vy *= -0.95; }
       if(this.y > h - this.radius){ this.y = h - this.radius; this.vy *= -0.95; }
 
-      // mouse repulsion
       if(mouse.active){
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
@@ -573,10 +620,8 @@
     }
 
     draw(){
-      // subtle “liquid” breathing
       const r = this.radius * (1 + Math.sin(this.wobble) * 0.015);
 
-      // outer fill (glass)
       const g = ctx.createRadialGradient(
         this.x - r * 0.35,
         this.y - r * 0.35,
@@ -595,12 +640,10 @@
       ctx.fillStyle = g;
       ctx.fill();
 
-      // rim stroke
       ctx.strokeStyle = "rgba(255,255,255,0.40)";
       ctx.lineWidth = 1.4;
       ctx.stroke();
 
-      // specular highlight (small)
       ctx.beginPath();
       ctx.arc(this.x - r*0.28, this.y - r*0.28, r*0.22, 0, Math.PI*2);
       ctx.fillStyle = "rgba(255,255,255,0.18)";
@@ -615,7 +658,6 @@
     const minDist = a.radius + b.radius;
 
     if(dist < minDist){
-      // separate (softly)
       const nx = dx / dist;
       const ny = dy / dist;
       const overlap = (minDist - dist);
@@ -625,15 +667,12 @@
       b.x += nx * overlap * 0.5;
       b.y += ny * overlap * 0.5;
 
-      // impulse (elastic-ish)
       const rvx = b.vx - a.vx;
       const rvy = b.vy - a.vy;
       const velAlongNormal = rvx * nx + rvy * ny;
-
-      // if moving apart, skip
       if(velAlongNormal > 0) return;
 
-      const restitution = 0.88; // “bouncy but viscous”
+      const restitution = 0.88;
       const j = -(1 + restitution) * velAlongNormal / (1/a.mass + 1/b.mass);
 
       const impX = j * nx;
@@ -644,16 +683,14 @@
       b.vx += impX / b.mass;
       b.vy += impY / b.mass;
 
-      // slight tangential friction (liquid)
       a.vx *= 0.995; a.vy *= 0.995;
       b.vx *= 0.995; b.vy *= 0.995;
     }
   }
 
-  // init
+  bubbles = [];
   for(let i=0;i<7;i++) bubbles.push(new Bubble());
 
-  // pointer events
   canvas.addEventListener("mousemove", (e)=>{
     const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
@@ -666,14 +703,11 @@
     mouse.x = null; mouse.y = null;
   });
 
-  // render loop
   function animateBubbles(){
-    const w = canvas.clientWidth;
-    const h = canvas.clientHeight;
-
+    const w = canvas.parentElement.getBoundingClientRect().width;
+    const h = canvas.parentElement.getBoundingClientRect().height;
     ctx.clearRect(0,0,w,h);
 
-    // collisions
     for(let i=0;i<bubbles.length;i++){
       bubbles[i].update();
       for(let j=i+1;j<bubbles.length;j++){
@@ -681,9 +715,7 @@
       }
     }
 
-    // draw
     bubbles.forEach(b => b.draw());
-
     requestAnimationFrame(animateBubbles);
   }
   animateBubbles();
