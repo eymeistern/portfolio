@@ -109,6 +109,7 @@
   }
   .nav-links a:hover{ background: rgba(255,255,255,.28); color: var(--ink); transform: translateY(-1px); }
 
+  /* Kontakt als Button rechts außen */
   .nav-btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding: 10px 16px;
@@ -245,6 +246,7 @@
 
   .actions{ display:flex; gap:12px; flex-wrap:wrap; }
 
+  /* ===== Buttons ===== */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding: 12px 16px;
@@ -330,6 +332,7 @@
   .year{ font-size: 13px; font-weight: 700; color: rgba(11,19,32,.55); }
   .desc{ margin:8px 0 0; color: rgba(11,19,32,.70); font-size: 13.5px; line-height: 1.55; }
 
+  /* media area */
   .media{
     height: 170px;
     border-bottom: 1px solid rgba(11,19,32,.06);
@@ -383,6 +386,7 @@
     .glass, .glass::before, .btn{ transition:none !important; }
   }
 
+  /* ===== Fallback if backdrop-filter not supported ===== */
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .glass, nav, .btn, .tag, .nav-btn {
       backdrop-filter: none !important;
@@ -436,7 +440,6 @@
       </div>
     </section>
 
-    <!-- rest unchanged (shortened for brevity in display) -->
     <section class="section" id="leistungen">
       <div class="section-title">Kompetenzen</div>
       <div class="grid">
@@ -455,6 +458,64 @@
       </div>
     </section>
 
+    <section class="section" id="projekte">
+      <div class="section-title">Ausgewählte Projekte</div>
+      <div class="grid">
+        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+          <div class="media"></div>
+          <div class="pad">
+            <div class="card-head">
+              <h3 class="title">Sternburg App (UI)</h3>
+              <div class="year">2025</div>
+            </div>
+            <p class="desc">Modernes UI für eine Marke — Look, Typo & spielerisches System.</p>
+            <div class="tags">
+              <span class="tag">UI</span><span class="tag">Figma</span><span class="tag">Prototyp</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+          <div class="media"></div>
+          <div class="pad">
+            <div class="card-head">
+              <h3 class="title">Das stille Ritual</h3>
+              <div class="year">2026</div>
+            </div>
+            <p class="desc">Reduzierte Serie — Licht als Erzählung, klare Inszenierung.</p>
+            <div class="tags">
+              <span class="tag">Photography</span><span class="tag">Series</span><span class="tag">Light</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+          <div class="media"></div>
+          <div class="pad">
+            <div class="card-head">
+              <h3 class="title">Unreal — Magische Welt</h3>
+              <div class="year">2026</div>
+            </div>
+            <p class="desc">Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe.</p>
+            <div class="tags">
+              <span class="tag">Unreal</span><span class="tag">3D</span><span class="tag">Lookdev</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="ueber">
+      <div class="section-title">Über mich</div>
+      <div class="glass pad tilt">
+        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
+          Ich verbinde klare UI-Systeme mit räumlicher, lichtgeführter Gestaltung.
+          Mein Stil ist clean, modular und atmosphärisch — damit Projekte professionell wirken
+          und trotzdem Magie behalten.
+        </p>
+      </div>
+    </section>
+
     <section class="section" id="kontakt">
       <div class="section-title">Kontakt</div>
       <div class="glass pad tilt">
@@ -469,13 +530,36 @@
   </main>
 
 <script>
+  // year
   document.getElementById("y").textContent = new Date().getFullYear();
 
+  // optional: subtle tilt (desktop only)
+  const cards = document.querySelectorAll(".tilt");
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+  if (hasFinePointer) {
+    cards.forEach(el => {
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `translateY(-2px) rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*5).toFixed(2)}deg)`;
+      });
+      el.addEventListener("mouseleave", () => { el.style.transform = ""; });
+    });
+  }
+
+  /* ===== Liquid bubbles (glassier, thinner rim, gentle wind, no shadow) ===== */
   const canvas = document.getElementById("liquidBubbles");
   const ctx = canvas.getContext("2d", { alpha: true });
 
   let bubbles = [];
   let mouse = { x: null, y: null, active: false };
+
+  // wind + edge padding (prevents "box edge" shadow look)
+  const MOUSE_RANGE = 220;  // bigger radius, softer effect
+  const MOUSE_PUSH  = 0.55; // gentle push (wind)
+  const EDGE_PAD    = 16;   // keep bubbles away from canvas edges
 
   function resizeBubbles(){
     const rect = canvas.parentElement.getBoundingClientRect();
@@ -496,11 +580,13 @@
       const h = Math.max(120, rect.height);
 
       this.radius = 26 + Math.random() * 42;
-      this.x = 40 + Math.random() * (w - 80);
-      this.y = 40 + Math.random() * (h - 80);
 
-      this.vx = (Math.random() - 0.5) * 1.2;
-      this.vy = (Math.random() - 0.5) * 1.2;
+      // start away from edges
+      this.x = (this.radius + EDGE_PAD) + Math.random() * (w - (this.radius*2 + EDGE_PAD*2));
+      this.y = (this.radius + EDGE_PAD) + Math.random() * (h - (this.radius*2 + EDGE_PAD*2));
+
+      this.vx = (Math.random() - 0.5) * 1.0;
+      this.vy = (Math.random() - 0.5) * 1.0;
 
       this.mass = this.radius * 0.09;
       this.wobble = Math.random() * Math.PI * 2;
@@ -508,62 +594,54 @@
 
     update(){
       this.wobble += 0.02;
-      this.vx += Math.sin(this.wobble) * 0.002;
-      this.vy += Math.cos(this.wobble) * 0.002;
+
+      // subtle drift (keep it calm)
+      this.vx += Math.sin(this.wobble) * 0.0014;
+      this.vy += Math.cos(this.wobble) * 0.0014;
 
       this.x += this.vx;
       this.y += this.vy;
 
-      this.vx *= 0.992;
-      this.vy *= 0.992;
+      // damping
+      this.vx *= 0.993;
+      this.vy *= 0.993;
 
       const rect = canvas.parentElement.getBoundingClientRect();
       const w = rect.width, h = rect.height;
 
-      if(this.x < this.radius){ this.x = this.radius; this.vx *= -0.95; }
-      if(this.x > w - this.radius){ this.x = w - this.radius; this.vx *= -0.95; }
-      if(this.y < this.radius){ this.y = this.radius; this.vy *= -0.95; }
-      if(this.y > h - this.radius){ this.y = h - this.radius; this.vy *= -0.95; }
+      // keep away from edges (no hard contact)
+      const minX = this.radius + EDGE_PAD;
+      const maxX = w - this.radius - EDGE_PAD;
+      const minY = this.radius + EDGE_PAD;
+      const maxY = h - this.radius - EDGE_PAD;
 
+      if(this.x < minX){ this.x = minX; this.vx *= -0.70; }
+      if(this.x > maxX){ this.x = maxX; this.vx *= -0.70; }
+      if(this.y < minY){ this.y = minY; this.vy *= -0.70; }
+      if(this.y > maxY){ this.y = maxY; this.vy *= -0.70; }
+
+      // gentle mouse "wind" (softer than repulsion)
       if(mouse.active){
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
         const dist = Math.hypot(dx, dy) || 0.0001;
-        const range = 170;
 
-        if(dist < range){
-          const force = (range - dist) / range;
-          const push = 2.2 * force;
+        if(dist < MOUSE_RANGE){
+          const t = 1 - (dist / MOUSE_RANGE); // 0..1
+          const push = MOUSE_PUSH * (t * t);  // quadratic falloff = smooth
           this.vx += (dx / dist) * push;
           this.vy += (dy / dist) * push;
         }
       }
     }
 
-    // === GLASSIER DRAW ===
     draw(){
       const r = this.radius * (1 + Math.sin(this.wobble) * 0.015);
 
-      // soft drop shadow (separates from background)
-      ctx.save();
-      ctx.globalCompositeOperation = "multiply";
-      const sh = ctx.createRadialGradient(this.x, this.y + r*0.55, r*0.10, this.x, this.y + r*0.55, r*1.05);
-      sh.addColorStop(0, "rgba(10,18,35,0.14)");
-      sh.addColorStop(1, "rgba(10,18,35,0.00)");
-      ctx.beginPath();
-      ctx.arc(this.x, this.y + r*0.55, r*1.02, 0, Math.PI*2);
-      ctx.fillStyle = sh;
-      ctx.fill();
-      ctx.restore();
-
-      // main glass fill (stronger contrast)
+      // main glass fill (clear, high separation)
       const g = ctx.createRadialGradient(
-        this.x - r * 0.34,
-        this.y - r * 0.34,
-        r * 0.08,
-        this.x,
-        this.y,
-        r
+        this.x - r * 0.34, this.y - r * 0.34, r * 0.08,
+        this.x, this.y, r
       );
       g.addColorStop(0.00, "rgba(255,255,255,0.98)");
       g.addColorStop(0.22, "rgba(255,255,255,0.44)");
@@ -575,27 +653,27 @@
       ctx.fillStyle = g;
       ctx.fill();
 
-      // inner shadow (thickness)
+      // inner shadow (depth) - subtle
       ctx.save();
       ctx.globalCompositeOperation = "multiply";
-      const inner = ctx.createRadialGradient(this.x, this.y, r*0.35, this.x, this.y, r);
+      const inner = ctx.createRadialGradient(this.x, this.y, r*0.38, this.x, this.y, r);
       inner.addColorStop(0, "rgba(10,18,35,0.00)");
-      inner.addColorStop(1, "rgba(10,18,35,0.12)");
+      inner.addColorStop(1, "rgba(10,18,35,0.10)");
       ctx.beginPath();
       ctx.arc(this.x, this.y, r, 0, Math.PI*2);
       ctx.fillStyle = inner;
       ctx.fill();
       ctx.restore();
 
-      // rainbow refraction rim (subtle but visible)
+      // rainbow refraction rim (thin & premium)
       ctx.save();
       ctx.globalCompositeOperation = "screen";
-      ctx.lineWidth = Math.max(1.8, r * 0.05);
+      ctx.lineWidth = Math.max(1.1, r * 0.028);
 
       const arcs = [
-        { col:"rgba(255,80,180,0.22)", ox:-0.9, oy:-0.5 },
-        { col:"rgba(80,220,255,0.20)", ox: 1.0, oy:-0.3 },
-        { col:"rgba(255,220,80,0.16)", ox: 0.0, oy: 0.9 }
+        { col:"rgba(255,80,180,0.18)", ox:-0.8, oy:-0.45 },
+        { col:"rgba(80,220,255,0.16)", ox: 0.9, oy:-0.25 },
+        { col:"rgba(255,220,80,0.12)", ox: 0.0, oy: 0.85 }
       ];
 
       for(const a of arcs){
@@ -606,32 +684,32 @@
       }
       ctx.restore();
 
-      // outer rim (clear separation)
-      ctx.strokeStyle = "rgba(255,255,255,0.88)";
-      ctx.lineWidth = 2.2;
+      // thinner outer rim
+      ctx.strokeStyle = "rgba(255,255,255,0.74)";
+      ctx.lineWidth = 1.15;
       ctx.beginPath();
       ctx.arc(this.x, this.y, r, 0, Math.PI*2);
       ctx.stroke();
 
-      // inner rim (adds "lens" look)
-      ctx.strokeStyle = "rgba(255,255,255,0.35)";
-      ctx.lineWidth = 1.2;
+      // thin inner rim
+      ctx.strokeStyle = "rgba(255,255,255,0.26)";
+      ctx.lineWidth = 0.9;
       ctx.beginPath();
       ctx.arc(this.x, this.y, r*0.92, 0, Math.PI*2);
       ctx.stroke();
 
-      // highlights (softbox feel)
+      // highlights
       ctx.save();
       ctx.globalCompositeOperation = "screen";
 
       ctx.beginPath();
       ctx.arc(this.x - r*0.28, this.y - r*0.30, r*0.28, 0, Math.PI*2);
-      ctx.fillStyle = "rgba(255,255,255,0.20)";
+      ctx.fillStyle = "rgba(255,255,255,0.18)";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(this.x - r*0.16, this.y - r*0.42, r*0.12, 0, Math.PI*2);
-      ctx.fillStyle = "rgba(255,255,255,0.28)";
+      ctx.fillStyle = "rgba(255,255,255,0.24)";
       ctx.fill();
 
       ctx.restore();
@@ -654,12 +732,13 @@
       b.x += nx * overlap * 0.5;
       b.y += ny * overlap * 0.5;
 
+      // softer collision response
       const rvx = b.vx - a.vx;
       const rvy = b.vy - a.vy;
       const velAlongNormal = rvx * nx + rvy * ny;
       if(velAlongNormal > 0) return;
 
-      const restitution = 0.88;
+      const restitution = 0.78;
       const j = -(1 + restitution) * velAlongNormal / (1/a.mass + 1/b.mass);
 
       const impX = j * nx;
@@ -670,12 +749,11 @@
       b.vx += impX / b.mass;
       b.vy += impY / b.mass;
 
-      a.vx *= 0.995; a.vy *= 0.995;
-      b.vx *= 0.995; b.vy *= 0.995;
+      a.vx *= 0.996; a.vy *= 0.996;
+      b.vx *= 0.996; b.vy *= 0.996;
     }
   }
 
-  bubbles = [];
   for(let i=0;i<7;i++) bubbles.push(new Bubble());
 
   canvas.addEventListener("mousemove", (e)=>{
