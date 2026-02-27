@@ -9,7 +9,6 @@
   :root{
     --bg0:#f7f9fc;
     --bg1:#eef3f8;
-
     --ink:#0b1320;
     --ink2:rgba(11,19,32,.72);
 
@@ -17,46 +16,45 @@
     --padx: clamp(14px, 4vw, 60px);
     --max: 1120px;
 
-    /* more color detail behind glass so blur is visible */
-    --c1: rgba(140,210,255,.34);
-    --c2: rgba(205,175,255,.28);
-    --c3: rgba(255,210,170,.20);
+    --shadowA: 0 34px 120px rgba(10,18,35,.10);
+    --shadowB: 0 14px 38px rgba(10,18,35,.07);
+
+    /* slightly stronger background energy so glass pops */
+    --c1: rgba(140,210,255,.26);
+    --c2: rgba(205,175,255,.22);
+    --c3: rgba(255,210,170,.18);
   }
 
   * , *::before, *::after{ box-sizing:border-box; }
   html, body{ width:100%; max-width:100%; overflow-x:hidden; margin:0; }
   html{ scroll-behavior:smooth; }
-
   body{
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color: var(--ink);
-
     background:
-      radial-gradient(540px 360px at 18% 18%, rgba(124, 92, 255, .20), transparent 60%),
-      radial-gradient(560px 380px at 82% 22%, rgba(0, 224, 255, .16), transparent 62%),
-      radial-gradient(720px 520px at 70% 86%, rgba(255, 110, 199, .12), transparent 65%),
+      radial-gradient(560px 380px at 20% 18%, rgba(124, 92, 255, .14), transparent 62%),
+      radial-gradient(640px 420px at 82% 22%, rgba(0, 224, 255, .12), transparent 62%),
+      radial-gradient(820px 560px at 70% 86%, rgba(255, 110, 199, .10), transparent 65%),
       radial-gradient(1200px 760px at 20% 0%, rgba(255,255,255,.92), transparent 62%),
       radial-gradient(1000px 700px at 85% 15%, rgba(255,255,255,.78), transparent 62%),
       linear-gradient(180deg, var(--bg0), var(--bg1));
   }
 
-  /* ===== Atmosphere layers ===== */
   .atmo{
     position:fixed; inset:-20%; pointer-events:none; z-index:-2;
     background:
       radial-gradient(700px 420px at 18% 20%, var(--c1), transparent 70%),
       radial-gradient(720px 460px at 78% 22%, var(--c2), transparent 72%),
       radial-gradient(820px 540px at 55% 78%, var(--c3), transparent 72%);
-    filter: blur(4px);
-    opacity: 1;
+    filter: blur(6px);
+    opacity:.95;
   }
 
-  /* subtle noise */
   .noise{
     position:fixed; inset:0; pointer-events:none; z-index:-1;
     background-image:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E");
-    opacity:.12;
+    opacity:.10;
     mix-blend-mode: overlay;
   }
 
@@ -65,19 +63,20 @@
     margin:0 auto;
   }
 
-  /* ===== NAV ===== */
+  /* ===== NAV (stable, no shifting) ===== */
   nav{
     position:sticky; top:0; z-index:40;
     padding: 14px var(--padx);
-    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    align-items:center;
+    gap:14px;
 
-    background: rgba(247,249,252,.14);
+    background: rgba(247,249,252,.18);
     border-bottom: 1px solid rgba(255,255,255,.26);
-
-    backdrop-filter: blur(12px) saturate(1.6) contrast(1.06);
-    -webkit-backdrop-filter: blur(12px) saturate(1.6) contrast(1.06);
+    backdrop-filter: blur(14px) saturate(1.35);
+    -webkit-backdrop-filter: blur(14px) saturate(1.35);
   }
-
   .brand{
     display:flex; align-items:baseline; gap:10px;
     font-weight:750; letter-spacing:.02em;
@@ -89,7 +88,9 @@
     text-transform:uppercase;
     color: rgba(11,19,32,.50);
   }
-  .nav-links{ display:flex; gap:10px; align-items:center; }
+  .nav-links{
+    display:flex; justify-content:center; gap:10px; align-items:center;
+  }
   .nav-links a{
     text-decoration:none;
     color: rgba(11,19,32,.70);
@@ -99,101 +100,47 @@
     border-radius:999px;
     transition: background .18s ease, transform .18s ease, color .18s ease;
   }
-  .nav-links a:hover{ background: rgba(255,255,255,.28); color: var(--ink); transform: translateY(-1px); }
+  .nav-links a:hover{ background: rgba(255,255,255,.32); color: var(--ink); transform: translateY(-1px); }
 
-  /* ===== VisionOS Liquid Bubble layer (top-right) ===== */
-  nav{ position:sticky; } /* keep sticky */
-  nav::after{ content:""; } /* no-op, just keeps nav block stable */
+  .nav-btn{
+    justify-self:end;
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 12px 16px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight: 650;
+    color: rgba(11,19,32,.85);
 
-  .bubble-wrap{
-    position:absolute;
-    top:-42px;
-    right:-64px;
-    width:560px;
-    height:340px;
-    pointer-events:auto;
-    z-index: 2; /* above nav background */
-  }
-  #liquidBubbles{
-    width:100%;
-    height:100%;
-    display:block;
-  }
-
-  /* ===== CLEAR LIQUID GLASS ===== */
-  .glass{
-    position:relative;
-    overflow:hidden;
-    border-radius: var(--r);
-
-    background: linear-gradient(
-      180deg,
-      rgba(255,255,255,.10),
-      rgba(255,255,255,.03)
-    );
-
-    border: 1px solid rgba(255,255,255,.45);
-    border-right-color: rgba(255,255,255,.26);
-    border-bottom-color: rgba(11,19,32,.08);
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.60);
+    border-bottom-color: rgba(11,19,32,.10);
 
     box-shadow:
-      0 40px 120px rgba(10,18,35,.12),
-      0 15px 45px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.90),
-      inset 0 -20px 35px rgba(11,19,32,.05);
+      0 16px 38px rgba(10,18,35,.08),
+      inset 0 1px 0 rgba(255,255,255,.75),
+      inset 0 -12px 22px rgba(11,19,32,.05);
 
-    backdrop-filter: blur(12px) saturate(1.6) contrast(1.08);
-    -webkit-backdrop-filter: blur(12px) saturate(1.6) contrast(1.08);
+    backdrop-filter: blur(10px) saturate(1.25);
+    -webkit-backdrop-filter: blur(10px) saturate(1.25);
 
-    transform: translateZ(0);
-    transition: transform .25s ease, box-shadow .25s ease;
+    transition: transform .18s ease, background .18s ease;
   }
+  .nav-btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.18); }
 
-  .glass::after{
-    content:"";
-    position:absolute;
-    inset: 1px;
-    border-radius: calc(var(--r) - 1px);
-    pointer-events:none;
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.16),
-      inset 0 0 0 2px rgba(255,255,255,.06);
-    opacity: 1;
-  }
-
-  .glass::before{
-    content:"";
-    position:absolute;
-    inset:-40%;
-    background: linear-gradient(
-      120deg,
-      transparent 35%,
-      rgba(255,255,255,.9) 50%,
-      transparent 65%
-    );
-    transform: translateX(-40%) rotate(8deg);
-    opacity:.22;
-    pointer-events:none;
-    transition: opacity .25s ease, transform .7s cubic-bezier(.2,.9,.2,1);
-  }
-
-  .glass:hover{
-    transform: translateY(-6px);
-    box-shadow:
-      0 52px 170px rgba(10,18,35,.14),
-      0 20px 58px rgba(10,18,35,.10),
-      inset 0 1px 0 rgba(255,255,255,.92),
-      inset 0 -24px 40px rgba(11,19,32,.05);
-  }
-  .glass:hover::before{
-    opacity:.28;
-    transform: translateX(35%) rotate(8deg);
-  }
-
-  /* ===== HERO ===== */
+  /* ===== HERO with right bubble area ===== */
   .hero{
-    padding: clamp(64px, 9vh, 120px) 0 34px;
+    padding: clamp(64px, 9vh, 120px) 0 60px;
   }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1fr minmax(340px, 520px);
+    gap: clamp(18px, 4vw, 40px);
+    align-items:center;
+  }
+  @media (max-width: 980px){
+    .hero-grid{ grid-template-columns: 1fr; }
+  }
+
   .kicker{
     display:inline-block;
     letter-spacing:.18em;
@@ -220,7 +167,6 @@
 
   .actions{ display:flex; gap:12px; flex-wrap:wrap; }
 
-  /* ===== Buttons ===== */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding: 12px 16px;
@@ -238,13 +184,12 @@
       inset 0 1px 0 rgba(255,255,255,.80),
       inset 0 -12px 22px rgba(11,19,32,.05);
 
-    backdrop-filter: blur(10px) saturate(1.5) contrast(1.06);
-    -webkit-backdrop-filter: blur(10px) saturate(1.5) contrast(1.06);
+    backdrop-filter: blur(10px) saturate(1.35);
+    -webkit-backdrop-filter: blur(10px) saturate(1.35);
 
     transition: transform .18s ease, background .18s ease;
   }
   .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.16); }
-
   .btn-primary{
     background: rgba(11,19,32,.92);
     color: rgba(255,255,255,.92);
@@ -254,107 +199,33 @@
     -webkit-backdrop-filter:none;
   }
 
-  /* ===== Sections / Grid ===== */
-  .section{ padding: 34px 0 0; }
-  .section-title{
-    text-align:center;
-    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-    font-weight: 650;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    font-size:12px;
-    color: rgba(11,19,32,.55);
-    margin: 26px 0 14px;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(12, minmax(0,1fr));
-    gap:14px;
-    margin: 14px 0 40px;
-  }
-  .span-6{ grid-column: span 6; }
-  .span-4{ grid-column: span 4; }
-  @media (max-width: 980px){
-    .grid{ grid-template-columns: repeat(6, minmax(0,1fr)); }
-    .span-4,.span-6{ grid-column: span 6; }
-  }
-  @media (max-width: 640px){
-    .grid{ grid-template-columns: 1fr; }
-    .span-4,.span-6{ grid-column: 1 / -1; }
-  }
+  /* Bubble area (confined) */
+  .bubble-panel{
+    position:relative;
+    height: 420px;
+    border-radius: 32px;
+    overflow:hidden; /* IMPORTANT: bubbles stay inside */
+    user-select:none;
+    touch-action:none;
 
-  .pad{ padding: 18px 18px 16px; }
-  .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
-  .title{ margin:0; font-weight: 760; font-size: 15px; }
-  .year{ font-size: 13px; font-weight: 700; color: rgba(11,19,32,.55); }
-  .desc{ margin:8px 0 0; color: rgba(11,19,32,.70); font-size: 13.5px; line-height: 1.55; }
-
-  /* media area */
-  .media{
-    height: 170px;
-    border-bottom: 1px solid rgba(11,19,32,.06);
     background:
-      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.78), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0));
-    position: relative;
-    overflow:hidden;
-  }
-  .media::before{
-    content:"";
-    position:absolute; inset:-30%;
-    background:
-      radial-gradient(220px 140px at 22% 30%, rgba(255,255,255,.46), transparent 70%),
-      radial-gradient(240px 160px at 74% 40%, rgba(185,220,255,.22), transparent 74%);
-    filter: blur(10px);
-    opacity:.60;
-    pointer-events:none;
-  }
+      radial-gradient(900px 420px at 40% 20%, rgba(255,255,255,.55), transparent 62%),
+      radial-gradient(700px 460px at 80% 70%, rgba(185,220,255,.24), transparent 68%),
+      linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
 
-  .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px; }
-  .tag{
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 999px;
-
-    background: rgba(255,255,255,.10);
-    border: 1px solid rgba(255,255,255,.50);
-    border-bottom-color: rgba(11,19,32,.10);
-    color: rgba(11,19,32,.70);
-
+    border: 1px solid rgba(255,255,255,.35);
     box-shadow:
-      0 12px 26px rgba(10,18,35,.06),
-      inset 0 1px 0 rgba(255,255,255,.75),
-      inset 0 -10px 18px rgba(11,19,32,.05);
-
-    backdrop-filter: blur(9px) saturate(1.4) contrast(1.05);
-    -webkit-backdrop-filter: blur(9px) saturate(1.4) contrast(1.05);
+      0 30px 90px rgba(10,18,35,.10),
+      inset 0 1px 0 rgba(255,255,255,.55);
+  }
+  @media (max-width: 980px){
+    .bubble-panel{ height: 360px; }
   }
 
-  footer{
-    padding: 26px 0 44px;
-    color: rgba(11,19,32,.55);
-    font-size: 13px;
-    text-align:center;
-  }
-
-  /* ===== Optional: subtle 3D tilt on pointer ===== */
-  .tilt{ transform-style: preserve-3d; }
+  #bubbleCanvas{ width:100%; height:100%; display:block; }
 
   @media (prefers-reduced-motion: reduce){
-    .glass, .glass::before, .btn{ transition:none !important; }
-  }
-
-  /* ===== Fallback if backdrop-filter not supported ===== */
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass, nav, .btn, .tag {
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      background: rgba(255,255,255,.70) !important;
-      border-color: rgba(11,19,32,.08) !important;
-      box-shadow:
-        0 22px 70px rgba(10,18,35,.12),
-        inset 0 1px 0 rgba(255,255,255,.75) !important;
-    }
+    .btn, .nav-btn{ transition:none !important; }
   }
 </style>
 </head>
@@ -365,328 +236,348 @@
 
   <nav>
     <div class="brand">S.M. <small>Portfolio</small></div>
-
-    <!-- VisionOS liquid glass bubbles (top-right) -->
-    <div class="bubble-wrap" aria-hidden="true">
-      <canvas id="liquidBubbles"></canvas>
-    </div>
-
     <div class="nav-links">
       <a href="#projekte">Projekte</a>
       <a href="#leistungen">Leistungen</a>
       <a href="#ueber">Über mich</a>
-      <a href="#kontakt">Kontakt</a>
     </div>
+    <a class="nav-btn" href="#kontakt">Kontakt</a>
   </nav>
 
   <main class="container">
     <section class="hero" id="top">
-      <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
-      <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
-      <p class="sub">
-        Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
-        strukturiert, elegant und lebendig.
-      </p>
-      <div class="actions">
-        <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
-        <a class="btn" href="#leistungen">Leistungen</a>
-      </div>
-    </section>
-
-    <section class="section" id="leistungen">
-      <div class="section-title">Kompetenzen</div>
-      <div class="grid">
-        <div class="glass pad span-6 tilt">
-          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">UI/UX Design</h3>
-          <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
-            User Flows · Informationsarchitektur · Interaction Design · Design Systems · Prototyping · Testing
+      <div class="hero-grid">
+        <div>
+          <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
+          <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
+          <p class="sub">
+            Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
+            strukturiert, elegant und lebendig.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
+            <a class="btn" href="#leistungen">Leistungen</a>
           </div>
         </div>
-        <div class="glass pad span-6 tilt">
-          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">3D Art & Worldbuilding</h3>
-          <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
-            Scene Composition · Lighting (lichtbetont) · Unreal Engine · Blender · Materials · Rendering
-          </div>
+
+        <!-- Bubble cluster area (right of hero text) -->
+        <div class="bubble-panel" aria-label="Interaktive Glasblasen">
+          <canvas id="bubbleCanvas"></canvas>
         </div>
       </div>
     </section>
-
-    <section class="section" id="projekte">
-      <div class="section-title">Ausgewählte Projekte</div>
-      <div class="grid">
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Sternburg App (UI)</h3>
-              <div class="year">2025</div>
-            </div>
-            <p class="desc">Modernes UI für eine Marke — Look, Typo & spielerisches System.</p>
-            <div class="tags">
-              <span class="tag">UI</span><span class="tag">Figma</span><span class="tag">Prototyp</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Das stille Ritual</h3>
-              <div class="year">2026</div>
-            </div>
-            <p class="desc">Reduzierte Serie — Licht als Erzählung, klare Inszenierung.</p>
-            <div class="tags">
-              <span class="tag">Photography</span><span class="tag">Series</span><span class="tag">Light</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Unreal — Magische Welt</h3>
-              <div class="year">2026</div>
-            </div>
-            <p class="desc">Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe.</p>
-            <div class="tags">
-              <span class="tag">Unreal</span><span class="tag">3D</span><span class="tag">Lookdev</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="section" id="ueber">
-      <div class="section-title">Über mich</div>
-      <div class="glass pad tilt">
-        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
-          Ich verbinde klare UI-Systeme mit räumlicher, lichtgeführter Gestaltung.
-          Mein Stil ist clean, modular und atmosphärisch — damit Projekte professionell wirken
-          und trotzdem Magie behalten.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" id="kontakt">
-      <div class="section-title">Kontakt</div>
-      <div class="glass pad tilt">
-        <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
-          <strong>E-Mail:</strong> <span style="opacity:.75;">dein.name@mail.de</span> ·
-          <strong>Instagram:</strong> <span style="opacity:.75;">@eymeistern</span>
-        </p>
-      </div>
-    </section>
-
-    <footer>© <span id="y"></span> Sarah Meister — UI/UX & 3D</footer>
   </main>
 
 <script>
-  // year
-  document.getElementById("y").textContent = new Date().getFullYear();
+(() => {
+  const canvas = document.getElementById("bubbleCanvas");
+  const ctx = canvas.getContext("2d", { alpha:true });
 
-  // optional: subtle tilt (desktop only)
-  const cards = document.querySelectorAll(".tilt");
-  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
-
-  if (hasFinePointer) {
-    cards.forEach(el => {
-      el.addEventListener("mousemove", (e) => {
-        const r = el.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform = `translateY(-2px) rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*5).toFixed(2)}deg)`;
-      });
-      el.addEventListener("mouseleave", () => { el.style.transform = ""; });
-    });
-  }
-
-  /* ===== VisionOS-level liquid bubbles (collision + repulsion + glass shading) ===== */
-  const canvas = document.getElementById("liquidBubbles");
-  const ctx = canvas.getContext("2d", { alpha: true });
-
-  let bubbles = [];
-  let mouse = { x: null, y: null, active: false };
-
-  function resizeBubbles(){
-    const rect = canvas.parentElement.getBoundingClientRect();
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); // cap DPR for perf
+  // ===== sizing (crisp but safe) =====
+  let dpr = 1;
+  function resize(){
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
     canvas.width = Math.floor(rect.width * dpr);
     canvas.height = Math.floor(rect.height * dpr);
-    canvas.style.width = rect.width + "px";
-    canvas.style.height = rect.height + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
   }
-  resizeBubbles();
-  window.addEventListener("resize", resizeBubbles);
+  resize();
+  window.addEventListener("resize", resize);
 
-  class Bubble{
-    constructor(){
-      this.radius = 26 + Math.random() * 42;
-      this.x = 40 + Math.random() * (canvas.clientWidth - 80);
-      this.y = 40 + Math.random() * (canvas.clientHeight - 80);
+  // ===== pointer =====
+  const pointer = { x:0, y:0, down:false, active:false, id:-1 };
+  let dragged = null;
 
-      this.vx = (Math.random() - 0.5) * 1.2;
-      this.vy = (Math.random() - 0.5) * 1.2;
-
-      this.mass = this.radius * 0.09;
-      this.wobble = Math.random() * Math.PI * 2;
-    }
-
-    update(){
-      // gentle drift
-      this.wobble += 0.02;
-      this.vx += Math.sin(this.wobble) * 0.002;
-      this.vy += Math.cos(this.wobble) * 0.002;
-
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // damping = liquid feel
-      this.vx *= 0.992;
-      this.vy *= 0.992;
-
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
-
-      // wall bounce
-      if(this.x < this.radius){ this.x = this.radius; this.vx *= -0.95; }
-      if(this.x > w - this.radius){ this.x = w - this.radius; this.vx *= -0.95; }
-      if(this.y < this.radius){ this.y = this.radius; this.vy *= -0.95; }
-      if(this.y > h - this.radius){ this.y = h - this.radius; this.vy *= -0.95; }
-
-      // mouse repulsion
-      if(mouse.active){
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.hypot(dx, dy) || 0.0001;
-        const range = 170;
-
-        if(dist < range){
-          const force = (range - dist) / range;
-          const push = 2.2 * force;
-          this.vx += (dx / dist) * push;
-          this.vy += (dy / dist) * push;
-        }
-      }
-    }
-
-    draw(){
-      // subtle “liquid” breathing
-      const r = this.radius * (1 + Math.sin(this.wobble) * 0.015);
-
-      // outer fill (glass)
-      const g = ctx.createRadialGradient(
-        this.x - r * 0.35,
-        this.y - r * 0.35,
-        r * 0.12,
-        this.x,
-        this.y,
-        r
-      );
-      g.addColorStop(0, "rgba(255,255,255,0.92)");
-      g.addColorStop(0.22, "rgba(255,255,255,0.28)");
-      g.addColorStop(0.55, "rgba(255,255,255,0.10)");
-      g.addColorStop(1, "rgba(255,255,255,0.04)");
-
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, r, 0, Math.PI*2);
-      ctx.fillStyle = g;
-      ctx.fill();
-
-      // rim stroke
-      ctx.strokeStyle = "rgba(255,255,255,0.40)";
-      ctx.lineWidth = 1.4;
-      ctx.stroke();
-
-      // specular highlight (small)
-      ctx.beginPath();
-      ctx.arc(this.x - r*0.28, this.y - r*0.28, r*0.22, 0, Math.PI*2);
-      ctx.fillStyle = "rgba(255,255,255,0.18)";
-      ctx.fill();
-    }
+  function getLocal(e){
+    const r = canvas.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
   }
 
-  function resolveCollision(a, b){
+  canvas.addEventListener("mousemove", (e)=>{
+    const p = getLocal(e);
+    pointer.x = p.x; pointer.y = p.y;
+    pointer.active = true;
+  });
+  canvas.addEventListener("mouseleave", ()=>{
+    pointer.active = false;
+    dragged = null;
+    pointer.down = false;
+  });
+  canvas.addEventListener("mousedown", (e)=>{
+    const p = getLocal(e);
+    pointer.x = p.x; pointer.y = p.y;
+    pointer.down = true;
+    dragged = pickBubble(p.x, p.y);
+  });
+  window.addEventListener("mouseup", ()=>{
+    pointer.down = false;
+    dragged = null;
+  });
+
+  // Touch (optional)
+  canvas.addEventListener("touchstart", (e)=>{
+    const t = e.touches[0];
+    if(!t) return;
+    const r = canvas.getBoundingClientRect();
+    pointer.x = t.clientX - r.left;
+    pointer.y = t.clientY - r.top;
+    pointer.active = true;
+    pointer.down = true;
+    dragged = pickBubble(pointer.x, pointer.y);
+  }, { passive:true });
+
+  canvas.addEventListener("touchmove", (e)=>{
+    const t = e.touches[0];
+    if(!t) return;
+    const r = canvas.getBoundingClientRect();
+    pointer.x = t.clientX - r.left;
+    pointer.y = t.clientY - r.top;
+  }, { passive:true });
+
+  canvas.addEventListener("touchend", ()=>{
+    pointer.down = false;
+    dragged = null;
+    pointer.active = false;
+  }, { passive:true });
+
+  // ===== bubble cluster physics =====
+  const W = () => canvas.getBoundingClientRect().width;
+  const H = () => canvas.getBoundingClientRect().height;
+
+  const bubbles = [];
+  const center = () => ({ x: W()*0.52, y: H()*0.52 });
+
+  // Tunables (feel)
+  const SPRING = 0.018;     // pull back to rest position
+  const DAMP   = 0.985;     // velocity damping
+  const COLLIDE = 0.55;     // collision separation strength
+  const PUSH_R = 170;       // hover influence radius
+  const PUSH_S = 0.55;      // hover strength
+
+  function rand(min,max){ return min + Math.random()*(max-min); }
+
+  function seedCluster(){
+    bubbles.length = 0;
+    const c = center();
+
+    // Similar to Pinterest: 1 large + surrounding
+    const sizes = [78, 54, 48, 44, 40, 36, 34];
+    // Rest offsets (cluster layout)
+    const rests = [
+      {x: 0,   y: 10},   // large center
+      {x:-88,  y:-30},
+      {x: 88,  y:-20},
+      {x:-72,  y: 78},
+      {x: 78,  y: 92},
+      {x: 0,   y:-92},
+      {x: 132, y: 58}
+    ];
+
+    for(let i=0;i<sizes.length;i++){
+      const r = sizes[i];
+      const ro = rests[i] || { x: rand(-120,120), y: rand(-90,110) };
+      bubbles.push({
+        r,
+        x: c.x + ro.x + rand(-6,6),
+        y: c.y + ro.y + rand(-6,6),
+        vx: rand(-0.4,0.4),
+        vy: rand(-0.4,0.4),
+        rx: c.x + ro.x,
+        ry: c.y + ro.y,
+        wob: Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  seedCluster();
+  window.addEventListener("resize", () => {
+    // re-center rest positions on resize
+    const c = center();
+    for(const b of bubbles){
+      const ox = b.rx - (W()*0.52);
+      const oy = b.ry - (H()*0.52);
+      b.rx = c.x + ox;
+      b.ry = c.y + oy;
+    }
+  });
+
+  function pickBubble(x,y){
+    // pick top-most (largest first)
+    const sorted = [...bubbles].sort((a,b)=>b.r-a.r);
+    for(const b of sorted){
+      const dx = x - b.x, dy = y - b.y;
+      if(dx*dx + dy*dy <= b.r*b.r) return b;
+    }
+    return null;
+  }
+
+  function clampInside(b){
+    // keep inside panel
+    const w = W(), h = H();
+    b.x = Math.max(b.r, Math.min(w - b.r, b.x));
+    b.y = Math.max(b.r, Math.min(h - b.r, b.y));
+  }
+
+  function collide(a,b){
     const dx = b.x - a.x;
     const dy = b.y - a.y;
-    const dist = Math.hypot(dx, dy) || 0.0001;
-    const minDist = a.radius + b.radius;
+    const d = Math.hypot(dx,dy) || 0.0001;
+    const min = a.r + b.r;
 
-    if(dist < minDist){
-      // separate (softly)
-      const nx = dx / dist;
-      const ny = dy / dist;
-      const overlap = (minDist - dist);
+    if(d < min){
+      const nx = dx / d;
+      const ny = dy / d;
+      const overlap = (min - d) * COLLIDE;
 
       a.x -= nx * overlap * 0.5;
       a.y -= ny * overlap * 0.5;
       b.x += nx * overlap * 0.5;
       b.y += ny * overlap * 0.5;
 
-      // impulse (elastic-ish)
-      const rvx = b.vx - a.vx;
-      const rvy = b.vy - a.vy;
-      const velAlongNormal = rvx * nx + rvy * ny;
-
-      // if moving apart, skip
-      if(velAlongNormal > 0) return;
-
-      const restitution = 0.88; // “bouncy but viscous”
-      const j = -(1 + restitution) * velAlongNormal / (1/a.mass + 1/b.mass);
-
-      const impX = j * nx;
-      const impY = j * ny;
-
-      a.vx -= impX / a.mass;
-      a.vy -= impY / a.mass;
-      b.vx += impX / b.mass;
-      b.vy += impY / b.mass;
-
-      // slight tangential friction (liquid)
-      a.vx *= 0.995; a.vy *= 0.995;
-      b.vx *= 0.995; b.vy *= 0.995;
+      // small impulse (jelly)
+      const iv = 0.18;
+      a.vx -= nx * iv; a.vy -= ny * iv;
+      b.vx += nx * iv; b.vy += ny * iv;
     }
   }
 
-  // init
-  for(let i=0;i<7;i++) bubbles.push(new Bubble());
+  // ===== rendering (VisionOS-ish) =====
+  function drawBubble(b){
+    const r = b.r * (1 + Math.sin(b.wob)*0.008);
 
-  // pointer events
-  canvas.addEventListener("mousemove", (e)=>{
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-    mouse.active = true;
-  });
-  canvas.addEventListener("mouseenter", ()=>{ mouse.active = true; });
-  canvas.addEventListener("mouseleave", ()=>{
-    mouse.active = false;
-    mouse.x = null; mouse.y = null;
-  });
+    // Base glass fill
+    const g1 = ctx.createRadialGradient(
+      b.x - r*0.35, b.y - r*0.35, r*0.10,
+      b.x, b.y, r
+    );
+    g1.addColorStop(0,  "rgba(255,255,255,0.92)");
+    g1.addColorStop(0.22,"rgba(255,255,255,0.26)");
+    g1.addColorStop(0.60,"rgba(255,255,255,0.10)");
+    g1.addColorStop(1,  "rgba(255,255,255,0.04)");
 
-  // render loop
-  function animateBubbles(){
-    const w = canvas.clientWidth;
-    const h = canvas.clientHeight;
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, r, 0, Math.PI*2);
+    ctx.fillStyle = g1;
+    ctx.fill();
 
+    // Inner soft shadow for thickness
+    ctx.save();
+    ctx.globalCompositeOperation = "multiply";
+    const g2 = ctx.createRadialGradient(b.x, b.y, r*0.20, b.x, b.y, r);
+    g2.addColorStop(0, "rgba(0,0,0,0)");
+    g2.addColorStop(1, "rgba(10,18,35,0.08)");
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, r, 0, Math.PI*2);
+    ctx.fillStyle = g2;
+    ctx.fill();
+    ctx.restore();
+
+    // Rainbow “refraction ring”
+    ctx.save();
+    ctx.globalCompositeOperation = "screen";
+    ctx.lineWidth = Math.max(1.4, r*0.04);
+    // draw 3 colored arcs slightly offset to mimic chromatic aberration
+    const arcs = [
+      { col:"rgba(255,80,180,0.20)", ox:-0.8, oy:-0.4 },
+      { col:"rgba(80,220,255,0.18)", ox: 0.8, oy:-0.2 },
+      { col:"rgba(255,220,80,0.14)", ox: 0.0, oy: 0.8 }
+    ];
+    for(const a of arcs){
+      ctx.strokeStyle = a.col;
+      ctx.beginPath();
+      ctx.arc(b.x + a.ox, b.y + a.oy, r*0.98, -0.2, Math.PI*1.45);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Rim
+    ctx.strokeStyle = "rgba(255,255,255,0.55)";
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, r, 0, Math.PI*2);
+    ctx.stroke();
+
+    // Specular highlights (2-layer)
+    ctx.save();
+    ctx.globalCompositeOperation = "screen";
+    ctx.beginPath();
+    ctx.arc(b.x - r*0.30, b.y - r*0.30, r*0.28, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(255,255,255,0.16)";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(b.x - r*0.18, b.y - r*0.38, r*0.12, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(255,255,255,0.22)";
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function step(){
+    const w = W(), h = H();
     ctx.clearRect(0,0,w,h);
 
-    // collisions
+    // Update rest center drift (tiny ambient motion like the reference)
+    const c = center();
+
+    for(const b of bubbles){
+      b.wob += 0.02;
+
+      // spring back to rest position (cluster)
+      const ax = (b.rx - b.x) * SPRING;
+      const ay = (b.ry - b.y) * SPRING;
+
+      b.vx += ax;
+      b.vy += ay;
+
+      // hover push
+      if(pointer.active && !pointer.down){
+        const dx = b.x - pointer.x;
+        const dy = b.y - pointer.y;
+        const d = Math.hypot(dx,dy) || 0.0001;
+        if(d < PUSH_R){
+          const f = (1 - d / PUSH_R) * PUSH_S;
+          b.vx += (dx/d) * f;
+          b.vy += (dy/d) * f;
+        }
+      }
+
+      // drag (pull a bubble directly, others react by collisions)
+      if(pointer.down && dragged === b){
+        const k = 0.35; // follow strength
+        b.vx += (pointer.x - b.x) * k;
+        b.vy += (pointer.y - b.y) * k;
+      }
+
+      // integrate
+      b.x += b.vx;
+      b.y += b.vy;
+
+      // damping
+      b.vx *= DAMP;
+      b.vy *= DAMP;
+
+      // keep inside
+      clampInside(b);
+    }
+
+    // Collisions
     for(let i=0;i<bubbles.length;i++){
-      bubbles[i].update();
       for(let j=i+1;j<bubbles.length;j++){
-        resolveCollision(bubbles[i], bubbles[j]);
+        collide(bubbles[i], bubbles[j]);
       }
     }
 
-    // draw
-    bubbles.forEach(b => b.draw());
+    // draw (big first looks more “3D stack”)
+    const sorted = [...bubbles].sort((a,b)=>a.r-b.r);
+    for(const b of sorted) drawBubble(b);
 
-    requestAnimationFrame(animateBubbles);
+    requestAnimationFrame(step);
   }
-  animateBubbles();
+
+  step();
+})();
 </script>
+
 </body>
 </html>
