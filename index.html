@@ -398,6 +398,213 @@
         inset 0 1px 0 rgba(255,255,255,.75) !important;
     }
   }
+
+  /* =========================
+     PROJECT MODAL (Vision Glass)
+     ========================= */
+  .modal{
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(14px, 3vw, 34px);
+  }
+  .modal[aria-hidden="false"]{ display:flex; }
+
+  .modal-backdrop{
+    position:absolute;
+    inset:0;
+    background: rgba(11,19,32,.30);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  }
+
+  .modal-panel{
+    position: relative;
+    width: min(1120px, 100%);
+    max-height: min(78vh, 760px);
+    border-radius: 22px;
+    overflow: hidden;
+
+    background:
+      radial-gradient(900px 280px at 20% 0%, rgba(255,255,255,.32), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+
+    border: 1px solid rgba(255,255,255,.55);
+    border-bottom-color: rgba(11,19,32,.14);
+
+    box-shadow:
+      0 60px 180px rgba(10,18,35,.22),
+      0 18px 54px rgba(10,18,35,.14),
+      inset 0 1px 0 rgba(255,255,255,.85);
+
+    backdrop-filter: blur(20px) saturate(1.5) contrast(1.08);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5) contrast(1.08);
+  }
+
+  .modal-inner{
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 0;
+    height: 100%;
+  }
+
+  @media (max-width: 980px){
+    .modal-panel{ max-height: 86vh; }
+    .modal-inner{ grid-template-columns: 1fr; }
+  }
+
+  /* left mockup area */
+  .modal-left{
+    position: relative;
+    min-height: 360px;
+    padding: clamp(14px, 2.4vw, 22px);
+    border-right: 1px solid rgba(255,255,255,.22);
+    background:
+      radial-gradient(700px 260px at 30% 10%, rgba(255,255,255,.26), transparent 60%),
+      radial-gradient(650px 380px at 80% 70%, rgba(185,220,255,.18), transparent 65%),
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0));
+  }
+  @media (max-width: 980px){
+    .modal-left{ border-right: none; border-bottom: 1px solid rgba(255,255,255,.22); }
+  }
+
+  .mockup-frame{
+    height: 100%;
+    min-height: 360px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.42);
+    border-bottom-color: rgba(11,19,32,.10);
+    box-shadow:
+      0 24px 80px rgba(10,18,35,.12),
+      inset 0 1px 0 rgba(255,255,255,.70);
+    background:
+      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.74), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .mockup-frame img{
+    width:100%;
+    height:100%;
+    object-fit: cover; /* wenn du Screenshots hast */
+    display:block;
+  }
+
+  /* right content area */
+  .modal-right{
+    position: relative;
+    padding: clamp(18px, 2.6vw, 28px);
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-kicker{
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(11,19,32,.55);
+    margin-top: 4px;
+  }
+
+  .modal-title{
+    margin: 0;
+    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    font-size: clamp(24px, 2.6vw, 36px);
+    line-height: 1.06;
+  }
+
+  .modal-subtitle{
+    margin: 0;
+    font-weight: 750;
+    font-size: 12.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(11,19,32,.58);
+  }
+
+  .modal-text{
+    margin: 8px 0 14px;
+    color: rgba(11,19,32,.72);
+    line-height: 1.75;
+    font-size: 15px;
+    max-width: 52ch;
+  }
+
+  .modal-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top: auto;
+    padding-top: 10px;
+  }
+
+  .modal-primary{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 12px 16px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight: 700;
+    color: rgba(255,255,255,.92);
+    background: rgba(11,19,32,.92);
+    border: 1px solid rgba(11,19,32,.18);
+    box-shadow: 0 18px 44px rgba(11,19,32,.18);
+  }
+  .modal-secondary{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 12px 16px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight: 700;
+    color: rgba(11,19,32,.86);
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.58);
+    border-bottom-color: rgba(11,19,32,.12);
+    box-shadow:
+      0 16px 38px rgba(10,18,35,.08),
+      inset 0 1px 0 rgba(255,255,255,.78),
+      inset 0 -12px 22px rgba(11,19,32,.05);
+    backdrop-filter: blur(12px) saturate(1.35);
+    -webkit-backdrop-filter: blur(12px) saturate(1.35);
+  }
+
+  /* close button bottom-right */
+  .modal-close{
+    position:absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.58);
+    border-bottom-color: rgba(11,19,32,.14);
+    box-shadow:
+      0 16px 38px rgba(10,18,35,.10),
+      inset 0 1px 0 rgba(255,255,255,.80),
+      inset 0 -10px 18px rgba(11,19,32,.06);
+
+    backdrop-filter: blur(12px) saturate(1.35);
+    -webkit-backdrop-filter: blur(12px) saturate(1.35);
+
+    color: rgba(11,19,32,.85);
+    font-weight: 850;
+    line-height: 1;
+    user-select:none;
+  }
+  .modal-close:hover{ transform: translateY(-1px); }
 </style>
 </head>
 
@@ -461,7 +668,18 @@
     <section class="section" id="projekte">
       <div class="section-title">Ausgewählte Projekte</div>
       <div class="grid">
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+
+        <!-- PROJEKT 1 -->
+        <a class="glass span-4 tilt project-card"
+           href="#"
+           style="text-decoration:none;color:inherit;"
+           data-title="Sternburg App (UI)"
+           data-subtitle="UI/UX · Figma · Prototyp"
+           data-kicker="Projekt"
+           data-text="Modernes UI für eine Marke — Look, Typografie und ein spielerisches Pfandsystem. Fokus: klare Navigation, schnell erfassbare States, und ein Designsystem, das Spaß macht."
+           data-button="Case ansehen"
+           data-link="https://example.com"
+           data-mockup="assets/sternburg-mockup.jpg">
           <div class="media"></div>
           <div class="pad">
             <div class="card-head">
@@ -475,7 +693,17 @@
           </div>
         </a>
 
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+        <!-- PROJEKT 2 -->
+        <a class="glass span-4 tilt project-card"
+           href="#"
+           style="text-decoration:none;color:inherit;"
+           data-title="Das stille Ritual"
+           data-subtitle="Photography · Serie"
+           data-kicker="Projekt"
+           data-text="Reduzierte Serie — Licht als Erzählung, klare Inszenierung. Fokus: ruhige Bildsprache, Wiederholung als Ritual, und präzise Kontraste."
+           data-button="Serie öffnen"
+           data-link="https://example.com"
+           data-mockup="assets/stilles-ritual.jpg">
           <div class="media"></div>
           <div class="pad">
             <div class="card-head">
@@ -489,7 +717,17 @@
           </div>
         </a>
 
-        <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+        <!-- PROJEKT 3 -->
+        <a class="glass span-4 tilt project-card"
+           href="#"
+           style="text-decoration:none;color:inherit;"
+           data-title="Unreal — Magische Welt"
+           data-subtitle="3D · Lookdev · Unreal"
+           data-kicker="Projekt"
+           data-text="Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe. Fokus: Materialität, volumetrisches Licht, und ein konsistentes Mood-System."
+           data-button="Shots ansehen"
+           data-link="https://example.com"
+           data-mockup="assets/unreal-world.jpg">
           <div class="media"></div>
           <div class="pad">
             <div class="card-head">
@@ -502,6 +740,10 @@
             </div>
           </div>
         </a>
+
+      </div>
+      <div style="text-align:center;color:rgba(11,19,32,.55);font-size:12px;margin-top:-20px;">
+        Tipp: Lege deine Screenshots in <code>assets/</code> ab und trage den Pfad in <code>data-mockup</code> ein.
       </div>
     </section>
 
@@ -529,6 +771,40 @@
     <footer>© <span id="y"></span> Sarah Meister — UI/UX & 3D</footer>
   </main>
 
+  <!-- =========================
+       MODAL MARKUP
+       ========================= -->
+  <div class="modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Projekt">
+    <div class="modal-backdrop" data-close="1"></div>
+
+    <div class="modal-panel" role="document">
+      <div class="modal-inner">
+        <div class="modal-left">
+          <div class="mockup-frame" id="modalMockupFrame">
+            <!-- img injected -->
+            <div id="modalMockupFallback" style="width:100%;height:100%;display:grid;place-items:center;color:rgba(11,19,32,.55);font-weight:700;">
+              Mockup hier (data-mockup)
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-right">
+          <div class="modal-kicker" id="modalKicker">Projekt</div>
+          <h2 class="modal-title" id="modalTitle">Titel</h2>
+          <div class="modal-subtitle" id="modalSubtitle">Subheader</div>
+          <p class="modal-text" id="modalText">Text</p>
+
+          <div class="modal-actions">
+            <a class="modal-primary" id="modalPrimaryBtn" href="#" target="_blank" rel="noopener">Ansehen</a>
+            <a class="modal-secondary" href="#projekte" data-close="1">Zur Übersicht</a>
+          </div>
+
+          <div class="modal-close" title="Schließen" aria-label="Schließen" data-close="1">×</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script>
   // year
   document.getElementById("y").textContent = new Date().getFullYear();
@@ -549,17 +825,16 @@
     });
   }
 
-  /* ===== Liquid bubbles (glassier, thinner rim, gentle wind, no shadow) ===== */
+  /* ===== Liquid bubbles (glassier, thinner rim, gentle wind) ===== */
   const canvas = document.getElementById("liquidBubbles");
   const ctx = canvas.getContext("2d", { alpha: true });
 
   let bubbles = [];
   let mouse = { x: null, y: null, active: false };
 
-  // wind + edge padding (prevents "box edge" shadow look)
-  const MOUSE_RANGE = 220;  // bigger radius, softer effect
-  const MOUSE_PUSH  = 0.55; // gentle push (wind)
-  const EDGE_PAD    = 16;   // keep bubbles away from canvas edges
+  const MOUSE_RANGE = 220;
+  const MOUSE_PUSH  = 0.55;
+  const EDGE_PAD    = 16;
 
   function resizeBubbles(){
     const rect = canvas.parentElement.getBoundingClientRect();
@@ -581,7 +856,6 @@
 
       this.radius = 26 + Math.random() * 42;
 
-      // start away from edges
       this.x = (this.radius + EDGE_PAD) + Math.random() * (w - (this.radius*2 + EDGE_PAD*2));
       this.y = (this.radius + EDGE_PAD) + Math.random() * (h - (this.radius*2 + EDGE_PAD*2));
 
@@ -595,21 +869,18 @@
     update(){
       this.wobble += 0.02;
 
-      // subtle drift (keep it calm)
       this.vx += Math.sin(this.wobble) * 0.0014;
       this.vy += Math.cos(this.wobble) * 0.0014;
 
       this.x += this.vx;
       this.y += this.vy;
 
-      // damping
       this.vx *= 0.993;
       this.vy *= 0.993;
 
       const rect = canvas.parentElement.getBoundingClientRect();
       const w = rect.width, h = rect.height;
 
-      // keep away from edges (no hard contact)
       const minX = this.radius + EDGE_PAD;
       const maxX = w - this.radius - EDGE_PAD;
       const minY = this.radius + EDGE_PAD;
@@ -620,15 +891,14 @@
       if(this.y < minY){ this.y = minY; this.vy *= -0.70; }
       if(this.y > maxY){ this.y = maxY; this.vy *= -0.70; }
 
-      // gentle mouse "wind" (softer than repulsion)
       if(mouse.active){
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
         const dist = Math.hypot(dx, dy) || 0.0001;
 
         if(dist < MOUSE_RANGE){
-          const t = 1 - (dist / MOUSE_RANGE); // 0..1
-          const push = MOUSE_PUSH * (t * t);  // quadratic falloff = smooth
+          const t = 1 - (dist / MOUSE_RANGE);
+          const push = MOUSE_PUSH * (t * t);
           this.vx += (dx / dist) * push;
           this.vy += (dy / dist) * push;
         }
@@ -638,7 +908,6 @@
     draw(){
       const r = this.radius * (1 + Math.sin(this.wobble) * 0.015);
 
-      // main glass fill (clear, high separation)
       const g = ctx.createRadialGradient(
         this.x - r * 0.34, this.y - r * 0.34, r * 0.08,
         this.x, this.y, r
@@ -653,7 +922,6 @@
       ctx.fillStyle = g;
       ctx.fill();
 
-      // inner shadow (depth) - subtle
       ctx.save();
       ctx.globalCompositeOperation = "multiply";
       const inner = ctx.createRadialGradient(this.x, this.y, r*0.38, this.x, this.y, r);
@@ -665,7 +933,6 @@
       ctx.fill();
       ctx.restore();
 
-      // rainbow refraction rim (thin & premium)
       ctx.save();
       ctx.globalCompositeOperation = "screen";
       ctx.lineWidth = Math.max(1.1, r * 0.028);
@@ -684,21 +951,18 @@
       }
       ctx.restore();
 
-      // thinner outer rim
       ctx.strokeStyle = "rgba(255,255,255,0.74)";
       ctx.lineWidth = 1.15;
       ctx.beginPath();
       ctx.arc(this.x, this.y, r, 0, Math.PI*2);
       ctx.stroke();
 
-      // thin inner rim
       ctx.strokeStyle = "rgba(255,255,255,0.26)";
       ctx.lineWidth = 0.9;
       ctx.beginPath();
       ctx.arc(this.x, this.y, r*0.92, 0, Math.PI*2);
       ctx.stroke();
 
-      // highlights
       ctx.save();
       ctx.globalCompositeOperation = "screen";
 
@@ -732,7 +996,6 @@
       b.x += nx * overlap * 0.5;
       b.y += ny * overlap * 0.5;
 
-      // softer collision response
       const rvx = b.vx - a.vx;
       const rvy = b.vy - a.vy;
       const velAlongNormal = rvx * nx + rvy * ny;
@@ -783,6 +1046,100 @@
     requestAnimationFrame(animateBubbles);
   }
   animateBubbles();
+
+  /* =========================
+     PROJECT MODAL LOGIC
+     ========================= */
+  const modal = document.getElementById("projectModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalSubtitle = document.getElementById("modalSubtitle");
+  const modalKicker = document.getElementById("modalKicker");
+  const modalText = document.getElementById("modalText");
+  const modalPrimaryBtn = document.getElementById("modalPrimaryBtn");
+  const mockupFrame = document.getElementById("modalMockupFrame");
+  const mockupFallback = document.getElementById("modalMockupFallback");
+
+  let lastFocus = null;
+
+  function setMockup(src){
+    // remove existing img
+    const old = mockupFrame.querySelector("img");
+    if(old) old.remove();
+
+    if(!src){
+      mockupFallback.style.display = "grid";
+      return;
+    }
+
+    const img = new Image();
+    img.alt = "Projekt Mockup";
+    img.src = src;
+    img.onload = () => {
+      mockupFallback.style.display = "none";
+      mockupFrame.appendChild(img);
+    };
+    img.onerror = () => {
+      mockupFallback.style.display = "grid";
+    };
+  }
+
+  function openModalFromCard(card){
+    lastFocus = document.activeElement;
+
+    modalTitle.textContent = card.dataset.title || "Projekt";
+    modalSubtitle.textContent = card.dataset.subtitle || "";
+    modalKicker.textContent = card.dataset.kicker || "Projekt";
+    modalText.textContent = card.dataset.text || "";
+
+    const link = card.dataset.link || "#";
+    const btnText = card.dataset.button || "Ansehen";
+    modalPrimaryBtn.textContent = btnText;
+    modalPrimaryBtn.href = link;
+
+    setMockup(card.dataset.mockup || "");
+
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    // focus close button for accessibility
+    const closeBtn = modal.querySelector(".modal-close");
+    closeBtn && closeBtn.focus?.();
+  }
+
+  function closeModal(){
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+
+    // restore focus
+    if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+  }
+
+  document.querySelectorAll(".project-card").forEach(card => {
+    card.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModalFromCard(card);
+    });
+
+    // keyboard open (Enter/Space)
+    card.addEventListener("keydown", (e) => {
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        openModalFromCard(card);
+      }
+    });
+  });
+
+  // close handlers
+  modal.addEventListener("click", (e) => {
+    const t = e.target;
+    if(t && t.getAttribute && t.getAttribute("data-close") === "1") closeModal();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && modal.getAttribute("aria-hidden") === "false"){
+      closeModal();
+    }
+  });
 </script>
 </body>
 </html>
