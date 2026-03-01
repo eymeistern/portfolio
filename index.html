@@ -7,24 +7,26 @@
 
 <style>
   :root{
-    /* ===== Modal-like base tones (smoky blue/lavender) ===== */
-    --bg0:#f5f7fb;
-    --bg1:#edf1f7;
-
     --ink:#0b1320;
-    --ink2:rgba(11,19,32,.72);
 
-    --r: 26px;
+    /* ===== modal tones ===== */
+    --bg: #f3f5fa;
+    --smoke: rgba(11,19,32,.32);
+
+    --r: 22px;
     --padx: clamp(14px, 4vw, 60px);
     --max: 1120px;
 
-    /* toned down atmospheric glows (cool + lavender) */
-    --c1: rgba(120,190,255,.18);
-    --c2: rgba(185,165,255,.18);
-    --c3: rgba(255,205,230,.10);
+    /* glass */
+    --glassA: rgba(255,255,255,.14);
+    --glassB: rgba(255,255,255,.06);
+    --glassBorder: rgba(255,255,255,.55);
+    --glassBorderBottom: rgba(11,19,32,.14);
 
-    /* “smoke layer” for the whole page */
-    --smoke: rgba(11,19,32,.06);
+    /* ambient glows (like your modal) */
+    --g1: rgba(185,220,255,.22);
+    --g2: rgba(205,190,255,.20);
+    --g3: rgba(255,210,235,.14);
   }
 
   * , *::before, *::after{ box-sizing:border-box; }
@@ -34,63 +36,100 @@
   body{
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color: var(--ink);
-
-    /* ===== More like your modal: muted, smoky gradients ===== */
-    background:
-      radial-gradient(980px 520px at 16% 16%, rgba(160,205,255,.26), transparent 62%),
-      radial-gradient(980px 520px at 84% 18%, rgba(205,190,255,.24), transparent 64%),
-      radial-gradient(1100px 640px at 70% 86%, rgba(255,210,235,.14), transparent 65%),
-      radial-gradient(1200px 760px at 28% -5%, rgba(255,255,255,.92), transparent 62%),
-      radial-gradient(1100px 700px at 92% 10%, rgba(255,255,255,.72), transparent 64%),
-      linear-gradient(180deg, var(--bg0), var(--bg1));
+    background: var(--bg);
   }
 
-  /* ===== Atmosphere layers ===== */
-  .atmo{
-    position:fixed; inset:-20%; pointer-events:none; z-index:-3;
+  /* ===== MODAL-LIKE BACKDROP FOR WHOLE PAGE ===== */
+  .page-backdrop{
+    position:fixed; inset:0; z-index:-3;
     background:
-      radial-gradient(820px 520px at 18% 22%, var(--c1), transparent 72%),
-      radial-gradient(820px 520px at 80% 20%, var(--c2), transparent 74%),
-      radial-gradient(900px 560px at 62% 78%, var(--c3), transparent 74%);
-    filter: blur(8px);
-    opacity: .95;
+      radial-gradient(980px 520px at 18% 18%, var(--g1), transparent 62%),
+      radial-gradient(980px 520px at 82% 18%, var(--g2), transparent 64%),
+      radial-gradient(1100px 640px at 70% 86%, var(--g3), transparent 65%),
+      linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.62));
+    filter: blur(0px);
   }
 
-  /* soft vignette “smoke” like in modal overlay */
-  .vignette{
-    position:fixed; inset:0; pointer-events:none; z-index:-2;
-    background:
-      radial-gradient(1200px 720px at 50% 35%, rgba(255,255,255,.00), rgba(11,19,32,.10) 78%);
-    opacity:.65;
+  /* dark smoke overlay like modal backdrop */
+  .page-smoke{
+    position:fixed; inset:0; z-index:-2;
+    background: var(--smoke);
+    backdrop-filter: blur(12px) saturate(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  }
+
+  /* vignette to match modal feeling */
+  .page-vignette{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background: radial-gradient(1200px 720px at 50% 30%, rgba(255,255,255,.00), rgba(11,19,32,.18) 78%);
+    opacity:.75;
     mix-blend-mode: multiply;
   }
 
-  /* subtle noise */
+  /* subtle noise (same vibe) */
   .noise{
-    position:fixed; inset:0; pointer-events:none; z-index:-1;
+    position:fixed; inset:0; pointer-events:none; z-index:0;
     background-image:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E");
     opacity:.10;
     mix-blend-mode: overlay;
   }
 
-  .container{
-    width:min(var(--max), calc(100% - (var(--padx) * 2)));
-    margin:0 auto;
+  /* ===== big glass “modal panel” that holds the whole site ===== */
+  .shell{
+    position:relative;
+    z-index:1;
+    padding: clamp(18px, 3vw, 34px);
+    min-height: 100svh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
   }
 
-  /* ===== NAV (more “smoked glass”) ===== */
+  .panel{
+    width: min(1180px, 100%);
+    border-radius: var(--r);
+    overflow:hidden;
+
+    background:
+      radial-gradient(900px 280px at 20% 0%, rgba(255,255,255,.32), transparent 62%),
+      radial-gradient(900px 520px at 80% 70%, rgba(185,220,255,.16), transparent 66%),
+      linear-gradient(180deg, var(--glassA), var(--glassB));
+
+    border: 1px solid var(--glassBorder);
+    border-bottom-color: var(--glassBorderBottom);
+
+    box-shadow:
+      0 60px 180px rgba(10,18,35,.22),
+      0 18px 54px rgba(10,18,35,.14),
+      inset 0 1px 0 rgba(255,255,255,.85);
+
+    backdrop-filter: blur(20px) saturate(1.5) contrast(1.08);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5) contrast(1.08);
+  }
+
+  /* inner hairline like your modal */
+  .panel::after{
+    content:"";
+    position:absolute;
+    inset: 12px;
+    border-radius: calc(var(--r) - 12px);
+    pointer-events:none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+    opacity:.7;
+  }
+
+  /* ===== NAV inside panel (same glass feel) ===== */
   nav{
-    position:sticky; top:0; z-index:40;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+
     padding: 14px var(--padx);
     display:flex; align-items:center; gap:14px;
 
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08));
-    border-bottom: 1px solid rgba(255,255,255,.26);
-
-    box-shadow:
-      0 10px 40px rgba(10,18,35,.08);
+    background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08));
+    border-bottom: 1px solid rgba(255,255,255,.22);
 
     backdrop-filter: blur(18px) saturate(1.35) contrast(1.06);
     -webkit-backdrop-filter: blur(18px) saturate(1.35) contrast(1.06);
@@ -98,14 +137,14 @@
 
   .brand{
     display:flex; align-items:baseline; gap:10px;
-    font-weight:800; letter-spacing:.02em;
+    font-weight:850; letter-spacing:.02em;
   }
   .brand small{
     font-weight:650;
     font-size:11px;
     letter-spacing:.18em;
     text-transform:uppercase;
-    color: rgba(11,19,32,.50);
+    color: rgba(11,19,32,.52);
   }
 
   .nav-right{
@@ -118,7 +157,7 @@
   .nav-links{ display:flex; gap:10px; align-items:center; }
   .nav-links a{
     text-decoration:none;
-    color: rgba(11,19,32,.68);
+    color: rgba(11,19,32,.70);
     font-weight:650;
     font-size:14px;
     padding:10px 12px;
@@ -126,19 +165,18 @@
     transition: background .18s ease, transform .18s ease, color .18s ease;
   }
   .nav-links a:hover{
-    background: rgba(255,255,255,.22);
-    color: var(--ink);
+    background: rgba(255,255,255,.18);
+    color: rgba(11,19,32,.92);
     transform: translateY(-1px);
   }
 
-  /* Kontakt als Button rechts außen */
   .nav-btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding: 10px 16px;
     border-radius: 999px;
     text-decoration:none;
     font-weight: 750;
-    color: rgba(11,19,32,.86);
+    color: rgba(11,19,32,.88);
 
     background: rgba(255,255,255,.14);
     border: 1px solid rgba(255,255,255,.58);
@@ -149,84 +187,23 @@
       inset 0 1px 0 rgba(255,255,255,.78),
       inset 0 -12px 22px rgba(11,19,32,.05);
 
-    backdrop-filter: blur(14px) saturate(1.25);
-    -webkit-backdrop-filter: blur(14px) saturate(1.25);
-
+    backdrop-filter: blur(12px) saturate(1.35);
+    -webkit-backdrop-filter: blur(12px) saturate(1.35);
     transition: transform .18s ease, background .18s ease;
   }
   .nav-btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.20); }
 
-  /* ===== CLEAR LIQUID GLASS (more modal-like, less “cardy”) ===== */
-  .glass{
-    position:relative;
-    overflow:hidden;
-    border-radius: var(--r);
-
-    background:
-      radial-gradient(900px 280px at 18% 0%, rgba(255,255,255,.26), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
-
-    border: 1px solid rgba(255,255,255,.55);
-    border-bottom-color: rgba(11,19,32,.12);
-
-    box-shadow:
-      0 40px 120px rgba(10,18,35,.14),
-      0 15px 45px rgba(10,18,35,.10),
-      inset 0 1px 0 rgba(255,255,255,.85);
-
-    backdrop-filter: blur(18px) saturate(1.45) contrast(1.08);
-    -webkit-backdrop-filter: blur(18px) saturate(1.45) contrast(1.08);
-
-    transform: translateZ(0);
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-
-  .glass::after{
-    content:"";
-    position:absolute;
-    inset: 1px;
-    border-radius: calc(var(--r) - 1px);
-    pointer-events:none;
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.14),
-      inset 0 0 0 2px rgba(255,255,255,.05);
-    opacity: 1;
-  }
-
-  .glass::before{
-    content:"";
-    position:absolute;
-    inset:-40%;
-    background: linear-gradient(
-      120deg,
-      transparent 36%,
-      rgba(255,255,255,.75) 50%,
-      transparent 64%
-    );
-    transform: translateX(-44%) rotate(8deg);
-    opacity:.18;
-    pointer-events:none;
-    transition: opacity .25s ease, transform .7s cubic-bezier(.2,.9,.2,1);
-  }
-
-  .glass:hover{
-    transform: translateY(-6px);
-    box-shadow:
-      0 56px 180px rgba(10,18,35,.16),
-      0 20px 58px rgba(10,18,35,.12),
-      inset 0 1px 0 rgba(255,255,255,.88);
-  }
-  .glass:hover::before{
-    opacity:.24;
-    transform: translateX(35%) rotate(8deg);
+  /* ===== content container inside panel ===== */
+  .container{
+    width:min(var(--max), calc(100% - (var(--padx) * 2)));
+    margin:0 auto;
+    padding: 26px 0 44px;
   }
 
   /* ===== HERO ===== */
   .hero{
-    position:relative;
-    padding: clamp(64px, 9vh, 120px) 0 70px;
+    padding: clamp(40px, 6vh, 74px) 0 28px;
   }
-
   .hero-grid{
     display:grid;
     grid-template-columns: 1fr minmax(320px, 520px);
@@ -242,7 +219,7 @@
     letter-spacing:.18em;
     text-transform:uppercase;
     font-size:12px;
-    color: rgba(11,19,32,.52);
+    color: rgba(11,19,32,.58);
     margin-bottom: 14px;
   }
   h1{
@@ -256,14 +233,14 @@
   .sub{
     max-width: 70ch;
     margin:0 0 22px;
-    color: rgba(11,19,32,.70);
+    color: rgba(11,19,32,.72);
     font-size: 16.5px;
-    line-height: 1.7;
+    line-height: 1.75;
   }
 
   .actions{ display:flex; gap:12px; flex-wrap:wrap; }
 
-  /* ===== Buttons (match modal buttons) ===== */
+  /* ===== Buttons (modal style) ===== */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     padding: 12px 16px;
@@ -281,8 +258,8 @@
       inset 0 1px 0 rgba(255,255,255,.78),
       inset 0 -12px 22px rgba(11,19,32,.05);
 
-    backdrop-filter: blur(14px) saturate(1.25);
-    -webkit-backdrop-filter: blur(14px) saturate(1.25);
+    backdrop-filter: blur(12px) saturate(1.35);
+    -webkit-backdrop-filter: blur(12px) saturate(1.35);
 
     transition: transform .18s ease, background .18s ease;
   }
@@ -292,35 +269,33 @@
     background: rgba(11,19,32,.92);
     color: rgba(255,255,255,.92);
     border-color: rgba(11,19,32,.18);
-    box-shadow: 0 18px 42px rgba(11,19,32,.18);
+    box-shadow: 0 18px 44px rgba(11,19,32,.18);
     backdrop-filter:none;
     -webkit-backdrop-filter:none;
   }
 
-  /* ===== Bubble Area rechts im Hero ===== */
+  /* ===== Bubble area (same, but now sits on “free space” inside panel) ===== */
   .bubble-area{
     position:relative;
     height: 420px;
     overflow:hidden;
     user-select:none;
     touch-action:none;
-    /* subtle internal smoke to match modal vibe */
+    border-radius: 18px;
+
+    /* IMPORTANT: no “box shadow edge” look — very soft inner tint only */
     background:
-      radial-gradient(900px 260px at 18% 0%, rgba(255,255,255,.10), transparent 62%),
-      radial-gradient(900px 540px at 80% 70%, rgba(185,220,255,.08), transparent 68%);
-    border-radius: 22px;
+      radial-gradient(900px 280px at 22% 8%, rgba(255,255,255,.10), transparent 62%),
+      radial-gradient(900px 520px at 82% 70%, rgba(185,220,255,.08), transparent 66%);
   }
   @media (max-width: 980px){
     .bubble-area{ height: 360px; }
   }
-  #liquidBubbles{
-    width:100%;
-    height:100%;
-    display:block;
-  }
+  #liquidBubbles{ width:100%; height:100%; display:block; }
 
-  /* ===== Sections / Grid ===== */
-  .section{ padding: 34px 0 0; }
+  /* ===== Sections ===== */
+  .section{ padding: 24px 0 0; }
+
   .section-title{
     text-align:center;
     font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
@@ -328,14 +303,46 @@
     letter-spacing:.18em;
     text-transform:uppercase;
     font-size:12px;
-    color: rgba(11,19,32,.52);
-    margin: 26px 0 14px;
+    color: rgba(11,19,32,.58);
+    margin: 24px 0 14px;
   }
+
+  /* cards in same glass style */
+  .glass{
+    position:relative;
+    overflow:hidden;
+    border-radius: 18px;
+
+    background:
+      radial-gradient(900px 260px at 18% 0%, rgba(255,255,255,.26), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+
+    border: 1px solid rgba(255,255,255,.50);
+    border-bottom-color: rgba(11,19,32,.12);
+
+    box-shadow:
+      0 30px 90px rgba(10,18,35,.14),
+      0 12px 34px rgba(10,18,35,.10),
+      inset 0 1px 0 rgba(255,255,255,.78);
+
+    backdrop-filter: blur(18px) saturate(1.45) contrast(1.06);
+    -webkit-backdrop-filter: blur(18px) saturate(1.45) contrast(1.06);
+
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .glass:hover{
+    transform: translateY(-6px);
+    box-shadow:
+      0 40px 120px rgba(10,18,35,.18),
+      0 18px 46px rgba(10,18,35,.12),
+      inset 0 1px 0 rgba(255,255,255,.82);
+  }
+
   .grid{
     display:grid;
     grid-template-columns: repeat(12, minmax(0,1fr));
     gap:14px;
-    margin: 14px 0 40px;
+    margin: 14px 0 30px;
   }
   .span-6{ grid-column: span 6; }
   .span-4{ grid-column: span 4; }
@@ -351,14 +358,14 @@
   .pad{ padding: 18px 18px 16px; }
   .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
   .title{ margin:0; font-weight: 780; font-size: 15px; }
-  .year{ font-size: 13px; font-weight: 750; color: rgba(11,19,32,.52); }
-  .desc{ margin:8px 0 0; color: rgba(11,19,32,.68); font-size: 13.5px; line-height: 1.55; }
+  .year{ font-size: 13px; font-weight: 750; color: rgba(11,19,32,.56); }
+  .desc{ margin:8px 0 0; color: rgba(11,19,32,.72); font-size: 13.5px; line-height: 1.6; }
 
   .media{
     height: 170px;
     border-bottom: 1px solid rgba(255,255,255,.18);
     background:
-      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.38), transparent 60%),
+      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.56), transparent 60%),
       radial-gradient(900px 520px at 75% 70%, rgba(185,220,255,.14), transparent 66%),
       linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
     position: relative;
@@ -372,9 +379,9 @@
     border-radius: 999px;
 
     background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.52);
+    border: 1px solid rgba(255,255,255,.50);
     border-bottom-color: rgba(11,19,32,.10);
-    color: rgba(11,19,32,.68);
+    color: rgba(11,19,32,.70);
 
     box-shadow:
       0 12px 26px rgba(10,18,35,.06),
@@ -386,8 +393,8 @@
   }
 
   footer{
-    padding: 26px 0 44px;
-    color: rgba(11,19,32,.52);
+    padding: 18px 0 0;
+    color: rgba(11,19,32,.56);
     font-size: 13px;
     text-align:center;
   }
@@ -395,424 +402,155 @@
   .tilt{ transform-style: preserve-3d; }
 
   @media (prefers-reduced-motion: reduce){
-    .glass, .glass::before, .btn{ transition:none !important; }
+    .glass, .btn{ transition:none !important; }
   }
-
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass, nav, .btn, .tag, .nav-btn {
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      background: rgba(255,255,255,.72) !important;
-      border-color: rgba(11,19,32,.08) !important;
-      box-shadow:
-        0 22px 70px rgba(10,18,35,.12),
-        inset 0 1px 0 rgba(255,255,255,.75) !important;
-    }
-  }
-
-  /* =========================
-     PROJECT MODAL (unchanged)
-     ========================= */
-  .modal{
-    position: fixed;
-    inset: 0;
-    z-index: 120;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(14px, 3vw, 34px);
-  }
-  .modal[aria-hidden="false"]{ display:flex; }
-
-  .modal-backdrop{
-    position:absolute;
-    inset:0;
-    background: rgba(11,19,32,.30);
-    backdrop-filter: blur(10px) saturate(1.1);
-    -webkit-backdrop-filter: blur(10px) saturate(1.1);
-  }
-
-  .modal-panel{
-    position: relative;
-    width: min(1120px, 100%);
-    max-height: min(78vh, 760px);
-    border-radius: 22px;
-    overflow: hidden;
-
-    background:
-      radial-gradient(900px 280px at 20% 0%, rgba(255,255,255,.32), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
-
-    border: 1px solid rgba(255,255,255,.55);
-    border-bottom-color: rgba(11,19,32,.14);
-
-    box-shadow:
-      0 60px 180px rgba(10,18,35,.22),
-      0 18px 54px rgba(10,18,35,.14),
-      inset 0 1px 0 rgba(255,255,255,.85);
-
-    backdrop-filter: blur(20px) saturate(1.5) contrast(1.08);
-    -webkit-backdrop-filter: blur(20px) saturate(1.5) contrast(1.08);
-  }
-
-  .modal-inner{
-    display: grid;
-    grid-template-columns: 1.25fr 1fr;
-    gap: 0;
-    height: 100%;
-  }
-
-  @media (max-width: 980px){
-    .modal-panel{ max-height: 86vh; }
-    .modal-inner{ grid-template-columns: 1fr; }
-  }
-
-  .modal-left{
-    position: relative;
-    min-height: 360px;
-    padding: clamp(14px, 2.4vw, 22px);
-    border-right: 1px solid rgba(255,255,255,.22);
-    background:
-      radial-gradient(700px 260px at 30% 10%, rgba(255,255,255,.26), transparent 60%),
-      radial-gradient(650px 380px at 80% 70%, rgba(185,220,255,.18), transparent 65%),
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0));
-  }
-  @media (max-width: 980px){
-    .modal-left{ border-right: none; border-bottom: 1px solid rgba(255,255,255,.22); }
-  }
-
-  .mockup-frame{
-    height: 100%;
-    min-height: 360px;
-    border-radius: 18px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,.42);
-    border-bottom-color: rgba(11,19,32,.10);
-    box-shadow:
-      0 24px 80px rgba(10,18,35,.12),
-      inset 0 1px 0 rgba(255,255,255,.70);
-    background:
-      radial-gradient(900px 320px at 30% 0%, rgba(255,255,255,.74), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .mockup-frame img{
-    width:100%;
-    height:100%;
-    object-fit: cover;
-    display:block;
-  }
-
-  .modal-right{
-    position: relative;
-    padding: clamp(18px, 2.6vw, 28px);
-    display:flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .modal-kicker{
-    font-size: 11px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: rgba(11,19,32,.55);
-    margin-top: 4px;
-  }
-
-  .modal-title{
-    margin: 0;
-    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-    font-weight: 650;
-    letter-spacing: -0.02em;
-    font-size: clamp(24px, 2.6vw, 36px);
-    line-height: 1.06;
-  }
-
-  .modal-subtitle{
-    margin: 0;
-    font-weight: 750;
-    font-size: 12.5px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: rgba(11,19,32,.58);
-  }
-
-  .modal-text{
-    margin: 8px 0 14px;
-    color: rgba(11,19,32,.72);
-    line-height: 1.75;
-    font-size: 15px;
-    max-width: 52ch;
-  }
-
-  .modal-actions{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-top: auto;
-    padding-top: 10px;
-  }
-
-  .modal-primary{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 12px 16px;
-    border-radius: 999px;
-    text-decoration:none;
-    font-weight: 700;
-    color: rgba(255,255,255,.92);
-    background: rgba(11,19,32,.92);
-    border: 1px solid rgba(11,19,32,.18);
-    box-shadow: 0 18px 44px rgba(11,19,32,.18);
-  }
-  .modal-secondary{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding: 12px 16px;
-    border-radius: 999px;
-    text-decoration:none;
-    font-weight: 700;
-    color: rgba(11,19,32,.86);
-    background: rgba(255,255,255,.14);
-    border: 1px solid rgba(255,255,255,.58);
-    border-bottom-color: rgba(11,19,32,.12);
-    box-shadow:
-      0 16px 38px rgba(10,18,35,.08),
-      inset 0 1px 0 rgba(255,255,255,.78),
-      inset 0 -12px 22px rgba(11,19,32,.05);
-    backdrop-filter: blur(12px) saturate(1.35);
-    -webkit-backdrop-filter: blur(12px) saturate(1.35);
-  }
-
-  .modal-close{
-    position:absolute;
-    right: 16px;
-    bottom: 16px;
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    display:grid;
-    place-items:center;
-    cursor:pointer;
-
-    background: rgba(255,255,255,.16);
-    border: 1px solid rgba(255,255,255,.58);
-    border-bottom-color: rgba(11,19,32,.14);
-    box-shadow:
-      0 16px 38px rgba(10,18,35,.10),
-      inset 0 1px 0 rgba(255,255,255,.80),
-      inset 0 -10px 18px rgba(11,19,32,.06);
-
-    backdrop-filter: blur(12px) saturate(1.35);
-    -webkit-backdrop-filter: blur(12px) saturate(1.35);
-
-    color: rgba(11,19,32,.85);
-    font-weight: 850;
-    line-height: 1;
-    user-select:none;
-  }
-  .modal-close:hover{ transform: translateY(-1px); }
 </style>
 </head>
 
 <body>
-  <div class="atmo" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
+  <!-- modal-like background -->
+  <div class="page-backdrop" aria-hidden="true"></div>
+  <div class="page-smoke" aria-hidden="true"></div>
+  <div class="page-vignette" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
-  <nav>
-    <div class="brand">S.M. <small>Portfolio</small></div>
+  <!-- the big modal panel that IS the homepage -->
+  <div class="shell">
+    <div class="panel">
 
-    <div class="nav-right">
-      <div class="nav-links">
-        <a href="#projekte">Projekte</a>
-        <a href="#leistungen">Leistungen</a>
-        <a href="#ueber">Über mich</a>
-      </div>
-      <a class="nav-btn" href="#kontakt">Kontakt</a>
-    </div>
-  </nav>
+      <nav>
+        <div class="brand">S.M. <small>Portfolio</small></div>
 
-  <main class="container">
-    <section class="hero" id="top">
-      <div class="hero-grid">
-        <div>
-          <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
-          <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
-          <p class="sub">
-            Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
-            strukturiert, elegant und lebendig.
-          </p>
-          <div class="actions">
-            <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
-            <a class="btn" href="#leistungen">Leistungen</a>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="#projekte">Projekte</a>
+            <a href="#leistungen">Leistungen</a>
+            <a href="#ueber">Über mich</a>
           </div>
+          <a class="nav-btn" href="#kontakt">Kontakt</a>
         </div>
+      </nav>
 
-        <div class="bubble-area" aria-label="Interaktive Glasblasen">
-          <canvas id="liquidBubbles"></canvas>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="leistungen">
-      <div class="section-title">Kompetenzen</div>
-      <div class="grid">
-        <div class="glass pad span-6 tilt">
-          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">UI/UX Design</h3>
-          <div style="color:rgba(11,19,32,.70);line-height:1.7;font-size:14px;">
-            User Flows · Informationsarchitektur · Interaction Design · Design Systems · Prototyping · Testing
-          </div>
-        </div>
-        <div class="glass pad span-6 tilt">
-          <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">3D Art & Worldbuilding</h3>
-          <div style="color:rgba(11,19,32,.70);line-height:1.7;font-size:14px;">
-            Scene Composition · Lighting (lichtbetont) · Unreal Engine · Blender · Materials · Rendering
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="projekte">
-      <div class="section-title">Ausgewählte Projekte</div>
-      <div class="grid">
-
-        <a class="glass span-4 tilt project-card"
-           href="#"
-           style="text-decoration:none;color:inherit;"
-           data-title="Sternburg App (UI)"
-           data-subtitle="UI/UX · Figma · Prototyp"
-           data-kicker="Projekt"
-           data-text="Modernes UI für eine Marke — Look, Typografie und ein spielerisches Pfandsystem. Fokus: klare Navigation, schnell erfassbare States, und ein Designsystem, das Spaß macht."
-           data-button="Case ansehen"
-           data-link="https://example.com"
-           data-mockup="assets/sternburg-mockup.jpg">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Sternburg App (UI)</h3>
-              <div class="year">2025</div>
+      <main class="container">
+        <section class="hero" id="top">
+          <div class="hero-grid">
+            <div>
+              <span class="kicker">Digitale Ökosysteme · Räume der Intuition & Interaktion</span>
+              <h1>UI/UX Designerin<br>&amp; 3D Artist</h1>
+              <p class="sub">
+                Intelligente Interfaces, lichtgeführte Räume und kuratierte visuelle Systeme —
+                strukturiert, elegant und lebendig.
+              </p>
+              <div class="actions">
+                <a class="btn btn-primary" href="#projekte">Projekte ansehen →</a>
+                <a class="btn" href="#leistungen">Leistungen</a>
+              </div>
             </div>
-            <p class="desc">Modernes UI für eine Marke — Look, Typo & spielerisches System.</p>
-            <div class="tags">
-              <span class="tag">UI</span><span class="tag">Figma</span><span class="tag">Prototyp</span>
+
+            <div class="bubble-area" aria-label="Interaktive Glasblasen">
+              <canvas id="liquidBubbles"></canvas>
             </div>
           </div>
-        </a>
+        </section>
 
-        <a class="glass span-4 tilt project-card"
-           href="#"
-           style="text-decoration:none;color:inherit;"
-           data-title="Das stille Ritual"
-           data-subtitle="Photography · Serie"
-           data-kicker="Projekt"
-           data-text="Reduzierte Serie — Licht als Erzählung, klare Inszenierung. Fokus: ruhige Bildsprache, Wiederholung als Ritual, und präzise Kontraste."
-           data-button="Serie öffnen"
-           data-link="https://example.com"
-           data-mockup="assets/stilles-ritual.jpg">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Das stille Ritual</h3>
-              <div class="year">2026</div>
+        <section class="section" id="leistungen">
+          <div class="section-title">Kompetenzen</div>
+          <div class="grid">
+            <div class="glass pad span-6 tilt">
+              <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">UI/UX Design</h3>
+              <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
+                User Flows · Informationsarchitektur · Interaction Design · Design Systems · Prototyping · Testing
+              </div>
             </div>
-            <p class="desc">Reduzierte Serie — Licht als Erzählung, klare Inszenierung.</p>
-            <div class="tags">
-              <span class="tag">Photography</span><span class="tag">Series</span><span class="tag">Light</span>
+            <div class="glass pad span-6 tilt">
+              <h3 style="margin:0 0 8px;font-size:16px;font-weight:800;">3D Art & Worldbuilding</h3>
+              <div style="color:rgba(11,19,32,.72);line-height:1.7;font-size:14px;">
+                Scene Composition · Lighting (lichtbetont) · Unreal Engine · Blender · Materials · Rendering
+              </div>
             </div>
           </div>
-        </a>
+        </section>
 
-        <a class="glass span-4 tilt project-card"
-           href="#"
-           style="text-decoration:none;color:inherit;"
-           data-title="Unreal — Magische Welt"
-           data-subtitle="3D · Lookdev · Unreal"
-           data-kicker="Projekt"
-           data-text="Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe. Fokus: Materialität, volumetrisches Licht, und ein konsistentes Mood-System."
-           data-button="Shots ansehen"
-           data-link="https://example.com"
-           data-mockup="assets/unreal-world.jpg">
-          <div class="media"></div>
-          <div class="pad">
-            <div class="card-head">
-              <h3 class="title">Unreal — Magische Welt</h3>
-              <div class="year">2026</div>
-            </div>
-            <p class="desc">Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe.</p>
-            <div class="tags">
-              <span class="tag">Unreal</span><span class="tag">3D</span><span class="tag">Lookdev</span>
-            </div>
+        <section class="section" id="projekte">
+          <div class="section-title">Ausgewählte Projekte</div>
+          <div class="grid">
+            <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+              <div class="media"></div>
+              <div class="pad">
+                <div class="card-head">
+                  <h3 class="title">Sternburg App (UI)</h3>
+                  <div class="year">2025</div>
+                </div>
+                <p class="desc">Modernes UI für eine Marke — Look, Typo & spielerisches System.</p>
+                <div class="tags">
+                  <span class="tag">UI</span><span class="tag">Figma</span><span class="tag">Prototyp</span>
+                </div>
+              </div>
+            </a>
+
+            <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+              <div class="media"></div>
+              <div class="pad">
+                <div class="card-head">
+                  <h3 class="title">Das stille Ritual</h3>
+                  <div class="year">2026</div>
+                </div>
+                <p class="desc">Reduzierte Serie — Licht als Erzählung, klare Inszenierung.</p>
+                <div class="tags">
+                  <span class="tag">Photography</span><span class="tag">Series</span><span class="tag">Light</span>
+                </div>
+              </div>
+            </a>
+
+            <a class="glass span-4 tilt" href="#" style="text-decoration:none;color:inherit;">
+              <div class="media"></div>
+              <div class="pad">
+                <div class="card-head">
+                  <h3 class="title">Unreal — Magische Welt</h3>
+                  <div class="year">2026</div>
+                </div>
+                <p class="desc">Atmosphärisches Worldbuilding — Uhren, Bücher, Licht, Tiefe.</p>
+                <div class="tags">
+                  <span class="tag">Unreal</span><span class="tag">3D</span><span class="tag">Lookdev</span>
+                </div>
+              </div>
+            </a>
           </div>
-        </a>
+        </section>
 
-      </div>
-    </section>
-
-    <section class="section" id="ueber">
-      <div class="section-title">Über mich</div>
-      <div class="glass pad tilt">
-        <p style="margin:0;color:rgba(11,19,32,.70);line-height:1.7;">
-          Ich verbinde klare UI-Systeme mit räumlicher, lichtgeführter Gestaltung.
-          Mein Stil ist clean, modular und atmosphärisch — damit Projekte professionell wirken
-          und trotzdem Magie behalten.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" id="kontakt">
-      <div class="section-title">Kontakt</div>
-      <div class="glass pad tilt">
-        <p style="margin:0;color:rgba(11,19,32,.70);line-height:1.7;">
-          <strong>E-Mail:</strong> <span style="opacity:.75;">dein.name@mail.de</span> ·
-          <strong>Instagram:</strong> <span style="opacity:.75;">@eymeistern</span>
-        </p>
-      </div>
-    </section>
-
-    <footer>© <span id="y"></span> Sarah Meister — UI/UX & 3D</footer>
-  </main>
-
-  <!-- Modal -->
-  <div class="modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Projekt">
-    <div class="modal-backdrop" data-close="1"></div>
-
-    <div class="modal-panel" role="document">
-      <div class="modal-inner">
-        <div class="modal-left">
-          <div class="mockup-frame" id="modalMockupFrame">
-            <div id="modalMockupFallback" style="width:100%;height:100%;display:grid;place-items:center;color:rgba(11,19,32,.55);font-weight:700;">
-              Mockup hier (data-mockup)
-            </div>
+        <section class="section" id="ueber">
+          <div class="section-title">Über mich</div>
+          <div class="glass pad tilt">
+            <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
+              Ich verbinde klare UI-Systeme mit räumlicher, lichtgeführter Gestaltung.
+              Mein Stil ist clean, modular und atmosphärisch — damit Projekte professionell wirken
+              und trotzdem Magie behalten.
+            </p>
           </div>
-        </div>
+        </section>
 
-        <div class="modal-right">
-          <div class="modal-kicker" id="modalKicker">Projekt</div>
-          <h2 class="modal-title" id="modalTitle">Titel</h2>
-          <div class="modal-subtitle" id="modalSubtitle">Subheader</div>
-          <p class="modal-text" id="modalText">Text</p>
-
-          <div class="modal-actions">
-            <a class="modal-primary" id="modalPrimaryBtn" href="#" target="_blank" rel="noopener">Ansehen</a>
-            <a class="modal-secondary" href="#projekte" data-close="1">Zur Übersicht</a>
+        <section class="section" id="kontakt">
+          <div class="section-title">Kontakt</div>
+          <div class="glass pad tilt">
+            <p style="margin:0;color:rgba(11,19,32,.72);line-height:1.7;">
+              <strong>E-Mail:</strong> <span style="opacity:.75;">dein.name@mail.de</span> ·
+              <strong>Instagram:</strong> <span style="opacity:.75;">@eymeistern</span>
+            </p>
           </div>
+        </section>
 
-          <div class="modal-close" title="Schließen" aria-label="Schließen" data-close="1">×</div>
-        </div>
-      </div>
+        <footer>© <span id="y"></span> Sarah Meister — UI/UX & 3D</footer>
+      </main>
+
     </div>
   </div>
 
 <script>
-  // year
   document.getElementById("y").textContent = new Date().getFullYear();
 
   // optional: subtle tilt (desktop only)
   const cards = document.querySelectorAll(".tilt");
   const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
-
   if (hasFinePointer) {
     cards.forEach(el => {
       el.addEventListener("mousemove", (e) => {
@@ -825,7 +563,7 @@
     });
   }
 
-  /* ===== Liquid bubbles (unchanged) ===== */
+  /* ===== Liquid bubbles (your glassy gentle version) ===== */
   const canvas = document.getElementById("liquidBubbles");
   const ctx = canvas.getContext("2d", { alpha: true });
 
@@ -855,7 +593,6 @@
       const h = Math.max(120, rect.height);
 
       this.radius = 26 + Math.random() * 42;
-
       this.x = (this.radius + EDGE_PAD) + Math.random() * (w - (this.radius*2 + EDGE_PAD*2));
       this.y = (this.radius + EDGE_PAD) + Math.random() * (h - (this.radius*2 + EDGE_PAD*2));
 
@@ -1041,89 +778,10 @@
         resolveCollision(bubbles[i], bubbles[j]);
       }
     }
-
     bubbles.forEach(b => b.draw());
     requestAnimationFrame(animateBubbles);
   }
   animateBubbles();
-
-  /* ===== Modal logic ===== */
-  const modal = document.getElementById("projectModal");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalSubtitle = document.getElementById("modalSubtitle");
-  const modalKicker = document.getElementById("modalKicker");
-  const modalText = document.getElementById("modalText");
-  const modalPrimaryBtn = document.getElementById("modalPrimaryBtn");
-  const mockupFrame = document.getElementById("modalMockupFrame");
-  const mockupFallback = document.getElementById("modalMockupFallback");
-
-  let lastFocus = null;
-
-  function setMockup(src){
-    const old = mockupFrame.querySelector("img");
-    if(old) old.remove();
-
-    if(!src){
-      mockupFallback.style.display = "grid";
-      return;
-    }
-
-    const img = new Image();
-    img.alt = "Projekt Mockup";
-    img.src = src;
-    img.onload = () => {
-      mockupFallback.style.display = "none";
-      mockupFrame.appendChild(img);
-    };
-    img.onerror = () => { mockupFallback.style.display = "grid"; };
-  }
-
-  function openModalFromCard(card){
-    lastFocus = document.activeElement;
-
-    modalTitle.textContent = card.dataset.title || "Projekt";
-    modalSubtitle.textContent = card.dataset.subtitle || "";
-    modalKicker.textContent = card.dataset.kicker || "Projekt";
-    modalText.textContent = card.dataset.text || "";
-
-    const link = card.dataset.link || "#";
-    const btnText = card.dataset.button || "Ansehen";
-    modalPrimaryBtn.textContent = btnText;
-    modalPrimaryBtn.href = link;
-
-    setMockup(card.dataset.mockup || "");
-
-    modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeModal(){
-    modal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
-  }
-
-  document.querySelectorAll(".project-card").forEach(card => {
-    card.addEventListener("click", (e) => {
-      e.preventDefault();
-      openModalFromCard(card);
-    });
-    card.addEventListener("keydown", (e) => {
-      if(e.key === "Enter" || e.key === " "){
-        e.preventDefault();
-        openModalFromCard(card);
-      }
-    });
-  });
-
-  modal.addEventListener("click", (e) => {
-    const t = e.target;
-    if(t && t.getAttribute && t.getAttribute("data-close") === "1") closeModal();
-  });
-
-  window.addEventListener("keydown", (e) => {
-    if(e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeModal();
-  });
 </script>
 </body>
 </html>
